@@ -1,0 +1,32 @@
+[
+  {
+    "key": "space x",
+    "command": "workbench.action.closeActiveEditor",
+    "when": "!inputFocus && !editorFocus"
+  },
+  {
+    "key": "space e",
+    "command": "workbench.view.explorer",
+    "when": "!inputFocus && !editorFocus"
+  },
+  {
+    "key": "space f g",
+    "command": "workbench.action.quickOpen",
+    "when": "!inputFocus && !editorFocus"
+  },
+  {
+    "key": "space f f",
+    "command": "workbench.action.findInFiles",
+    "when": "!inputFocus && !editorFocus"
+  },
+  {
+    "key": "space g",
+    "command": "workbench.view.scm",
+    "when": "!inputFocus && !editorFocus"
+  },
+  {
+    "key": "space s v",
+    "command": "workbench.action.splitEditorRight",
+    "when": "!inputFocus && !editorFocus"
+  }
+]
