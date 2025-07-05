@@ -61,3 +61,4 @@ bindkey -s '^e' 'nvim .\n'
 bindkey -s '^g' 'lazygit\n'
 
 alias sudonvim='sudo -E nvim'
+# Test change
