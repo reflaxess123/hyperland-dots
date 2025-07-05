@@ -14,10 +14,10 @@ cd "$HOME" || exit 1
 # Получаем все файлы и папки в корне (включая скрытые)
 all_root_items=$(find . -maxdepth 1 -name ".*" -o -maxdepth 1 -name "*" | grep -v "^\.$" | sed 's|^\./||' | sort)
 
-# Получаем все папки в .config
+# Получаем все папки и файлы в .config
 all_config_items=""
 if [ -d ".config" ]; then
-    all_config_items=$(find .config -maxdepth 1 -type d | sed 's|^\./||' | grep -v "^\.config$" | sort)
+    all_config_items=$(find .config -maxdepth 1 ! -path ".config" | sed 's|^\./||' | grep -v "^\.config$" | sort)
 fi
 
 # Получаем список отслеживаемых Git файлов
@@ -45,11 +45,11 @@ for item in $all_root_items; do
     exclude_items="$exclude_items    \"$item\": true,\n"
 done
 
-# Обрабатываем папки в .config
+# Обрабатываем папки и файлы в .config
 for item in $all_config_items; do
     config_name=$(basename "$item")
     
-    # Пропускаем если это отслеживаемая папка в .config
+    # Пропускаем если это отслеживаемая папка/файл в .config
     if echo "$tracked_config" | grep -q "^$config_name$"; then
         continue
     fi
