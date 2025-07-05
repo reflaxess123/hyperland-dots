@@ -1,7 +1,7 @@
 [window]
 opacity = 0.36
 decorations = "none"
-padding = { x = 10, y = 10 }
+padding = { x = 25, y = 45 }
 dynamic_padding = false
 startup_mode = "Windowed"
 
