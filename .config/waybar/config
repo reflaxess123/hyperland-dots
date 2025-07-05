@@ -122,7 +122,7 @@
     "exec": "~/.config/waybar/scripts/ovpn-status.sh",
     "return-type": "json",
     "interval": 5,
-    "on-click": "~/.config/waybar/scripts/ovpn-toggle.sh",
+    "on-click": "~/.config/waybar/scripts/../../hypr/scripts/socks-toggle.sh",
     "signal": 8,
     "format": "{}",
     "tooltip": true
