@@ -15,6 +15,7 @@
 !.config/hypr/**
 !.config/waybar/**
 !.config/kitty/**
+!.config/ghostty/**
 !.config/rofi/**
 !.config/swaync/**
 !.config/swaykbdd/**
