@@ -156,10 +156,11 @@
     ".config/google-chrome": true,
     ".config/lazygit": true,
     ".config/pulse": true,
-    ".config/swaykbd": true,
+    ".config/wofi": true,
     ".config/yay": true,
     ".config/yazi": true,
     ".config/zsh": true,
+    ".config/nautilus": true,
     ".nv": true
   },
 
