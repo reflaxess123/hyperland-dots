@@ -1,6 +1,10 @@
 {
   "layer": "top",
   "position": "top",
+  "margin-top": 10,
+  "margin-bottom": 20,
+  "margin-left": 25,
+  "margin-right": 25,
   "modules-left": [
     "custom/launcher",
     "cpu",

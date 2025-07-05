@@ -8,9 +8,28 @@
 }
 
 window#waybar {
-  background: rgba(26, 26, 26, 0.25);
+  background: rgba(26, 26, 26, 0);
   color: #cad3f5;
-  padding: 5px 0;
+}
+
+/* Левый блок */
+.modules-left {
+  background-color: #1d1d41;
+  border-radius: 25px;
+  padding: 0 15px;
+}
+
+/* Правый блок */
+.modules-right {
+  background-color: #1d1d41;
+  border-radius: 25px;
+  padding: 0 15px;
+}
+
+.modules-center {
+  background-color: #1d1d41;
+  border-radius: 25px;
+  padding: 0 5px;
 }
 
 /* Reset all modules */
@@ -44,23 +63,17 @@ window#waybar {
 }
 
 #workspaces button {
-  padding: 0 10px;
-  margin: 0 2px;
-  border-radius: 4px;
+  padding: 0 5px;
   color: #cdd6f4;
-  background: transparent;
-  border: none;
   transition: all 0.3s ease;
 }
 
 #workspaces button:hover {
-  background: rgba(137, 180, 250, 0.2);
+  background: rgba(137, 180, 250, 0);
 }
 
 #workspaces button.active {
-  background: rgba(137, 180, 250, 0.3);
   color: #89b4fa;
-  border: 1px solid rgba(137, 180, 250, 0.5);
 }
 
 #custom-launcher {
@@ -134,18 +147,6 @@ window#waybar {
   background-color: #cad3f4;
 }
 
-/* #pulseaudio-slider { */
-/*   padding: 0 10px; */
-/* } */
-
-.modules-left {
-  padding-left: 25px;
-}
-
-.modules-right {
-  padding-right: 25px;
-}
-
 /* VPN индикатор */
 #custom-vpn {
   color: #cdd6f4;
@@ -205,4 +206,9 @@ window#waybar {
 /* Слайдер громкости */
 #pulseaudio.slider {
   min-width: 100px;
+}
+
+tooltip {
+  border-radius: 15px;
+  background-color: #10102e;
 }
