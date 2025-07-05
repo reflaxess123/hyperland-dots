@@ -8,6 +8,7 @@
 !.zshrc
 !.tmux.conf
 !.p10k.zsh
+!gpu-fan-control.sh
 !.config/
 !.config/nvim/**
 !.config/hypr/**

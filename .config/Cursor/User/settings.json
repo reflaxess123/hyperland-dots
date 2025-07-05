@@ -145,7 +145,6 @@
     "Videos": true,
     "wallpapers": true,
     ".nvidia-settings-rc": true,
-    "gpu-fan-control.sh": true,
     "reset-dotfiles.sh": true,
     ".claude.json": true,
     ".config/BraveSoftware": true,
