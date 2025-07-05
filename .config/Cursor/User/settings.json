@@ -20,7 +20,6 @@
   "workbench.tree.enableStickyScroll": false,
   "workbench.tree.renderIndentGuides": "none",
   "workbench.list.openMode": "singleClick",
-  "workbench.iconTheme": "material-icon-theme",
 
   // Цветовые настройки
   "workbench.colorCustomizations": {
@@ -164,8 +163,7 @@
     ".config/user-dirs.locale": true,
     ".config/yay": true,
     ".config/yazi": true,
-    ".config/zsh": true,
-
+    ".config/zsh": true
   },
 
   // ===========================================
@@ -218,10 +216,13 @@
     "asvetliakov.vscode-neovim": 1
   },
   "material-icon-theme.hidesExplorerArrows": true,
-  "workbench.colorTheme": "Bearded Theme Vivid Black",
   "editor.smoothScrolling": true,
   "editor.cursorBlinking": "smooth",
   "editor.cursorSmoothCaretAnimation": "on",
   "python.languageServer": "None",
-  "window.commandCenter": true
+  "window.commandCenter": true,
+  "workbench.productIconTheme": "fluent-icons",
+  "workbench.colorTheme": "Bearded Theme Vivid Black",
+  "workbench.iconTheme": "bearded-icons",
+  "terminal.integrated.defaultProfile.linux": "zsh"
 }

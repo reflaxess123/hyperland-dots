@@ -1,0 +1,84 @@
+/* Catppuccin Mocha Theme для Power Menu */
+* {
+  font-family: "JetBrainsMono Nerd Font Mono";
+  font-size: 20px;
+}
+
+window {
+  margin: 0px;
+  background-color: rgba(0, 0, 255, 0.99);
+  border-radius: 50px;
+}
+
+#input {
+  display: none;
+}
+
+#input:focus {
+  border: 2px solid #89b4fa;
+  background-color: #45475a;
+}
+
+#inner-box {
+  margin: 8px;
+  padding: 12px;
+  background-color: transparent;
+}
+
+#outer-box {
+  margin: 8px;
+  padding: 12px;
+  background-color: transparent;
+}
+
+#scroll {
+  margin: 0px;
+  padding: 8px;
+}
+
+#text {
+  font-size: 20px;
+  padding: 15px;
+  margin: 3px;
+  color: #cdd6f4;
+}
+
+#entry {
+  padding: 15px;
+  margin: 3px;
+  border-radius: 10px;
+  background-color: transparent;
+  transition: all 0.2s ease;
+}
+
+#entry:selected {
+  background-color: #1f2c42;
+  color: #1e1e2e;
+  font-weight: bold;
+}
+
+#entry:hover {
+  background-color: #45475a;
+  color: #404a69;
+}
+
+/* Специальные стили для разных типов действий */
+#entry:nth-child(1) {
+  border-left: 4px solid #f9e2af;
+  border-top: 4px solid #f9e2af;
+}
+
+#entry:nth-child(2) {
+  border-left: 4px solid #fab387;
+  border-top: 4px solid #fab387;
+}
+
+#entry:nth-child(3) {
+  border-left: 4px solid #f38ba8;
+  border-top: 4px solid #f38ba8;
+}
+
+#entry:nth-child(4) {
+  border-left: 4px solid #a6e3a1;
+  border-top: 4px solid #a6e3a1;
+}
