@@ -1,0 +1,208 @@
+* {
+  border: none;
+  border-radius: 0;
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
+  min-height: 0;
+  font-weight: bold;
+}
+
+window#waybar {
+  background: rgba(26, 26, 26, 0.25);
+  color: #cad3f5;
+  padding: 5px 0;
+}
+
+/* Reset all modules */
+#workspaces,
+#clock,
+#pulseaudio,
+#custom-mic-volume,
+#pulseaudio-slider,
+#network,
+#bluetooth,
+#cpu,
+#custom-cpu-temp,
+#custom-gpu-temp,
+#custom-fan,
+#memory,
+#disk,
+#tray,
+#hyprland-language,
+#custom-power,
+#custom-launcher,
+#language {
+  padding: 10px 10px;
+  margin: 0 2px;
+  color: #cad3f5;
+}
+
+#workspaces {
+  margin: 5px;
+  padding: 0 5px;
+  border-radius: 6px;
+}
+
+#workspaces button {
+  padding: 0 10px;
+  margin: 0 2px;
+  border-radius: 4px;
+  color: #cdd6f4;
+  background: transparent;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+#workspaces button:hover {
+  background: rgba(137, 180, 250, 0.2);
+}
+
+#workspaces button.active {
+  background: rgba(137, 180, 250, 0.3);
+  color: #89b4fa;
+  border: 1px solid rgba(137, 180, 250, 0.5);
+}
+
+#custom-launcher {
+  color: #89b4fa;
+  font-size: 16px;
+  padding: 0 15px;
+}
+
+#custom-power {
+  color: #f38ba8;
+  font-size: 16px;
+  padding: 0 15px;
+}
+
+/* Style for specific icons/modules that need it */
+#pulseaudio {
+  color: #89b4fa;
+}
+
+#network {
+  color: #a6e3a1;
+}
+
+#bluetooth {
+  color: #cba6f7;
+}
+
+#cpu {
+  color: #fab387;
+}
+
+#memory {
+  color: #f5c2e7;
+}
+
+#disk {
+  color: #94e2d5;
+}
+
+#clock {
+  color: #f9e2af;
+  font-weight: bold;
+}
+
+/* Hide sliders by default */
+#pulseaudio-slider slider {
+  min-height: 0px;
+  min-width: 0px;
+  opacity: 0;
+  background: none;
+  border: none;
+  box-shadow: none;
+  margin: 0;
+  padding: 0;
+}
+
+#pulseaudio-slider trough {
+  min-height: 12px;
+  min-width: 80px;
+  border-radius: 5px;
+  background-color: #302d41;
+}
+
+#pulseaudio-slider highlight {
+  min-width: 12px;
+  /* Убедитесь, что ширина и высота одинаковы для круга */
+  min-height: 12px;
+  /* Убедитесь, что ширина и высота одинаковы для круга */
+  border-radius: 9999px;
+  /* Делает ползунок круглым */
+  background-color: #cad3f4;
+}
+
+/* #pulseaudio-slider { */
+/*   padding: 0 10px; */
+/* } */
+
+.modules-left {
+  padding-left: 25px;
+}
+
+.modules-right {
+  padding-right: 25px;
+}
+
+/* VPN индикатор */
+#custom-vpn {
+  color: #cdd6f4;
+  padding: 0 10px;
+  font-weight: bold;
+}
+
+#custom-vpn.connected {
+  color: #a6e3a1;
+}
+
+#custom-vpn.disconnected {
+  color: #f38ba8;
+}
+
+#custom-vpn.connecting {
+  color: #f9e2af;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.6;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+#custom-cpu-temp,
+#custom-gpu-temp {
+  color: #f38ba8;
+}
+
+#custom-fan {
+  color: #74c7ec;
+}
+
+#tray {
+  margin: 0 5px;
+}
+
+/* Языковой индикатор */
+#language {
+  padding: 0 10px;
+  margin: 0 2px;
+  border-radius: 6px;
+  color: #a6e3a1;
+  font-weight: bold;
+}
+
+/* Слайдер громкости */
+#pulseaudio.slider {
+  min-width: 100px;
+}

@@ -1,0 +1,179 @@
+{
+  // ===========================================
+  // 🎨 ВНЕШНИЙ ВИД И ИНТЕРФЕЙС
+  // ===========================================
+  "vscode-neovim.useCtrlKeysForVim": false,
+  "vscode-neovim.neovimInitPath": "/home/crock/.config/nvim-vscode/init.lua",
+  "vscode-neovim.neovimExecutablePaths.linux": "/home/crock/bin/nvim-vscode-real",
+  "window.density.editorTabHeight": "default",
+  "window.menuBarVisibility": "visible",
+  "window.titleBarStyle": "custom",
+  "window.customTitleBarVisibility": "never",
+  "window.zoomLevel": 1.2,
+
+  // Workbench
+  "workbench.tree.indent": 8,
+  "workbench.startupEditor": "none",
+  "workbench.activityBar.location": "hidden",
+  "workbench.editor.showTabs": "multiple",
+  "workbench.statusBar.visible": false,
+  "workbench.tree.enableStickyScroll": false,
+  "workbench.tree.renderIndentGuides": "none",
+  "workbench.list.openMode": "singleClick",
+  "workbench.iconTheme": "material-icon-theme",
+
+  // Цветовые настройки
+  "workbench.colorCustomizations": {
+    "editorCursor.background": "#000000",
+    "editorOverviewRuler.wordHighlightStrongForeground": "#0000",
+    "editorOverviewRuler.selectionHighlightForeground": "#0000",
+    "editorOverviewRuler.rangeHighlightForeground": "#0000",
+    "editorOverviewRuler.wordHighlightForeground": "#0000",
+    "editorOverviewRuler.bracketMatchForeground": "#0000",
+    "editorOverviewRuler.findMatchForeground": "#0000",
+    "editorOverviewRuler.modifiedForeground": "#0000",
+    "editorOverviewRuler.deletedForeground": "#0000",
+    "editorOverviewRuler.warningForeground": "#0000",
+    "editorOverviewRuler.addedForeground": "#0000",
+    "editorOverviewRuler.errorForeground": "#0000",
+    "editorOverviewRuler.infoForeground": "#0000",
+    "editorOverviewRuler.border": "#0000"
+  },
+
+  // ===========================================
+  // ✏️ РЕДАКТОР
+  // ===========================================
+
+  // Шрифт и размеры
+  "editor.fontFamily": "jetbrainsMono Nerd Font",
+  "terminal.integrated.fontFamily": "jetbrainsmono nerd font",
+  "editor.fontSize": 14,
+  "editor.fontLigatures": true,
+  "editor.lineHeight": 1.8,
+  "editor.tabSize": 2,
+
+  // Подсказки, декорации, всплывающие подсказки
+  "editor.hover.enabled": true,
+  "editor.parameterHints.enabled": true,
+  "editor.codeLens": true,
+  "editor.links": true,
+  "editor.suggestOnTriggerCharacters": true,
+  "editor.quickSuggestions": {
+    "other": true,
+    "comments": false,
+    "strings": false
+  },
+
+  // Оформление редактора
+  "editor.minimap.enabled": true,
+  "editor.scrollbar.horizontal": "hidden",
+  "editor.scrollbar.vertical": "hidden",
+  "editor.matchBrackets": "never",
+  "editor.occurrencesHighlight": "off",
+  "editor.renderWhitespace": "none",
+  "editor.renderLineHighlight": "none",
+  "editor.stickyScroll.enabled": false,
+  "editor.guides.indentation": false,
+  "editor.showFoldingControls": "never",
+  "editor.hideCursorInOverviewRuler": true,
+  "editor.overviewRulerBorder": false,
+  "editor.lineNumbers": "on",
+  "editor.selectionHighlight": false,
+
+  // Поведение
+  "editor.cursorStyle": "line",
+  "editor.mouseWheelZoom": true,
+  "editor.autoClosingBrackets": "always",
+  "editor.autoSurround": "languageDefined",
+  "editor.foldingImportsByDefault": false,
+  "editor.linkedEditing": true,
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "explicit"
+  },
+  "editor.tokenColorCustomizations": {
+    "textMateRules": [
+      {
+        "scope": "comment",
+        "settings": {
+          "fontStyle": "italic"
+        }
+      }
+    ]
+  },
+
+  // ===========================================
+  // 🖥 ТЕРМИНАЛ
+  // ===========================================
+  "terminal.integrated.fontSize": 13,
+
+  // ===========================================
+  // 📁 EXPLORER И ФАЙЛЫ
+  // ===========================================
+  "files.eol": "\n",
+  "explorer.confirmDelete": false,
+  "explorer.confirmDragAndDrop": false,
+  "explorer.compactFolders": false,
+  "explorer.decorations.badges": false,
+  "explorer.autoReveal": true,
+
+  // ===========================================
+  // 🍞 BREADCRUMBS
+  // ===========================================
+  "breadcrumbs.enabled": true,
+  "breadcrumbs.filePath": "on",
+  "breadcrumbs.showClasses": true,
+  "breadcrumbs.symbolPath": "off",
+
+  // ===========================================
+  // 🔧 GIT
+  // ===========================================
+  "git.decorations.enabled": false,
+  "git.autofetch": true,
+  "git.enableSmartCommit": true,
+  "git.confirmSync": false,
+  "git.openRepositoryInParentFolders": "never",
+
+  // ===========================================
+  // 🟨 JAVASCRIPT / TYPESCRIPT
+  // ===========================================
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "javascript.suggest.autoImports": true,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "typescript.suggest.autoImports": true,
+
+  // ===========================================
+  // 🔍 ESLINT
+  // ===========================================
+  "eslint.validate": ["javascript", "typescript"],
+
+  // ===========================================
+  // 🌐 ИНТЕРНАЦИОНАЛИЗАЦИЯ
+  // ===========================================
+  "i18n-ally.displayLanguage": "en",
+  "i18n-ally.translationSource": "code",
+  "i18n-ally.keystyle": "flat",
+  "i18n-ally.extract.autoDetect": true,
+
+  // ===========================================
+  // 🔒 БЕЗОПАСНОСТЬ И РАЗНОЕ
+  // ===========================================
+  "security.workspace.trust.untrustedFiles": "open",
+  "chat.commandCenter.enabled": false,
+  "cursor.general.globalCursorIgnoreList": [],
+  "RainbowBrackets.depreciation-notice": false,
+  "extensions.ignoreRecommendations": true,
+  "extensions.experimental.affinity": {
+    "asvetliakov.vscode-neovim": 1
+  },
+  "material-icon-theme.hidesExplorerArrows": true,
+  "workbench.colorTheme": "Bearded Theme Vivid Black",
+  "editor.smoothScrolling": true,
+  "editor.cursorBlinking": "smooth",
+  "editor.cursorSmoothCaretAnimation": "on",
+  "python.languageServer": "None",
+  "window.commandCenter": true
+}

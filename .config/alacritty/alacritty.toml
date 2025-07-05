@@ -1,0 +1,118 @@
+[window]
+opacity = 0.36
+decorations = "none"
+padding = { x = 10, y = 10 }
+dynamic_padding = false
+startup_mode = "Windowed"
+
+[font]
+size = 14
+
+[font.normal]
+family = "JetBrainsMono Nerd Font"
+style = "Regular"
+
+[colors]
+# Схема "Catppuccin Mocha" - яркая и красивая
+[colors.primary]
+background = "#1e1e1e"
+foreground = "#cdd6f4"
+
+# Цвета курсора
+[colors.cursor]
+text = "#1e1e1e"
+cursor = "#89b4fa"  # Синий курсор
+
+# Цвета выделения
+[colors.selection]
+text = "#1e1e1e"
+background = "#cdd6f4"
+
+# Поиск
+[colors.search.matches]
+foreground = "#1e1e1e"
+background = "#f9e2af"
+
+[colors.search.focused_match]
+foreground = "#1e1e1e"
+background = "#a6e3a1"
+
+# Стандартные цвета
+[colors.normal]
+black = "#45475a"
+red = "#f38ba8"
+green = "#a6e3a1"
+yellow = "#f9e2af"
+blue = "#89b4fa"
+magenta = "#f5c2e7"
+cyan = "#94e2d5"
+white = "#bac2de"
+
+# Яркие цвета
+[colors.bright]
+black = "#585b70"
+red = "#f38ba8"
+green = "#a6e3a1"
+yellow = "#f9e2af"
+blue = "#89b4fa"
+magenta = "#f5c2e7"
+cyan = "#94e2d5"
+white = "#a6adc8"
+
+[[keyboard.bindings]]
+key = "C"
+mods = "Control"
+action = "Copy"
+
+[[keyboard.bindings]]
+key = "V"
+mods = "Control"
+action = "Paste"
+
+# Сохраняем также стандартные терминальные сочетания
+[[keyboard.bindings]]
+key = "C"
+mods = "Control|Shift"
+action = "Copy"
+
+[[keyboard.bindings]]
+key = "V"
+mods = "Control|Shift"
+action = "Paste"
+
+# Дополнительные настройки как в kitty
+[cursor]
+style = { shape = "Block", blinking = "On" }
+blink_interval = 500
+unfocused_hollow = true
+
+[mouse]
+hide_when_typing = false
+
+[scrolling]
+history = 10000
+multiplier = 3
+
+[window.dimensions]
+columns = 120
+lines = 40
+
+# URL настройки
+[hints]
+enabled = [
+  { regex = "https?://[^\\s<>\"{}|\\\\^`]+", action = "Copy", post_processing = true, mouse = { enabled = true }, binding = { key = "U", mods = "Control|Shift" } }
+]
+
+# Производительность
+[debug]
+render_timer = false
+persistent_logging = false
+
+# Переменные окружения для nvim поддержки
+[env]
+TERM = "alacritty"
+COLORTERM = "truecolor"
+
+# Настройки терминала для лучшей совместимости
+[terminal]
+osc52 = "CopyPaste"  # Поддержка OSC 52 для copy/paste

@@ -1,0 +1,130 @@
+{
+  "layer": "top",
+  "position": "top",
+  "modules-left": [
+    "custom/launcher",
+    "cpu",
+    "custom/cpu-temp",
+    "custom/gpu-temp",
+    "custom/fan",
+    "memory",
+    "disk",
+    "network",
+    "custom/vpn",
+    "tray"
+  ],
+  "modules-center": [
+    "hyprland/workspaces"
+  ],
+  "modules-right": [
+    "hyprland/language",
+    "bluetooth",
+    "pulseaudio",
+    "custom/mic-volume",
+    "pulseaudio/slider",
+    "clock",
+    "custom/power"
+  ],
+  "hyprland/language": {
+    "format-us": "US",
+    "format-ru": "RU"
+  },
+  "pulseaudio": {
+    "tooltip": false,
+    "scroll-step": 5,
+    "format": "{icon}  {volume}%",
+    "format-muted": "{icon}  {volume}%",
+    "on-click": "pavucontrol",
+    "format-icons": {
+      "default": [
+        " ",
+        " ",
+        " "
+      ]
+    }
+  },
+  "pulseaudio/slider": {
+    "min": 0,
+    "max": 100,
+    "orientation": "horizontal",
+    "expand": false
+  },
+  "network": {
+    "format-wifi": "  {essid}",
+    "format-ethernet": "󰈀  Connected",
+    "tooltip-format": "{essid} ({signalStrength}%)",
+    "format-linked": "{ifname} (No IP) ",
+    "format-disconnected": "󰌙 Disconnected",
+    "format-alt": "{ifname}: {ipaddr}/{cidr}"
+  },
+  "bluetooth": {
+    "format": "  {status}",
+    "on-click": "blueman-manager",
+    "format-disabled": "",
+    "format-connected": " {num_connections} connected",
+    "tooltip-format": "{controller_alias} {controller_address}"
+  },
+  "tray": {
+    "icon-size": 18,
+    "spacing": 10
+  },
+  "clock": {
+    "format": "  {:%H:%M %d/%m/%Y}",
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+  },
+  "cpu": {
+    "interval": 15,
+    "format": "  {}%",
+    "max-length": 10
+  },
+  "custom/cpu-temp": {
+    "exec": "sensors k10temp-pci-00c3 | grep 'Tctl:' | awk '{print $2}' | sed 's/+//;s/°C//'",
+    "format": "  {}°C",
+    "interval": 5
+  },
+  "custom/gpu-temp": {
+    "exec": "nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader,nounits",
+    "format": "GPU:  {}°C",
+    "interval": 5
+  },
+  "custom/fan": {
+    "exec": "sensors asusec-isa-000a | grep 'Chipset:' | awk 'NR==1{print $2}'",
+    "format": "  {} RPM",
+    "interval": 5
+  },
+  "memory": {
+    "interval": 30,
+    "format": "  {}%",
+    "max-length": 10
+  },
+  "disk": {
+    "interval": 30,
+    "format": "  {percentage_used}%",
+    "path": "/"
+  },
+  "custom/launcher": {
+    "format": "",
+    "on-click": "rofi -show drun",
+    "on-click-right": "killall rofi"
+  },
+  "custom/power": {
+    "format": "⏻",
+    "on-click": "bash ~/.config/waybar/scripts/leave.sh",
+    "tooltip": "Power Menu"
+  },
+  "hyprland/workspaces": {
+    "format": "{name}",
+    "on-scroll-up": "hyprctl dispatch workspace e+1",
+    "on-scroll-down": "hyprctl dispatch workspace e-1",
+    "on-click": "activate"
+  },
+  "custom/vpn": {
+    "exec": "~/.config/waybar/scripts/ovpn-status.sh",
+    "return-type": "json",
+    "interval": 5,
+    "on-click": "~/.config/waybar/scripts/ovpn-toggle.sh",
+    "signal": 8,
+    "format": "{}",
+    "tooltip": true
+  }
+}

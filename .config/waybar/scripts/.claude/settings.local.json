@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(groups)",
+      "Bash(systemctl:*)"
+    ],
+    "deny": []
+  }
+}

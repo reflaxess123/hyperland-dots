@@ -1,0 +1,25 @@
+# Игнорировать всё
+*
+
+# Но не игнорировать сам .gitignore
+!.gitignore
+
+# Явно включаем нужные конфиги
+!.zshrc
+!.tmux.conf
+!.p10k.zsh
+!.config/
+!.config/nvim/**
+!.config/hypr/**
+!.config/waybar/**
+!.config/kitty/**
+!.config/rofi/**
+!.config/swaync/**
+!.config/swaykbdd/**
+!.config/neofetch/**
+!.config/Cursor/User/keybindings.json
+!.config/Cursor/User/settings.json
+!.config/gtk-3.0/**
+!.config/gtk-4.0/**
+!.config/alacritty/**
+
