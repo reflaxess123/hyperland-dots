@@ -11,17 +11,27 @@ echo "🔄 Синхронизация files.exclude с Git..."
 # Получаем список всех файлов/папок в домашней директории
 cd "$HOME" || exit 1
 
-# Получаем все файлы и папки (включая скрытые)
-all_items=$(find . -maxdepth 1 -name ".*" -o -maxdepth 1 -name "*" | grep -v "^\.$" | sed 's|^\./||' | sort)
+# Получаем все файлы и папки в корне (включая скрытые)
+all_root_items=$(find . -maxdepth 1 -name ".*" -o -maxdepth 1 -name "*" | grep -v "^\.$" | sed 's|^\./||' | sort)
+
+# Получаем все папки в .config
+all_config_items=""
+if [ -d ".config" ]; then
+    all_config_items=$(find .config -maxdepth 1 -type d | sed 's|^\./||' | grep -v "^\.config$" | sort)
+fi
 
 # Получаем список отслеживаемых Git файлов
-tracked_files=$(git ls-files | cut -d'/' -f1 | sort -u)
+tracked_files=$(git ls-files)
+tracked_root=$(echo "$tracked_files" | cut -d'/' -f1 | sort -u)
+tracked_config=$(echo "$tracked_files" | grep "^\.config/" | cut -d'/' -f2 | sort -u)
 
 # Файлы, которые НЕ отслеживаются Git и должны быть в exclude
 exclude_items=""
-for item in $all_items; do
+
+# Обрабатываем корневые элементы
+for item in $all_root_items; do
     # Пропускаем если это отслеживаемый файл/папка
-    if echo "$tracked_files" | grep -q "^$item$"; then
+    if echo "$tracked_root" | grep -q "^$item$"; then
         continue
     fi
     
@@ -31,6 +41,18 @@ for item in $all_items; do
             continue
             ;;
     esac
+    
+    exclude_items="$exclude_items    \"$item\": true,\n"
+done
+
+# Обрабатываем папки в .config
+for item in $all_config_items; do
+    config_name=$(basename "$item")
+    
+    # Пропускаем если это отслеживаемая папка в .config
+    if echo "$tracked_config" | grep -q "^$config_name$"; then
+        continue
+    fi
     
     exclude_items="$exclude_items    \"$item\": true,\n"
 done
