@@ -17,6 +17,7 @@ window#waybar {
   background-color: #1d1d41;
   border-radius: 25px;
   padding: 0 15px;
+  border: none;
 }
 
 /* Правый блок */
@@ -24,12 +25,14 @@ window#waybar {
   background-color: #1d1d41;
   border-radius: 25px;
   padding: 0 15px;
+  border: none;
 }
 
 .modules-center {
   background-color: #1d1d41;
   border-radius: 25px;
   padding: 0 5px;
+  border: none;
 }
 
 /* Reset all modules */
@@ -69,7 +72,7 @@ window#waybar {
 }
 
 #workspaces button:hover {
-  background: rgba(137, 180, 250, 0);
+  background: rgba(100, 100, 100, 0.1);
 }
 
 #workspaces button.active {
@@ -139,11 +142,8 @@ window#waybar {
 
 #pulseaudio-slider highlight {
   min-width: 12px;
-  /* Убедитесь, что ширина и высота одинаковы для круга */
   min-height: 12px;
-  /* Убедитесь, что ширина и высота одинаковы для круга */
   border-radius: 9999px;
-  /* Делает ползунок круглым */
   background-color: #cad3f4;
 }
 
@@ -211,4 +211,6 @@ window#waybar {
 tooltip {
   border-radius: 15px;
   background-color: #10102e;
+  color: #cad3f5;
+  border: none;
 }
