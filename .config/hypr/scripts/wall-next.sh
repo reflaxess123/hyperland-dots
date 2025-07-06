@@ -1,13 +1,18 @@
 #!/bin/bash
 
 WALLDIR="$HOME/wallpapers"
-CONF="$HOME/.config/hypr/hyprpaper.conf"
+CACHE_FILE="$HOME/.cache/current_wallpaper"
 
-# Получаем текущую обойну
-CURRENT=$(grep '^wallpaper' "$CONF" | cut -d',' -f2)
+# Создаем кеш-файл если его нет
+if [[ ! -f "$CACHE_FILE" ]]; then
+    echo "" > "$CACHE_FILE"
+fi
+
+# Получаем текущую обоину из кеша
+CURRENT=$(cat "$CACHE_FILE")
 
 # Получаем список всех .jpg и .png файлов, отсортированных
-readarray -t FILES < <(find "$WALLDIR" -type f \( -iname "*.jpg" -o -iname "*.png" \) | sort)
+readarray -t FILES < <(find "$WALLDIR" -type f \( -iname "*.jpg" -o -iname "*.png" -o -iname "*.jpeg" -o -iname "*.webp" \) | sort)
 
 # Если список пуст — выходим
 if [[ ${#FILES[@]} -eq 0 ]]; then
@@ -25,10 +30,10 @@ for i in "${!FILES[@]}"; do
     fi
 done
 
-# Перезаписываем конфиг
-echo "preload = $NEXT" > "$CONF"
-echo "wallpaper = ,$NEXT" >> "$CONF"
+# Сохраняем новую обоину в кеш
+echo "$NEXT" > "$CACHE_FILE"
 
-# Перезапускаем hyprpaper
-pkill hyprpaper
-hyprpaper -c "$CONF" &
+# Устанавливаем обоину через swww с переходом "grow" (кружок из центра) и 144 FPS
+swww img "$NEXT" --transition-type grow --transition-duration 1 --transition-fps 144
+
+echo "✅ Установлена обойка: $(basename "$NEXT")"
