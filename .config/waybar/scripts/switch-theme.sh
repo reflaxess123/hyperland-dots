@@ -145,7 +145,7 @@ window#waybar {
 }
 
 #workspaces button:hover {
-  background: rgba(100, 100, 100, 0.1);
+  background: rgba(100, 100, 100, 0);
 }
 
 #workspaces button.active {
