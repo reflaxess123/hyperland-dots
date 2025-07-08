@@ -13,14 +13,14 @@ start_redsocks() {
     sudo iptables -t nat -A REDSOCKS -p tcp -j REDIRECT --to-ports 12345
     sudo iptables -t nat -A OUTPUT -p tcp -m owner ! --uid-owner 0 -j REDSOCKS
     echo 1 > "$STATE_FILE"
-    notify-send "🧦 Прокси включен"
+    # notify-send "🧦 Прокси включен"
 }
 
 stop_redsocks() {
     sudo iptables -t nat -F
     sudo pkill redsocks
     echo 0 > "$STATE_FILE"
-    notify-send "🧦 Прокси отключен"
+    # notify-send "🧦 Прокси отключен"
 }
 
 # Проверяем состояние

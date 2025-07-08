@@ -77,3 +77,4 @@ copy-on-select = true
 
 keybind = shift+insert=paste_from_clipboard
 keybind = ctrl+insert=copy_to_clipboard
+keybind = shift+enter=text:\n
