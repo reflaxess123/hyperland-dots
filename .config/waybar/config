@@ -26,6 +26,7 @@
     "pulseaudio",
     "custom/mic-volume",
     "pulseaudio/slider",
+    "custom/theme-toggle",
     "clock",
     "custom/power"
   ],
@@ -130,5 +131,10 @@
     "signal": 8,
     "format": "{}",
     "tooltip": true
+  },
+  "custom/theme-toggle": {
+    "format": "🌙",
+    "on-click": "~/.config/waybar/scripts/switch-theme.sh",
+    "tooltip": "Toggle Theme"
   }
 }

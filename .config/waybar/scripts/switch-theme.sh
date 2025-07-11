@@ -305,11 +305,35 @@ if [ "$CURRENT_THEME" = "dark" ]; then
     # Switch to white
     generate_css WHITE_THEME
     echo "white" > "$STATE_FILE"
+    # Set GTK theme to light
+    gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita'
+    gsettings set org.gnome.desktop.interface color-scheme 'prefer-light'
+    
+    # Switch NeoVim to light theme
+    sed -i 's/theme = "onedark"/theme = "github_light"/' /home/crock/.config/nvim/lua/chadrc.lua
+    
+    # Switch Ghostty to light theme
+    sed -i 's/foreground = ffffff/foreground = 2c2c2c/' /home/crock/.config/ghostty/config
+    sed -i 's/background = 0d1117/background = ffffff/' /home/crock/.config/ghostty/config
+    sed -i 's/cursor-color = ff79c6/cursor-color = 0066cc/' /home/crock/.config/ghostty/config
+    
     echo "Switched to white theme"
 else
     # Switch to dark
     generate_css DARK_THEME
     echo "dark" > "$STATE_FILE"
+    # Set GTK theme to dark
+    gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
+    gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+    
+    # Switch NeoVim to dark theme
+    sed -i 's/theme = "github_light"/theme = "onedark"/' /home/crock/.config/nvim/lua/chadrc.lua
+    
+    # Switch Ghostty to dark theme
+    sed -i 's/foreground = 2c2c2c/foreground = ffffff/' /home/crock/.config/ghostty/config
+    sed -i 's/background = ffffff/background = 0d1117/' /home/crock/.config/ghostty/config
+    sed -i 's/cursor-color = 0066cc/cursor-color = ff79c6/' /home/crock/.config/ghostty/config
+    
     echo "Switched to dark theme"
 fi
 
