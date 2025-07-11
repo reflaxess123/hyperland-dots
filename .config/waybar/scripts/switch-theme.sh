@@ -317,6 +317,34 @@ if [ "$CURRENT_THEME" = "dark" ]; then
     sed -i 's/background = 0d1117/background = ffffff/' /home/crock/.config/ghostty/config
     sed -i 's/cursor-color = ff79c6/cursor-color = 0066cc/' /home/crock/.config/ghostty/config
     
+    # Update palette for light theme - darker colors for better contrast
+    sed -i 's/palette = 0=44475a/palette = 0=000000/' /home/crock/.config/ghostty/config
+    sed -i 's/palette = 1=ff5555/palette = 1=cc0000/' /home/crock/.config/ghostty/config
+    sed -i 's/palette = 2=50fa7b/palette = 2=006600/' /home/crock/.config/ghostty/config
+    sed -i 's/palette = 3=ffb86c/palette = 3=994400/' /home/crock/.config/ghostty/config
+    sed -i 's/palette = 4=8be9fd/palette = 4=0066cc/' /home/crock/.config/ghostty/config
+    sed -i 's/palette = 5=bd93f9/palette = 5=6600cc/' /home/crock/.config/ghostty/config
+    sed -i 's/palette = 6=ff79c6/palette = 6=006666/' /home/crock/.config/ghostty/config
+    sed -i 's/palette = 7=f8f8f2/palette = 7=999999/' /home/crock/.config/ghostty/config
+    sed -i 's/palette = 8=6272a4/palette = 8=333333/' /home/crock/.config/ghostty/config
+    sed -i 's/palette = 9=ff6e6e/palette = 9=ff0000/' /home/crock/.config/ghostty/config
+    sed -i 's/palette = 10=69ff94/palette = 10=008800/' /home/crock/.config/ghostty/config
+    sed -i 's/palette = 11=ffffa5/palette = 11=aa6600/' /home/crock/.config/ghostty/config
+    sed -i 's/palette = 12=d6acff/palette = 12=0088ff/' /home/crock/.config/ghostty/config
+    sed -i 's/palette = 13=ff92df/palette = 13=8800ff/' /home/crock/.config/ghostty/config
+    sed -i 's/palette = 14=a4ffff/palette = 14=008888/' /home/crock/.config/ghostty/config
+    sed -i 's/palette = 15=ffffff/palette = 15=333333/' /home/crock/.config/ghostty/config
+    
+    # Switch tmux to light theme
+    sed -i 's/tmux_conf_theme_colour_1="#080808"/tmux_conf_theme_colour_1="#f8f8f8"/' /home/crock/.tmux/.tmux.conf.local
+    sed -i 's/tmux_conf_theme_colour_2="#303030"/tmux_conf_theme_colour_2="#e0e0e0"/' /home/crock/.tmux/.tmux.conf.local
+    sed -i 's/tmux_conf_theme_colour_3="#8a8a8a"/tmux_conf_theme_colour_3="#666666"/' /home/crock/.tmux/.tmux.conf.local
+    sed -i 's/tmux_conf_theme_colour_4="#00afff"/tmux_conf_theme_colour_4="#0066cc"/' /home/crock/.tmux/.tmux.conf.local
+    sed -i 's/tmux_conf_theme_colour_5="#ffff00"/tmux_conf_theme_colour_5="#cc6600"/' /home/crock/.tmux/.tmux.conf.local
+    sed -i 's/tmux_conf_theme_colour_6="#080808"/tmux_conf_theme_colour_6="#f8f8f8"/' /home/crock/.tmux/.tmux.conf.local
+    sed -i 's/tmux_conf_theme_colour_7="#e4e4e4"/tmux_conf_theme_colour_7="#333333"/' /home/crock/.tmux/.tmux.conf.local
+    sed -i 's/tmux_conf_theme_colour_8="#080808"/tmux_conf_theme_colour_8="#f8f8f8"/' /home/crock/.tmux/.tmux.conf.local
+    
     echo "Switched to white theme"
 else
     # Switch to dark
@@ -334,9 +362,42 @@ else
     sed -i 's/background = ffffff/background = 0d1117/' /home/crock/.config/ghostty/config
     sed -i 's/cursor-color = 0066cc/cursor-color = ff79c6/' /home/crock/.config/ghostty/config
     
+    # Update palette for dark theme - bright colors for dark background
+    sed -i 's/palette = 0=000000/palette = 0=44475a/' /home/crock/.config/ghostty/config
+    sed -i 's/palette = 1=cc0000/palette = 1=ff5555/' /home/crock/.config/ghostty/config
+    sed -i 's/palette = 2=006600/palette = 2=50fa7b/' /home/crock/.config/ghostty/config
+    sed -i 's/palette = 3=994400/palette = 3=ffb86c/' /home/crock/.config/ghostty/config
+    sed -i 's/palette = 4=0066cc/palette = 4=8be9fd/' /home/crock/.config/ghostty/config
+    sed -i 's/palette = 5=6600cc/palette = 5=bd93f9/' /home/crock/.config/ghostty/config
+    sed -i 's/palette = 6=006666/palette = 6=ff79c6/' /home/crock/.config/ghostty/config
+    sed -i 's/palette = 7=999999/palette = 7=f8f8f2/' /home/crock/.config/ghostty/config
+    sed -i 's/palette = 8=333333/palette = 8=6272a4/' /home/crock/.config/ghostty/config
+    sed -i 's/palette = 9=ff0000/palette = 9=ff6e6e/' /home/crock/.config/ghostty/config
+    sed -i 's/palette = 10=008800/palette = 10=69ff94/' /home/crock/.config/ghostty/config
+    sed -i 's/palette = 11=aa6600/palette = 11=ffffa5/' /home/crock/.config/ghostty/config
+    sed -i 's/palette = 12=0088ff/palette = 12=d6acff/' /home/crock/.config/ghostty/config
+    sed -i 's/palette = 13=8800ff/palette = 13=ff92df/' /home/crock/.config/ghostty/config
+    sed -i 's/palette = 14=008888/palette = 14=a4ffff/' /home/crock/.config/ghostty/config
+    sed -i 's/palette = 15=333333/palette = 15=ffffff/' /home/crock/.config/ghostty/config
+    
+    # Switch tmux to dark theme
+    sed -i 's/tmux_conf_theme_colour_1="#f8f8f8"/tmux_conf_theme_colour_1="#080808"/' /home/crock/.tmux/.tmux.conf.local
+    sed -i 's/tmux_conf_theme_colour_2="#e0e0e0"/tmux_conf_theme_colour_2="#303030"/' /home/crock/.tmux/.tmux.conf.local
+    sed -i 's/tmux_conf_theme_colour_3="#666666"/tmux_conf_theme_colour_3="#8a8a8a"/' /home/crock/.tmux/.tmux.conf.local
+    sed -i 's/tmux_conf_theme_colour_4="#0066cc"/tmux_conf_theme_colour_4="#00afff"/' /home/crock/.tmux/.tmux.conf.local
+    sed -i 's/tmux_conf_theme_colour_5="#cc6600"/tmux_conf_theme_colour_5="#ffff00"/' /home/crock/.tmux/.tmux.conf.local
+    sed -i 's/tmux_conf_theme_colour_6="#f8f8f8"/tmux_conf_theme_colour_6="#080808"/' /home/crock/.tmux/.tmux.conf.local
+    sed -i 's/tmux_conf_theme_colour_7="#333333"/tmux_conf_theme_colour_7="#e4e4e4"/' /home/crock/.tmux/.tmux.conf.local
+    sed -i 's/tmux_conf_theme_colour_8="#f8f8f8"/tmux_conf_theme_colour_8="#080808"/' /home/crock/.tmux/.tmux.conf.local
+    
     echo "Switched to dark theme"
 fi
 
 # Restart waybar to apply changes with delay
 pkill waybar
 waybar &
+
+# Reload tmux config if tmux is running
+if pgrep tmux > /dev/null; then
+    tmux source-file ~/.tmux.conf 2>/dev/null || true
+fi
