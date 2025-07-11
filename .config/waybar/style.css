@@ -9,12 +9,12 @@
 
 window#waybar {
   background: rgba(26, 26, 26, 0);
-  color: #cad3f5;
+  color: #2c2c2c;
 }
 
 /* Левый блок */
 .modules-left {
-  background-color: #1d1d41;
+  background-color: #f0f0f0;
   border-radius: 25px;
   padding: 0 15px;
   border: none;
@@ -22,14 +22,14 @@ window#waybar {
 
 /* Правый блок */
 .modules-right {
-  background-color: #1d1d41;
+  background-color: #f0f0f0;
   border-radius: 25px;
   padding: 0 15px;
   border: none;
 }
 
 .modules-center {
-  background-color: #1d1d41;
+  background-color: #f0f0f0;
   border-radius: 25px;
   padding: 0 5px;
   border: none;
@@ -56,7 +56,7 @@ window#waybar {
 #language {
   padding: 10px 10px;
   margin: 0 2px;
-  color: #cad3f5;
+  color: #2c2c2c;
 }
 
 #workspaces {
@@ -67,7 +67,7 @@ window#waybar {
 
 #workspaces button {
   padding: 0 5px;
-  color: #cdd6f4;
+  color: #404040;
   transition: all 0.3s ease;
 }
 
@@ -76,48 +76,48 @@ window#waybar {
 }
 
 #workspaces button.active {
-  color: #89b4fa;
+  color: #0066cc;
 }
 
 #custom-launcher {
-  color: #89b4fa;
+  color: #0066cc;
   font-size: 16px;
   padding: 0 15px;
 }
 
 #custom-power {
-  color: #f38ba8;
+  color: #cc0000;
   font-size: 16px;
   padding: 0 15px;
 }
 
 /* Style for specific icons/modules that need it */
 #pulseaudio {
-  color: #89b4fa;
+  color: #0066cc;
 }
 
 #network {
-  color: #a6e3a1;
+  color: #009900;
 }
 
 #bluetooth {
-  color: #cba6f7;
+  color: #6600cc;
 }
 
 #cpu {
-  color: #fab387;
+  color: #cc6600;
 }
 
 #memory {
-  color: #f5c2e7;
+  color: #cc0066;
 }
 
 #disk {
-  color: #94e2d5;
+  color: #00cc99;
 }
 
 #clock {
-  color: #f9e2af;
+  color: #cc9900;
   font-weight: bold;
 }
 
@@ -137,33 +137,33 @@ window#waybar {
   min-height: 12px;
   min-width: 80px;
   border-radius: 5px;
-  background-color: #302d41;
+  background-color: #e0e0e0;
 }
 
 #pulseaudio-slider highlight {
   min-width: 12px;
   min-height: 12px;
   border-radius: 9999px;
-  background-color: #cad3f4;
+  background-color: #2c2c2c;
 }
 
 /* VPN индикатор */
 #custom-vpn {
-  color: #cdd6f4;
+  color: #404040;
   padding: 0 10px;
   font-weight: bold;
 }
 
 #custom-vpn.connected {
-  color: #a6e3a1;
+  color: #009900;
 }
 
 #custom-vpn.disconnected {
-  color: #f38ba8;
+  color: #cc0000;
 }
 
 #custom-vpn.connecting {
-  color: #f9e2af;
+  color: #cc9900;
   animation: pulse 2s infinite;
 }
 
@@ -183,11 +183,11 @@ window#waybar {
 
 #custom-cpu-temp,
 #custom-gpu-temp {
-  color: #f38ba8;
+  color: #cc0000;
 }
 
 #custom-fan {
-  color: #74c7ec;
+  color: #0099cc;
 }
 
 #tray {
@@ -199,7 +199,7 @@ window#waybar {
   padding: 0 10px;
   margin: 0 2px;
   border-radius: 6px;
-  color: #a6e3a1;
+  color: #009900;
   font-weight: bold;
 }
 
@@ -210,7 +210,7 @@ window#waybar {
 
 tooltip {
   border-radius: 15px;
-  background-color: #10102e;
-  color: #cad3f5;
-  border: none;
+  background-color: #f8f8f8;
+  color: #2c2c2c;
+  border: 1px solid #d0d0d0;
 }
