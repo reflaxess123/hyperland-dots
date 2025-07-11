@@ -67,6 +67,9 @@ alias ...='cd ../..'
 alias ....='cd ../../..'
 ~() { cd $HOME }
 
+# Tmux
+ta() { tmux attach -t "$@" }
+
 # Cleanup
 clean-node() { rm -rf node_modules }
 clean-logs() { rm -f *.log }
