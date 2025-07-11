@@ -38,7 +38,7 @@ myip() { curl ipinfo.io }
 # Git aliases
 alias gs='git status'
 gadd() { git add "$@" }
-gcommit() { git commit -m "$@" }
+gcom() { git commit -m "$@" }
 alias gp='git push'
 alias gl='git pull'
 alias gd='git diff'
