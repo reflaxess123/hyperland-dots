@@ -11,8 +11,8 @@
   "terminal.integrated.fontFamily": "jetbrainsmono nerd font",
   "workbench.tree.renderIndentGuides": "none",
   "files.exclude": {
-    "**/__*": true,
-    "**/.*": true,
+    // "**/__*": true,
+    // "**/.*": true,
     "**/.cursor": false,
     "**/.cursor/**": false,
     "**/.env": false
@@ -26,8 +26,6 @@
     ".monaco-editor .cursors-layer .cursor": "animation: pulse 1.5s infinite ease-in-out; background-image: linear-gradient(135deg, #ffaffc 10%, #DA70D6 100%)",
     "@keyframes pulse": "0% { transform: scaleY(0.2); opacity: 0.3; } 50% { transform: scaleY(1); opacity: 1; } 100% { transform: scaleY(0.2); opacity: 0.3; }"
   },
-  "vscode-neovim.revealOutputChannelOn": "never",
-  "vscode-neovim.logLevel": "warn",
-  "vscode-neovim.logOutputToConsole": false,
-  "vscode-neovim.neovimClean": false
+  "git.enableSmartCommit": true,
+  "workbench.colorTheme": "Jetbrains Fleet"
 }
