@@ -1,14 +1,17 @@
+// Place your key bindings in this file to override the defaults
 [
-    {
-        "key": "shift+enter",
-        "command": "workbench.action.terminal.sendSequence",
-        "args": {
-            "text": "\\\r\n"
-        },
-        "when": "terminalFocus"
-    },
-    {
-        "key": "ctrl+i",
-        "command": "composerMode.agent"
-    }
+  {
+    "key": "ctrl+i",
+    "command": "composerMode.agent"
+  },
+  {
+    "key": "ctrl+h",
+    "command": "workbench.action.focusSideBar",
+    "when": "neovim.mode == normal"
+  },
+  {
+    "key": "ctrl+k",
+    "command": "workbench.action.focusActiveEditorGroup",
+    "when": "neovim.mode == normal"
+  }
 ]
