@@ -10,29 +10,29 @@ window-height = 750
 
 window-decoration = false
 
-foreground = 2c2c2c
-background = ffffff
+foreground = ffffff
+background = 0d1117
 selection-foreground = 0d1117
 selection-background = ff6b6b
 
-cursor-color = 0066cc
+cursor-color = ff79c6
 
-palette = 0=000000
-palette = 1=cc0000
-palette = 2=006600
-palette = 3=994400
-palette = 4=0066cc
-palette = 5=6600cc
-palette = 6=006666
-palette = 7=999999
-palette = 8=333333
-palette = 9=ff0000
-palette = 10=008800
-palette = 11=aa6600
-palette = 12=0088ff
-palette = 13=8800ff
-palette = 14=008888
-palette = 15=333333
+palette = 0=44475a
+palette = 1=ff5555
+palette = 2=50fa7b
+palette = 3=ffb86c
+palette = 4=8be9fd
+palette = 5=bd93f9
+palette = 6=ff79c6
+palette = 7=f8f8f2
+palette = 8=6272a4
+palette = 9=ff6e6e
+palette = 10=69ff94
+palette = 11=ffffa5
+palette = 12=d6acff
+palette = 13=ff92df
+palette = 14=a4ffff
+palette = 15=ffffff
 
 scrollback-limit = 50000
 
