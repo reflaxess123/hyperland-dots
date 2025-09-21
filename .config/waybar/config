@@ -93,13 +93,13 @@
     "interval": 5
   },
   "custom/fan": {
-    "exec": "sensors asusec-isa-000a | grep 'Chipset:' | awk 'NR==1{print $2}'",
-    "format": "  {} RPM",
+    "exec": "sensors asusec-isa-000a | grep 'Chipset:' | awk 'NR==1{print $2}' | sed 's/RPM//'",
+    "format": "󰈐 {} RPM",
     "interval": 5
   },
   "memory": {
     "interval": 30,
-    "format": "  {}%",
+    "format": "󰍛 {}%",
     "max-length": 10
   },
   "disk": {
@@ -133,7 +133,7 @@
     "tooltip": true
   },
   "custom/theme-toggle": {
-    "format": "🌙",
+    "format": "󰖔",
     "on-click": "~/.config/waybar/scripts/switch-theme.sh",
     "tooltip": "Toggle Theme"
   }
