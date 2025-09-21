@@ -28,3 +28,4 @@
 !.config/alacritty/**
 !.config/wofi/**
 
+\!.config/scripts/**
