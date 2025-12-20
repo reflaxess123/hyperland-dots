@@ -75,6 +75,73 @@
 *   `restart_hyprland.sh`: Перезагружает Hyprland, Waybar, swaync и другие компоненты.
 *   `socks-toggle.sh`: Включает и выключает системный прокси с помощью `redsocks` и `iptables`.
 *   `wall-next.sh`: Устанавливает случайные обои из папки `~/wallpapers`.
+*   `gpu-fan-control.sh`: Управление вентиляторами NVIDIA GPU (см. раздел ниже).
+
+## NVIDIA GPU Fan Control на Wayland
+
+### Проблема
+
+На Wayland (Hyprland) нельзя управлять вентиляторами GPU через `nvidia-settings`, потому что:
+1. `nvidia-settings` требует X сервер с расширением NV-CONTROL
+2. XWayland не подходит — он не читает `xorg.conf` и не имеет доступа к Coolbits
+3. Xvfb (виртуальный framebuffer) не работает с реальным GPU
+4. Когда Hyprland запущен, он захватывает GPU через DRM и X сервер не может получить modesetting
+
+### Решение
+
+Systemd сервис который запускается **ДО** display manager:
+1. Поднимает временный X сервер на `:99` с nvidia драйвером и Coolbits
+2. Настраивает вентиляторы через `nvidia-settings`
+3. Убивает X сервер — настройки вентиляторов сохраняются!
+4. Hyprland запускается и работает нормально
+
+### Установка
+
+```bash
+# Запустить скрипт установки
+./scripts/setup-gpu-fan.sh
+
+# Перезагрузиться
+reboot
+```
+
+### Что создаёт скрипт
+
+| Файл | Описание |
+|------|----------|
+| `/etc/X11/xorg.conf.d/20-nvidia.conf` | Xorg конфиг с Coolbits=4 и BusID видеокарты |
+| `/usr/local/bin/gpu-fan-setup.sh` | Скрипт настройки вентиляторов |
+| `/etc/systemd/system/gpu-fan.service` | Systemd сервис |
+
+### Проверка
+
+```bash
+# Логи
+cat /var/log/gpu-fan.log
+
+# Текущая скорость
+nvidia-smi --query-gpu=fan.speed --format=csv
+```
+
+### Изменение скорости вентиляторов
+
+```bash
+# Отредактировать сервис
+sudo nano /etc/systemd/system/gpu-fan.service
+
+# Изменить значение GPU_FAN_SPEED (по умолчанию 62)
+Environment="GPU_FAN_SPEED=70"
+
+# Применить
+sudo systemctl daemon-reload
+sudo systemctl restart gpu-fan
+```
+
+### Требования
+
+- `nvidia-settings`
+- `xorg-server` (не xvfb!)
+- NVIDIA GPU с проприетарным драйвером
 
 ## Конфигурация
 

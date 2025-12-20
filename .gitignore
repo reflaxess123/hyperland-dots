@@ -27,5 +27,11 @@
 !.config/gtk-4.0/**
 !.config/alacritty/**
 !.config/wofi/**
+!.config/scripts/**
 
-\!.config/scripts/**
+# Скрипты установки
+!scripts/
+!scripts/**
+
+# README
+!README.md

@@ -103,6 +103,10 @@ install_pacman_packages() {
         kitty
         alacritty
         neofetch
+
+        # NVIDIA GPU Fan Control
+        nvidia-settings
+        xorg-server
     )
 
     sudo pacman -S --needed --noconfirm "${packages[@]}" || log_warn "Некоторые пакеты не найдены в pacman"
@@ -216,7 +220,99 @@ EOF
 }
 
 # ==========================================
-# 6. Установка Oh-My-Zsh и Powerlevel10k
+# 6. Настройка NVIDIA GPU Fan Control
+# ==========================================
+setup_gpu_fan() {
+    log_info "Настройка GPU Fan Control..."
+
+    # Проверка nvidia
+    if ! lspci | grep -qi nvidia; then
+        log_warn "NVIDIA GPU не найден, пропускаем настройку вентиляторов"
+        return
+    fi
+
+    # Получаем BusID видеокарты
+    local BUS_ID=$(lspci | grep -i 'vga.*nvidia' | awk '{print $1}' | head -1)
+    if [[ -z "$BUS_ID" ]]; then
+        BUS_ID=$(lspci | grep -i nvidia | awk '{print $1}' | head -1)
+    fi
+
+    # Конвертируем BusID в формат для xorg (09:00.0 -> PCI:9:0:0)
+    local BUS_ID_XORG=$(echo "$BUS_ID" | awk -F'[:.]' '{printf "PCI:%d:%d:%d", "0x"$1, "0x"$2, $3}')
+    log_info "NVIDIA GPU: $BUS_ID -> $BUS_ID_XORG"
+
+    # Создаём xorg.conf с Coolbits
+    sudo mkdir -p /etc/X11/xorg.conf.d
+    sudo tee /etc/X11/xorg.conf.d/20-nvidia.conf > /dev/null << EOF
+Section "Device"
+    Identifier     "Device0"
+    Driver         "nvidia"
+    VendorName     "NVIDIA Corporation"
+    BusID          "$BUS_ID_XORG"
+    Option         "Coolbits" "4"
+    Option         "AllowEmptyInitialConfiguration" "True"
+EndSection
+
+Section "Screen"
+    Identifier     "Screen0"
+    Device         "Device0"
+EndSection
+EOF
+
+    # Создаём скрипт настройки вентиляторов
+    sudo tee /usr/local/bin/gpu-fan-setup.sh > /dev/null << 'SCRIPT'
+#!/bin/bash
+LOG="/var/log/gpu-fan.log"
+FAN_SPEED="${GPU_FAN_SPEED:-62}"
+
+echo "[$(date)] Starting GPU fan setup (target: ${FAN_SPEED}%)..." >> $LOG
+
+X :99 -config /etc/X11/xorg.conf.d/20-nvidia.conf -sharevts -noreset &
+XPID=$!
+sleep 3
+
+if kill -0 $XPID 2>/dev/null; then
+    echo "[$(date)] X server started on :99" >> $LOG
+    DISPLAY=:99 nvidia-settings -a "[gpu:0]/GPUFanControlState=1" >> $LOG 2>&1
+    DISPLAY=:99 nvidia-settings -a "[fan:0]/GPUTargetFanSpeed=$FAN_SPEED" >> $LOG 2>&1
+    DISPLAY=:99 nvidia-settings -a "[fan:1]/GPUTargetFanSpeed=$FAN_SPEED" >> $LOG 2>&1
+    SPEED=$(DISPLAY=:99 nvidia-settings -q "[fan:0]/GPUTargetFanSpeed" -t 2>/dev/null)
+    echo "[$(date)] Fan speed set to: ${SPEED}%" >> $LOG
+    kill $XPID 2>/dev/null
+    echo "[$(date)] X server stopped, fan settings preserved" >> $LOG
+else
+    echo "[$(date)] ERROR: Failed to start X server" >> $LOG
+    exit 1
+fi
+SCRIPT
+
+    sudo chmod +x /usr/local/bin/gpu-fan-setup.sh
+
+    # Создаём systemd сервис
+    sudo tee /etc/systemd/system/gpu-fan.service > /dev/null << 'SERVICE'
+[Unit]
+Description=NVIDIA GPU Fan Control
+Before=display-manager.service
+After=nvidia-persistenced.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/gpu-fan-setup.sh
+RemainAfterExit=yes
+Environment="GPU_FAN_SPEED=62"
+
+[Install]
+WantedBy=multi-user.target
+SERVICE
+
+    sudo systemctl daemon-reload
+    sudo systemctl enable gpu-fan.service
+
+    log_info "GPU Fan Control настроен (62% при загрузке)"
+}
+
+# ==========================================
+# 7. Установка Oh-My-Zsh и Powerlevel10k
 # ==========================================
 install_ohmyzsh() {
     log_info "Установка Oh-My-Zsh..."
@@ -359,6 +455,7 @@ main() {
     install_aur_packages
     install_fonts
     setup_redsocks
+    setup_gpu_fan
     install_ohmyzsh
     install_tpm
     copy_configs
@@ -372,10 +469,11 @@ main() {
     echo "=========================================="
     echo ""
     echo "Следующие шаги:"
-    echo "  1. Перелогинься для применения zsh"
+    echo "  1. ПЕРЕЗАГРУЗИСЬ для применения GPU fan control и zsh"
     echo "  2. Запусти nvim для установки плагинов"
-    echo "  3. В tmux нажми prefix + I для установки плагинов"
-    echo "  4. Для VPN: sudo vpn-on.sh / sudo vpn-off.sh"
+    echo "  3. В tmux нажми Ctrl+a затем I для установки плагинов"
+    echo "  4. VPN toggle: Alt+I"
+    echo "  5. Проверь вентиляторы: nvidia-smi --query-gpu=fan.speed --format=csv"
     echo ""
 }
 
