@@ -1,88 +1,382 @@
 #!/bin/bash
 
-# Скрипт для восстановления конфигурации
-# Удаляет старые файлы/папки из ~ и копирует их из текущей директории
+# Скрипт для полного восстановления системы
+# Устанавливает весь необходимый софт и конфиги
 
-set -e  # Останавливаться при ошибках
+set -e
 
-echo "🔄 Начинаю восстановление конфигурации..."
+echo "=========================================="
+echo "  Hyprland Dotfiles Restore Script"
+echo "=========================================="
 
-# Список файлов и папок для восстановления
-FILES_AND_DIRS=(
-    ".zshrc"
-    ".tmux.conf"
-    ".p10k.zsh"
-    "sync-git.sh"
-    ".config/nvim"
-    ".config/hypr"
-    ".config/waybar"
-    ".config/kitty"
-    ".config/ghostty"
-    ".config/rofi"
-    ".config/swaync"
-    ".config/swaykbdd"
-    ".config/neofetch"
-    ".config/scripts"
-    ".config/Cursor/User/keybindings.json"
-    ".config/Cursor/User/settings.json"
-    ".config/gtk-3.0"
-    ".config/gtk-4.0"
-    ".config/alacritty"
-    ".config/wofi"
-)
+# Цвета
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m'
 
-# Функция для удаления файлов/папок из домашней директории
-remove_from_home() {
-    local item="$1"
-    local home_path="$HOME/$item"
-    
-    if [[ -e "$home_path" ]]; then
-        echo "🗑️  Удаляю: $home_path"
-        rm -rf "$home_path"
-    else
-        echo "ℹ️  Не найден: $home_path"
+log_info() { echo -e "${GREEN}[INFO]${NC} $1"; }
+log_warn() { echo -e "${YELLOW}[WARN]${NC} $1"; }
+log_error() { echo -e "${RED}[ERROR]${NC} $1"; }
+
+# Проверка root
+if [[ $EUID -eq 0 ]]; then
+    log_error "Не запускай от root! Используй обычного пользователя."
+    exit 1
+fi
+
+# ==========================================
+# 1. Установка yay (AUR helper)
+# ==========================================
+install_yay() {
+    log_info "Установка yay..."
+    if command -v yay &> /dev/null; then
+        log_info "yay уже установлен"
+        return
     fi
+
+    sudo pacman -S --needed --noconfirm git base-devel
+    cd /tmp
+    rm -rf yay
+    git clone https://aur.archlinux.org/yay.git
+    cd yay
+    makepkg -si --noconfirm
+    cd ~
+    log_info "yay установлен"
 }
 
-# Функция для копирования файлов/папок в домашнюю директорию
-copy_to_home() {
-    local item="$1"
-    local current_path="./$item"
-    local home_path="$HOME/$item"
-    
-    if [[ -e "$current_path" ]]; then
-        # Создаём родительскую директорию, если нужно
-        local parent_dir=$(dirname "$home_path")
-        if [[ ! -d "$parent_dir" ]]; then
-            echo "📁 Создаю директорию: $parent_dir"
-            mkdir -p "$parent_dir"
+# ==========================================
+# 2. Установка пакетов из pacman
+# ==========================================
+install_pacman_packages() {
+    log_info "Установка pacman пакетов..."
+
+    local packages=(
+        # Базовые
+        git
+        base-devel
+
+        # Shell
+        zsh
+        zsh-autosuggestions
+        zsh-syntax-highlighting
+
+        # Терминальные утилиты
+        neovim
+        tmux
+        bat
+        eza
+        fd
+        fzf
+        ripgrep
+        yazi
+        lazygit
+        htop
+        curl
+        wget
+        unzip
+
+        # Wayland/Hyprland
+        hyprland
+        waybar
+        wofi
+        swaync
+        swww
+        hyprshot
+        wl-clipboard
+        cliphist
+        udiskie
+        network-manager-applet
+        pavucontrol
+        nautilus
+
+        # Dev tools
+        npm
+        python
+        python-pip
+        python-poetry
+        docker
+        docker-compose
+
+        # Misc
+        ghostty
+        kitty
+        alacritty
+        neofetch
+    )
+
+    sudo pacman -S --needed --noconfirm "${packages[@]}" || log_warn "Некоторые пакеты не найдены в pacman"
+    log_info "pacman пакеты установлены"
+}
+
+# ==========================================
+# 3. Установка AUR пакетов
+# ==========================================
+install_aur_packages() {
+    log_info "Установка AUR пакетов..."
+
+    local aur_packages=(
+        google-chrome
+        brave-bin
+        telegram-desktop
+        redsocks
+        mission-center
+    )
+
+    for pkg in "${aur_packages[@]}"; do
+        if ! yay -Qi "$pkg" &> /dev/null; then
+            log_info "Установка $pkg..."
+            yay -S --noconfirm "$pkg" || log_warn "Не удалось установить $pkg"
+        else
+            log_info "$pkg уже установлен"
         fi
-        
-        echo "📋 Копирую: $current_path -> $home_path"
-        cp -r "$current_path" "$home_path"
+    done
+
+    log_info "AUR пакеты установлены"
+}
+
+# ==========================================
+# 4. Установка шрифтов
+# ==========================================
+install_fonts() {
+    log_info "Установка шрифтов..."
+
+    # Maple Mono NF CN
+    if ! fc-list | grep -qi "maple"; then
+        log_info "Установка Maple Mono NF CN..."
+        yay -S --noconfirm ttf-maple || {
+            log_warn "ttf-maple не найден в AUR, скачиваю вручную..."
+            mkdir -p ~/.local/share/fonts
+            cd /tmp
+            curl -LO https://github.com/subframe7536/maple-font/releases/latest/download/MapleMono-NF-CN.zip
+            unzip -o MapleMono-NF-CN.zip -d ~/.local/share/fonts/
+            fc-cache -fv
+        }
     else
-        echo "⚠️  Не найден в текущей директории: $current_path"
+        log_info "Maple Mono уже установлен"
+    fi
+
+    # Playpen Sans
+    if ! fc-list | grep -qi "playpen"; then
+        log_info "Установка Playpen Sans..."
+        mkdir -p ~/.local/share/fonts
+        cd /tmp
+        curl -LO "https://github.com/nickshanks/Playpen-Sans/releases/latest/download/PlaypenSans.zip" 2>/dev/null || \
+        curl -LO "https://fonts.google.com/download?family=Playpen%20Sans" -o PlaypenSans.zip 2>/dev/null || {
+            log_warn "Скачиваю Playpen Sans с Google Fonts..."
+            curl -L "https://fonts.google.com/download?family=Playpen%20Sans" -o PlaypenSans.zip
+        }
+        unzip -o PlaypenSans.zip -d ~/.local/share/fonts/ 2>/dev/null || true
+        fc-cache -fv
+    else
+        log_info "Playpen Sans уже установлен"
+    fi
+
+    # Nerd Fonts (дополнительно)
+    sudo pacman -S --needed --noconfirm ttf-jetbrains-mono-nerd ttf-firacode-nerd 2>/dev/null || true
+
+    log_info "Шрифты установлены"
+}
+
+# ==========================================
+# 5. Настройка redsocks
+# ==========================================
+setup_redsocks() {
+    log_info "Настройка redsocks..."
+
+    # Конфиг redsocks
+    sudo tee /etc/redsocks.conf > /dev/null << 'EOF'
+base {
+    log_debug = off;
+    log_info = on;
+    log = "syslog:daemon";
+    daemon = on;
+    redirector = iptables;
+}
+
+redsocks {
+    local_ip = 127.0.0.1;
+    local_port = 12345;
+
+    ip = 78.40.193.120;
+    port = 46764;
+    type = socks5;
+}
+EOF
+
+    # Sudoers для скрипта socks-toggle.sh (iptables, redsocks, pkill)
+    sudo tee /etc/sudoers.d/redsocks > /dev/null << EOF
+$USER ALL=(ALL) NOPASSWD: /usr/bin/iptables
+$USER ALL=(ALL) NOPASSWD: /usr/bin/redsocks
+$USER ALL=(ALL) NOPASSWD: /usr/bin/pkill redsocks
+EOF
+    sudo chmod 440 /etc/sudoers.d/redsocks
+
+    log_info "redsocks настроен (используй Alt+I для toggle)"
+}
+
+# ==========================================
+# 6. Установка Oh-My-Zsh и Powerlevel10k
+# ==========================================
+install_ohmyzsh() {
+    log_info "Установка Oh-My-Zsh..."
+
+    if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
+        RUNZSH=no KEEP_ZSHRC=yes sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    else
+        log_info "Oh-My-Zsh уже установлен"
+    fi
+
+    # Powerlevel10k
+    local p10k_dir="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k"
+    if [[ ! -d "$p10k_dir" ]]; then
+        log_info "Установка Powerlevel10k..."
+        git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$p10k_dir"
+    else
+        log_info "Powerlevel10k уже установлен"
+    fi
+
+    log_info "Oh-My-Zsh настроен"
+}
+
+# ==========================================
+# 7. Установка TPM (Tmux Plugin Manager)
+# ==========================================
+install_tpm() {
+    log_info "Установка TPM..."
+
+    if [[ ! -d "$HOME/.tmux/plugins/tpm" ]]; then
+        git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+    else
+        log_info "TPM уже установлен"
+    fi
+
+    # Установка плагинов
+    ~/.tmux/plugins/tpm/bin/install_plugins 2>/dev/null || true
+
+    log_info "TPM настроен"
+}
+
+# ==========================================
+# 8. Установка NvChad
+# ==========================================
+install_nvchad() {
+    log_info "Установка NvChad..."
+
+    # Бэкап старого конфига
+    if [[ -d "$HOME/.config/nvim" ]]; then
+        log_info "Бэкап старого nvim конфига..."
+        rm -rf "$HOME/.config/nvim.bak"
+        mv "$HOME/.config/nvim" "$HOME/.config/nvim.bak"
+    fi
+
+    # Удаляем кэш
+    rm -rf ~/.local/share/nvim
+    rm -rf ~/.local/state/nvim
+    rm -rf ~/.cache/nvim
+
+    # Клонируем кастомный NvChad конфиг
+    log_info "Клонирование кастомного NvChad конфига..."
+    git clone https://github.com/reflaxess123/nvchad3 ~/.config/nvim
+
+    log_info "NvChad установлен. Запусти nvim для завершения установки плагинов."
+}
+
+# ==========================================
+# 9. Копирование конфигов
+# ==========================================
+copy_configs() {
+    log_info "Копирование конфигов..."
+
+    local SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+    local items=(
+        ".zshrc"
+        ".tmux.conf"
+        ".p10k.zsh"
+        ".config/hypr"
+        ".config/waybar"
+        ".config/ghostty"
+        ".config/kitty"
+        ".config/alacritty"
+        ".config/wofi"
+        ".config/swaync"
+        ".config/swaykbdd"
+        ".config/neofetch"
+        ".config/scripts"
+        ".config/Cursor"
+    )
+
+    for item in "${items[@]}"; do
+        local src="$SCRIPT_DIR/$item"
+        local dest="$HOME/$item"
+
+        if [[ -e "$src" ]]; then
+            local parent_dir=$(dirname "$dest")
+            mkdir -p "$parent_dir"
+            rm -rf "$dest"
+            cp -r "$src" "$dest"
+            log_info "Скопировано: $item"
+        fi
+    done
+
+    log_info "Конфиги скопированы"
+}
+
+# ==========================================
+# 10. Делаем скрипты исполняемыми
+# ==========================================
+make_scripts_executable() {
+    log_info "Делаем скрипты исполняемыми..."
+
+    chmod +x ~/.config/hypr/scripts/*.sh 2>/dev/null || true
+    chmod +x ~/.config/waybar/scripts/*.sh 2>/dev/null || true
+    chmod +x ~/.config/scripts/*.sh 2>/dev/null || true
+
+    log_info "Скрипты готовы"
+}
+
+# ==========================================
+# 11. Установка zsh по умолчанию
+# ==========================================
+set_default_shell() {
+    log_info "Установка zsh как shell по умолчанию..."
+
+    if [[ "$SHELL" != *"zsh"* ]]; then
+        chsh -s $(which zsh)
+        log_info "zsh установлен по умолчанию. Перелогинься для применения."
+    else
+        log_info "zsh уже установлен по умолчанию"
     fi
 }
 
-# Этап 1: Удаление старых файлов/папок
-echo ""
-echo "🗑️  Этап 1: Удаление старых файлов/папок из домашней директории"
-echo "================================================"
+# ==========================================
+# MAIN
+# ==========================================
+main() {
+    install_yay
+    install_pacman_packages
+    install_aur_packages
+    install_fonts
+    setup_redsocks
+    install_ohmyzsh
+    install_tpm
+    copy_configs
+    make_scripts_executable
+    install_nvchad
+    set_default_shell
 
-for item in "${FILES_AND_DIRS[@]}"; do
-    remove_from_home "$item"
-done
+    echo ""
+    echo "=========================================="
+    echo -e "${GREEN}  Установка завершена!${NC}"
+    echo "=========================================="
+    echo ""
+    echo "Следующие шаги:"
+    echo "  1. Перелогинься для применения zsh"
+    echo "  2. Запусти nvim для установки плагинов"
+    echo "  3. В tmux нажми prefix + I для установки плагинов"
+    echo "  4. Для VPN: sudo vpn-on.sh / sudo vpn-off.sh"
+    echo ""
+}
 
-# Этап 2: Копирование новых файлов/папок
-echo ""
-echo "📋 Этап 2: Копирование файлов/папок из текущей директории"
-echo "================================================"
-
-for item in "${FILES_AND_DIRS[@]}"; do
-    copy_to_home "$item"
-done
-
-echo ""
-echo "✅ Восстановление конфигурации завершено!"
-echo "💡 Возможно, потребуется перезапустить некоторые приложения для применения изменений." 
+main "$@"

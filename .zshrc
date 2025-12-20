@@ -3,8 +3,11 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="powerlevel10k/powerlevel10k"
-plugins=(git zsh-syntax-highlighting zsh-autosuggestions fzf z docker history)
+plugins=(git fzf z docker history)
 source $ZSH/oh-my-zsh.sh
+# Arch plugins (НЕ oh-my-zsh)
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # Basic exports
 export PATH="/sbin:$HOME/.local/bin:$PATH"
 export EDITOR='nvim'
