@@ -1,0 +1,80 @@
+/* Catppuccin Mocha theme for wallpaper selector */
+
+* {
+    bg: #1e1e2e;
+    bg-alt: #313244;
+    fg: #cdd6f4;
+    accent: #cba6f7;
+    accent-alt: #f5c2e7;
+    urgent: #f38ba8;
+
+    background-color: transparent;
+    text-color: @fg;
+    font: "MapleMono NF CN 11";
+}
+
+window {
+    background-color: @bg;
+    border: 3px solid;
+    border-color: @accent;
+    border-radius: 16px;
+    padding: 20px;
+    width: 900px;
+    height: 700px;
+}
+
+mainbox {
+    spacing: 15px;
+    children: [inputbar, listview];
+}
+
+inputbar {
+    background-color: @bg-alt;
+    border-radius: 10px;
+    padding: 12px;
+    spacing: 10px;
+    children: [prompt, entry];
+}
+
+prompt {
+    text-color: @accent;
+    font: "MapleMono NF CN Bold 12";
+}
+
+entry {
+    placeholder: "Search...";
+    placeholder-color: #6c7086;
+}
+
+listview {
+    columns: 4;
+    lines: 4;
+    spacing: 15px;
+    fixed-columns: true;
+    fixed-height: true;
+}
+
+element {
+    orientation: vertical;
+    background-color: @bg-alt;
+    border-radius: 12px;
+    padding: 10px;
+    spacing: 8px;
+    cursor: pointer;
+}
+
+element selected {
+    background-color: @accent;
+    text-color: @bg;
+}
+
+element-icon {
+    size: 140px;
+    horizontal-align: 0.5;
+    border-radius: 8px;
+}
+
+element-text {
+    horizontal-align: 0.5;
+    font: "MapleMono NF CN 9";
+}

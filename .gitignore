@@ -26,7 +26,6 @@
 !.config/gtk-3.0/**
 !.config/gtk-4.0/**
 !.config/alacritty/**
-!.config/wofi/**
 !.config/scripts/**
 !.config/sing-box/**
 

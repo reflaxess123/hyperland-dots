@@ -1,0 +1,97 @@
+/* Catppuccin Mocha - Application Launcher */
+
+* {
+    bg: #1e1e2e;
+    bg-alt: #313244;
+    bg-hover: #45475a;
+    fg: #cdd6f4;
+    fg-alt: #a6adc8;
+    accent: #89b4fa;
+    accent-alt: #b4befe;
+    urgent: #f38ba8;
+
+    background-color: transparent;
+    text-color: @fg;
+    font: "MapleMono NF CN 12";
+}
+
+window {
+    background-color: @bg;
+    border: 3px solid;
+    border-color: @accent;
+    border-radius: 16px;
+    padding: 20px;
+    width: 650px;
+    height: 450px;
+}
+
+mainbox {
+    spacing: 15px;
+    children: [inputbar, listview];
+}
+
+inputbar {
+    background-color: @bg-alt;
+    border-radius: 12px;
+    padding: 12px 15px;
+    spacing: 12px;
+    children: [prompt, entry];
+}
+
+prompt {
+    text-color: @accent;
+    font: "MapleMono NF CN Bold 14";
+}
+
+entry {
+    placeholder: "Search apps...";
+    placeholder-color: #6c7086;
+}
+
+listview {
+    columns: 1;
+    lines: 8;
+    spacing: 8px;
+    scrollbar: false;
+}
+
+element {
+    background-color: transparent;
+    border-radius: 10px;
+    padding: 10px 15px;
+    spacing: 15px;
+    cursor: pointer;
+}
+
+element normal.normal {
+    background-color: transparent;
+}
+
+element selected.normal {
+    background-color: @accent;
+    text-color: @bg;
+}
+
+element alternate.normal {
+    background-color: transparent;
+}
+
+element-icon {
+    size: 36px;
+    vertical-align: 0.5;
+}
+
+element-text {
+    vertical-align: 0.5;
+    font: "MapleMono NF CN 12";
+}
+
+element selected element-text {
+    text-color: @bg;
+}
+
+scrollbar {
+    handle-color: @accent;
+    handle-width: 5px;
+    border-radius: 5px;
+}

@@ -47,17 +47,17 @@
   },
   "hyprland/language": {
     "format": "{short}",
-    "format-en": "🇺🇸 US",
-    "format-ru": "🇷🇺 RU"
+    "format-en": " US",
+    "format-ru": " RU"
   },
   "pulseaudio": {
     "tooltip": false,
     "scroll-step": 5,
-    "format": "🔊 {volume}%",
-    "format-muted": "🔇 {volume}%",
+    "format": "󰕾 {volume}%",
+    "format-muted": "󰖁 {volume}%",
     "on-click": "pavucontrol",
     "format-icons": {
-      "default": ["🔈", "🔉", "🔊"]
+      "default": ["󰕿", "󰖀", "󰕾"]
     }
   },
   "pulseaudio/slider": {
@@ -67,18 +67,18 @@
     "expand": false
   },
   "network": {
-    "format-wifi": "📶 {essid}",
-    "format-ethernet": "🌐 Connected",
+    "format-wifi": "󰤨 {essid}",
+    "format-ethernet": "󰈀 Connected",
     "tooltip-format": "{essid} ({signalStrength}%)",
     "format-linked": "{ifname} (No IP)",
-    "format-disconnected": "❌ Disconnected",
+    "format-disconnected": "󰤭 Disconnected",
     "format-alt": "{ifname}: {ipaddr}/{cidr}"
   },
   "bluetooth": {
-    "format": "🔵 {status}",
+    "format": "󰂯 {status}",
     "on-click": "blueman-manager",
     "format-disabled": "",
-    "format-connected": "🔵 {num_connections} connected",
+    "format-connected": "󰂱 {num_connections}",
     "format-no-controller": "",
     "tooltip-format": "{controller_alias} {controller_address}"
   },
@@ -87,65 +87,59 @@
     "spacing": 10
   },
   "clock": {
-    "format": "{:%d.%m.%Y   %H:%M}",
+    "format": "󰃰 {:%d.%m.%Y   %H:%M}",
     "tooltip-format": "<big>{:%Y %B}</big>\n<tt>{calendar}</tt>"
   },
   "cpu": {
     "interval": 15,
-    "format": "🖥️ {}%",
+    "format": "󰻠 {}%",
     "max-length": 10
   },
   "custom/cpu-temp": {
     "exec": "sensors k10temp-pci-00c3 | grep 'Tctl:' | awk '{print $2}' | sed 's/+//;s/°C//'",
-    "format": "🌡️ {}°C",
+    "format": "󰔏 {}°C",
     "interval": 5
   },
   "custom/gpu-temp": {
     "exec": "nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader,nounits",
-    "format": "🎮 {}°C",
+    "format": "󰢮 {}°C",
     "interval": 5
   },
   "custom/gpu-fan": {
     "exec": "nvidia-smi --query-gpu=fan.speed --format=csv,noheader,nounits",
-    "format": "🌀 {}%",
+    "format": "󰈐 {}%",
     "interval": 5,
     "tooltip": true,
     "tooltip-format": "GPU Fan Speed"
   },
   "custom/gpu-vram": {
     "exec": "nvidia-smi --query-gpu=memory.used,memory.total --format=csv,noheader,nounits | awk -F', ' '{printf \"%.1f/%.1fG\", $1/1024, $2/1024}'",
-    "format": "🎞️ {}",
+    "format": "󰍛 {}",
     "interval": 5,
     "tooltip": true,
     "tooltip-format": "GPU VRAM Usage"
   },
   "custom/fan": {
     "exec": "sensors asusec-isa-000a | grep 'Chipset:' | awk 'NR==1{print $2}' | sed 's/RPM//'",
-    "format": "💨 {} RPM",
+    "format": "󰈐 {} RPM",
     "interval": 5
   },
   "memory": {
     "interval": 30,
-    "format": "🧠 {}%",
+    "format": "󰘚 {}%",
     "max-length": 10
   },
   "disk": {
     "interval": 30,
-    "format": "💾 {percentage_used}%",
+    "format": "󰋊 {percentage_used}%",
     "path": "/"
   },
-  "custom/launcher": {
-    "format": "⚡",
-    "on-click": "rofi -show drun",
-    "on-click-right": "killall rofi",
-    "tooltip": "Меню приложений"
-  },
   "custom/power": {
-    "format": "🔌",
+    "format": "󰐥",
     "on-click": "bash ~/.config/waybar/scripts/leave.sh",
-    "tooltip": "Меню выключения"
+    "tooltip": "Power Menu"
   },
-    "hyprland/workspaces": {
+  "hyprland/workspaces": {
     "format": "{name}",
     "on-scroll-up": "hyprctl dispatch workspace e+1",
     "on-scroll-down": "hyprctl dispatch workspace e-1",
@@ -167,10 +161,5 @@
     "on-click": "~/.config/hypr/scripts/singbox-toggle.sh",
     "format": "{}",
     "tooltip": true
-  },
-  "custom/theme-toggle": {
-    "format": "🎨",
-    "on-click": "~/.config/waybar/scripts/switch-theme.sh",
-    "tooltip": "Toggle Theme"
   }
 }
