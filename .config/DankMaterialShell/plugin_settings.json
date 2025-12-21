@@ -21,8 +21,8 @@
       {
         "icon": "language",
         "displayText": "",
-        "displayCommand": "hyprctl devices -j | jq -r '.keyboards[] | select(.main == true) | .active_keymap' | head -c 2 | tr '[:lower:]' '[:upper:]'",
-        "clickCommand": "hyprctl switchxkblayout all next",
+        "displayCommand": "~/.config/hypr/scripts/get-keyboard-layout.sh",
+        "clickCommand": "~/.config/hypr/scripts/switch-keyboard-layout.sh",
         "middleClickCommand": "",
         "rightClickCommand": "",
         "updateInterval": 1,

@@ -28,6 +28,7 @@
 !.config/scripts/**
 !.config/sing-box/**
 !.config/DankMaterialShell/**
+!.config/niri/**
 
 # Скрипты установки
 !scripts/
