@@ -1,31 +1,95 @@
-
 #!/bin/bash
 
-# Start virtual X server if not running
-DISPLAY_NUM=99
-XVFB_DISPLAY=":$DISPLAY_NUM"
+# GPU Fan Control Script with Dynamic Fan Curve
+# Использует XWayland для управления вентиляторами в Hyprland
+#
+# Требования:
+# - nvidia-settings
+# - xorg-xhost
+# - sudoers правило: vasya ALL=(ALL) NOPASSWD: /usr/bin/nvidia-settings
+#
+# Запуск: exec-once в hyprland.conf
 
-# Check if Xvfb is running on our display
-if ! pgrep -f "Xvfb $XVFB_DISPLAY" > /dev/null; then
-    echo "Starting virtual X server..."
-    Xvfb $XVFB_DISPLAY -screen 0 1024x768x24 2>/dev/null &
-    XVFB_PID=$!
-    sleep 2
+LOG_FILE="$HOME/.local/share/gpu-fan.log"
+INTERVAL=5  # Интервал проверки температуры (секунды)
 
-    # Check if Xvfb started successfully
-    if ! kill -0 $XVFB_PID 2>/dev/null; then
-        echo "Failed to start Xvfb"
-        exit 1
+# Кривая вентилятора: температура -> скорость
+TEMP_MIN=35   # При этой температуре и ниже - минимальная скорость
+TEMP_MAX=85   # При этой температуре и выше - максимальная скорость
+FAN_MIN=40    # Минимальная скорость вентилятора (%)
+FAN_MAX=100   # Максимальная скорость вентилятора (%)
+
+# Убедимся что DISPLAY установлен
+export DISPLAY="${DISPLAY:-:0}"
+
+mkdir -p "$(dirname "$LOG_FILE")"
+
+log() {
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1" >> "$LOG_FILE"
+}
+
+set_fan_speed() {
+    local speed=$1
+    DISPLAY=:0 xhost si:localuser:root > /dev/null 2>&1
+    DISPLAY=:0 sudo /usr/bin/nvidia-settings -a "[gpu:0]/GPUFanControlState=1" \
+        -a "[fan:0]/GPUTargetFanSpeed=$speed" \
+        -a "[fan:1]/GPUTargetFanSpeed=$speed" > /dev/null 2>&1
+    local result=$?
+    DISPLAY=:0 xhost -si:localuser:root > /dev/null 2>&1
+    return $result
+}
+
+get_temp() {
+    nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader 2>/dev/null
+}
+
+calculate_fan_speed() {
+    local temp=$1
+
+    if (( temp <= TEMP_MIN )); then
+        echo $FAN_MIN
+    elif (( temp >= TEMP_MAX )); then
+        echo $FAN_MAX
+    else
+        # Линейная интерполяция
+        local range_temp=$((TEMP_MAX - TEMP_MIN))
+        local range_fan=$((FAN_MAX - FAN_MIN))
+        local offset=$((temp - TEMP_MIN))
+        echo $((FAN_MIN + (offset * range_fan) / range_temp))
     fi
-fi
+}
 
-# Set display for nvidia-settings
-export DISPLAY=$XVFB_DISPLAY
+log "=== GPU Fan Control Started ==="
+log "Fan curve: ${FAN_MIN}% at ${TEMP_MIN}C -> ${FAN_MAX}% at ${TEMP_MAX}C"
 
-# Set fan control and speeds
-echo "Setting GPU fan control..."
-sudo nvidia-settings -a "[gpu:0]/GPUFanControlState=1" 2>/dev/null
-sudo nvidia-settings -a "[fan:0]/GPUTargetFanSpeed=62" 2>/dev/null
-sudo nvidia-settings -a "[fan:1]/GPUTargetFanSpeed=62" 2>/dev/null
+# Даем время XWayland запуститься
+sleep 3
 
-echo "GPU fan control configured successfully"
+LAST_SPEED=0
+
+while true; do
+    TEMP=$(get_temp)
+
+    if [[ -z "$TEMP" ]]; then
+        log "ERROR: Cannot read GPU temperature"
+        sleep $INTERVAL
+        continue
+    fi
+
+    TARGET_SPEED=$(calculate_fan_speed $TEMP)
+
+    # Меняем скорость только если отличается на 3% или больше
+    DIFF=$((TARGET_SPEED - LAST_SPEED))
+    DIFF=${DIFF#-}
+
+    if (( DIFF >= 3 )) || (( LAST_SPEED == 0 )); then
+        if set_fan_speed $TARGET_SPEED; then
+            log "Temp: ${TEMP}C -> Fan: ${TARGET_SPEED}%"
+            LAST_SPEED=$TARGET_SPEED
+        else
+            log "ERROR: Failed to set fan speed"
+        fi
+    fi
+
+    sleep $INTERVAL
+done

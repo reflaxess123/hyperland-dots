@@ -107,6 +107,7 @@ install_pacman_packages() {
         # NVIDIA GPU Fan Control
         nvidia-settings
         xorg-server
+        xorg-xhost
     )
 
     sudo pacman -S --needed --noconfirm "${packages[@]}" || log_warn "Некоторые пакеты не найдены в pacman"
@@ -308,7 +309,13 @@ SERVICE
     sudo systemctl daemon-reload
     sudo systemctl enable gpu-fan.service
 
-    log_info "GPU Fan Control настроен (62% при загрузке)"
+    # Добавляем sudoers правило для nvidia-settings (для динамического контроля через XWayland)
+    echo "$USER ALL=(ALL) NOPASSWD: /usr/bin/nvidia-settings" | sudo tee /etc/sudoers.d/nvidia-settings > /dev/null
+    sudo chmod 440 /etc/sudoers.d/nvidia-settings
+
+    log_info "GPU Fan Control настроен"
+    log_info "  - Systemd сервис: 62% при загрузке (до запуска Hyprland)"
+    log_info "  - Демон: динамическая кривая после запуска Hyprland"
 }
 
 # ==========================================

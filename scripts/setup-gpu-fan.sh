@@ -125,16 +125,27 @@ echo "Enabling systemd service..."
 sudo systemctl daemon-reload
 sudo systemctl enable gpu-fan.service
 
+# 6. Добавляем sudoers правило для динамического контроля через XWayland
+echo "Adding sudoers rule for nvidia-settings..."
+echo "$USER ALL=(ALL) NOPASSWD: /usr/bin/nvidia-settings" | sudo tee /etc/sudoers.d/nvidia-settings > /dev/null
+sudo chmod 440 /etc/sudoers.d/nvidia-settings
+
 echo ""
 echo -e "${GREEN}=== Setup Complete ===${NC}"
 echo ""
-echo "Fan speed will be set to 62% on every boot."
-echo "To change speed, edit /etc/systemd/system/gpu-fan.service"
-echo "and change GPU_FAN_SPEED value."
+echo "GPU Fan Control настроен:"
+echo ""
+echo "1. Systemd сервис (oneshot):"
+echo "   - Устанавливает 62% при загрузке (до запуска Hyprland)"
+echo "   - Изменить: sudo nano /etc/systemd/system/gpu-fan.service"
+echo ""
+echo "2. Демон gpu-fan-control.sh (динамическая кривая):"
+echo "   - Запускается через exec-once в hyprland.conf"
+echo "   - 40% при ≤35°C -> 100% при ≥85°C"
+echo "   - Логи: ~/.local/share/gpu-fan.log"
 echo ""
 echo "Commands:"
-echo "  Check logs:    cat /var/log/gpu-fan.log"
-echo "  Check speed:   nvidia-smi --query-gpu=fan.speed --format=csv"
-echo "  Manual run:    sudo systemctl start gpu-fan"
+echo "  Check logs:    tail -f ~/.local/share/gpu-fan.log"
+echo "  Check speed:   nvidia-smi --query-gpu=fan.speed,temperature.gpu --format=csv"
 echo ""
 echo "Reboot to apply!"

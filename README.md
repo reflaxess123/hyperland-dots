@@ -79,69 +79,69 @@
 
 ## NVIDIA GPU Fan Control на Wayland
 
-### Проблема
+### Динамическая кривая вентиляторов
 
-На Wayland (Hyprland) нельзя управлять вентиляторами GPU через `nvidia-settings`, потому что:
-1. `nvidia-settings` требует X сервер с расширением NV-CONTROL
-2. XWayland не подходит — он не читает `xorg.conf` и не имеет доступа к Coolbits
-3. Xvfb (виртуальный framebuffer) не работает с реальным GPU
-4. Когда Hyprland запущен, он захватывает GPU через DRM и X сервер не может получить modesetting
+Скрипт `gpu-fan-control.sh` автоматически управляет скоростью вентиляторов GPU в зависимости от температуры:
 
-### Решение
+| Температура | Скорость вентилятора |
+|-------------|---------------------|
+| ≤ 35°C      | 40%                 |
+| 50°C        | 58%                 |
+| 70°C        | 82%                 |
+| ≥ 85°C      | 100%                |
 
-Systemd сервис который запускается **ДО** display manager:
-1. Поднимает временный X сервер на `:99` с nvidia драйвером и Coolbits
-2. Настраивает вентиляторы через `nvidia-settings`
-3. Убивает X сервер — настройки вентиляторов сохраняются!
-4. Hyprland запускается и работает нормально
+Линейная интерполяция между точками с гистерезисом 3% для предотвращения частых переключений.
+
+### Как это работает
+
+Скрипт использует **XWayland** который уже запущен в Hyprland:
+
+1. `xhost si:localuser:root` — разрешает root доступ к X дисплею
+2. `nvidia-settings` — устанавливает скорость вентиляторов через XWayland
+3. `xhost -si:localuser:root` — убирает разрешение
+
+Это работает потому что Hyprland автоматически запускает XWayland на `:0`.
 
 ### Установка
 
 ```bash
-# Запустить скрипт установки
-./scripts/setup-gpu-fan.sh
+# 1. Установить зависимости
+sudo pacman -S nvidia-settings xorg-xhost
 
-# Перезагрузиться
-reboot
+# 2. Добавить sudoers правило (без пароля для nvidia-settings)
+echo '$USER ALL=(ALL) NOPASSWD: /usr/bin/nvidia-settings' | sudo tee /etc/sudoers.d/nvidia-settings
+
+# 3. Скрипт уже настроен на автозапуск через exec-once в hyprland.conf
 ```
-
-### Что создаёт скрипт
-
-| Файл | Описание |
-|------|----------|
-| `/etc/X11/xorg.conf.d/20-nvidia.conf` | Xorg конфиг с Coolbits=4 и BusID видеокарты |
-| `/usr/local/bin/gpu-fan-setup.sh` | Скрипт настройки вентиляторов |
-| `/etc/systemd/system/gpu-fan.service` | Systemd сервис |
 
 ### Проверка
 
 ```bash
-# Логи
-cat /var/log/gpu-fan.log
+# Логи демона
+tail -f ~/.local/share/gpu-fan.log
 
-# Текущая скорость
-nvidia-smi --query-gpu=fan.speed --format=csv
+# Текущая скорость и температура
+nvidia-smi --query-gpu=fan.speed,temperature.gpu --format=csv
 ```
 
-### Изменение скорости вентиляторов
+### Настройка кривой
+
+Отредактируйте `~/.config/hypr/scripts/gpu-fan-control.sh`:
 
 ```bash
-# Отредактировать сервис
-sudo nano /etc/systemd/system/gpu-fan.service
-
-# Изменить значение GPU_FAN_SPEED (по умолчанию 62)
-Environment="GPU_FAN_SPEED=70"
-
-# Применить
-sudo systemctl daemon-reload
-sudo systemctl restart gpu-fan
+TEMP_MIN=35   # Температура для минимальной скорости
+TEMP_MAX=85   # Температура для максимальной скорости
+FAN_MIN=40    # Минимальная скорость (%)
+FAN_MAX=100   # Максимальная скорость (%)
+INTERVAL=5    # Интервал проверки (секунды)
 ```
 
 ### Требования
 
 - `nvidia-settings`
-- `xorg-server` (не xvfb!)
+- `xorg-xhost`
 - NVIDIA GPU с проприетарным драйвером
+- Sudoers правило для nvidia-settings
 
 ## Конфигурация
 
