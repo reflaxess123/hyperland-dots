@@ -28,9 +28,6 @@
   "modules-right": [
     "hyprland/language",
     "bluetooth",
-    "custom/brightness-down",
-    "custom/brightness",
-    "custom/brightness-up",
     "pulseaudio",
     "pulseaudio/slider",
     "clock",
@@ -148,26 +145,7 @@
     "on-click": "bash ~/.config/waybar/scripts/leave.sh",
     "tooltip": "Меню выключения"
   },
-  "custom/brightness": {
-    "exec": "~/.config/waybar/scripts/brightness.sh",
-    "return-type": "json",
-    "interval": 5,
-    "on-scroll-up": "~/.config/waybar/scripts/brightness.sh up",
-    "on-scroll-down": "~/.config/waybar/scripts/brightness.sh down",
-    "format": "{}",
-    "tooltip": true
-  },
-  "custom/brightness-up": {
-    "format": "+",
-    "on-click": "~/.config/waybar/scripts/brightness.sh up",
-    "tooltip": false
-  },
-  "custom/brightness-down": {
-    "format": "-",
-    "on-click": "~/.config/waybar/scripts/brightness.sh down",
-    "tooltip": false
-  },
-  "hyprland/workspaces": {
+    "hyprland/workspaces": {
     "format": "{name}",
     "on-scroll-up": "hyprctl dispatch workspace e+1",
     "on-scroll-down": "hyprctl dispatch workspace e-1",
