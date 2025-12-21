@@ -31,6 +31,7 @@
     *   `eww`
     *   `hyprshot`
     *   `redsocks` (опционально, для скрипта `socks-toggle.sh`)
+    *   `sing-box` (опционально, для VPN с split tunneling)
 
 3.  **Сделать скрипты исполняемыми:**
     ```bash
@@ -60,7 +61,8 @@
 | `Alt + H/J/K/L`          | Переместить фокус между окнами (как в Vim)         |
 | `Alt + Shift + H/J/K/L`  | Переместить активное окно                          |
 | `Alt + Ctrl + H/J/K/L`   | Изменить размер активного окна                     |
-| `Alt + V`                | Включить/выключить прокси (redsocks)               |
+| `Alt + I`                | Включить/выключить прокси (redsocks)               |
+| `Alt + P`                | Включить/выключить VPN (sing-box)                  |
 | `Alt + Shift + D`        | Показать/скрыть EWW виджет                         |
 | `Alt + Y`                | Сменить тему Waybar                                |
 | `Alt + 1-9, 0`           | Переключиться на рабочий стол 1-10                 |
@@ -74,6 +76,7 @@
 
 *   `restart_hyprland.sh`: Перезагружает Hyprland, Waybar, swaync и другие компоненты.
 *   `socks-toggle.sh`: Включает и выключает системный прокси с помощью `redsocks` и `iptables`.
+*   `singbox-toggle.sh`: Включает и выключает VPN через `sing-box` с поддержкой split tunneling.
 *   `wall-next.sh`: Устанавливает случайные обои из папки `~/wallpapers`.
 *   `gpu-fan-control.sh`: Управление вентиляторами NVIDIA GPU (см. раздел ниже).
 
@@ -233,6 +236,94 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg
 - Тема Catppuccin Mocha
 - Запоминает последний выбор
 - Таймаут 30 секунд
+
+## sing-box VPN с Split Tunneling
+
+VPN на основе sing-box с VLESS + Reality протоколом и раздельным роутингом.
+
+### Особенности
+
+- **VLESS + Reality** — современный протокол с маскировкой под обычный TLS
+- **Split tunneling** — yandex.ru и ya.ru идут напрямую, остальной трафик через VPN
+- **TUN режим** — весь системный трафик проходит через VPN
+- **DNS over HTTPS** — защищённые DNS запросы через Google
+
+### Установка
+
+```bash
+# 1. Установить sing-box
+sudo pacman -S sing-box
+
+# 2. Добавить sudoers правило (без пароля)
+echo '$USER ALL=(ALL) NOPASSWD: /usr/bin/sing-box' | sudo tee /etc/sudoers.d/singbox
+sudo chmod 440 /etc/sudoers.d/singbox
+
+# 3. Скопировать конфиг
+mkdir -p ~/.config/sing-box
+cp .config/sing-box/config.json ~/.config/sing-box/
+
+# 4. Отредактировать config.json — указать свой сервер, uuid, public_key
+```
+
+### Настройка сервера
+
+В `~/.config/sing-box/config.json` измените:
+
+```json
+{
+  "outbounds": [{
+    "type": "vless",
+    "server": "ВАШ_IP",
+    "server_port": ВАШ_ПОРТ,
+    "uuid": "ВАШ_UUID",
+    "tls": {
+      "reality": {
+        "public_key": "ВАШ_PUBLIC_KEY",
+        "short_id": "ВАШ_SHORT_ID"
+      }
+    }
+  }]
+}
+```
+
+### Split Tunneling
+
+Домены которые идут напрямую (без VPN):
+
+```json
+{
+  "route": {
+    "rules": [
+      {
+        "domain_suffix": [".yandex.ru", ".ya.ru", ".yandex.net"],
+        "action": "route",
+        "outbound": "direct"
+      }
+    ]
+  }
+}
+```
+
+### Использование
+
+- `Alt + P` — включить/выключить VPN
+- Статус отображается в уведомлениях
+
+### Проверка
+
+```bash
+# Логи
+tail -f ~/.local/share/singbox.log
+
+# Проверить IP
+curl ifconfig.me
+```
+
+### Требования
+
+- `sing-box`
+- Sudoers правило для sing-box
+- Сервер с VLESS + Reality
 
 ## Конфигурация
 

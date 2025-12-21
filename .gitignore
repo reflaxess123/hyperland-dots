@@ -28,6 +28,7 @@
 !.config/alacritty/**
 !.config/wofi/**
 !.config/scripts/**
+!.config/sing-box/**
 
 # Скрипты установки
 !scripts/
