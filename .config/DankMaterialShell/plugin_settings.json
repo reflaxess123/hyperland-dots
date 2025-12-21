@@ -1,0 +1,59 @@
+{
+  "dankActions": {
+    "enabled": true,
+    "variants": [
+      {
+        "icon": "vpn_lock",
+        "displayText": "",
+        "displayCommand": "pgrep -x sing-box > /dev/null && echo \"On\" || echo \"Off\"",
+        "clickCommand": "~/.config/hypr/scripts/singbox-toggle.sh",
+        "middleClickCommand": "",
+        "rightClickCommand": "",
+        "updateInterval": 5,
+        "showIcon": true,
+        "showText": true,
+        "id": "variant_1766326439104",
+        "name": "VPN"
+      },
+      {
+        "icon": "thermostat",
+        "displayText": "",
+        "displayCommand": "nvidia-smi --query-gpu=temperature.gpu,fan.speed --format=csv,noheader,nounits | awk -F', ' '{print $1\"°C \"$2\"%\"}'",
+        "clickCommand": "",
+        "middleClickCommand": "",
+        "rightClickCommand": "",
+        "updateInterval": 5,
+        "showIcon": true,
+        "showText": true,
+        "id": "variant_1766326465372",
+        "name": "GPU"
+      },
+      {
+        "icon": "language",
+        "displayText": "",
+        "displayCommand": "hyprctl devices -j | jq -r '.keyboards[] | select(.main == true) | .active_keymap' | head -c 2 | tr '[:lower:]' '[:upper:]'",
+        "clickCommand": "hyprctl switchxkblayout all next",
+        "middleClickCommand": "",
+        "rightClickCommand": "",
+        "updateInterval": 1,
+        "showIcon": true,
+        "showText": true,
+        "id": "variant_1766326601352",
+        "name": "Lang"
+      },
+      {
+        "icon": "terminal",
+        "displayText": "",
+        "displayCommand": "nvidia-smi --query-gpu=memory.used,memory.total --format=csv,noheader,nounits | awk -F', ' '{printf \"%.1fG/%.0fG\", $1/1024, $2/1024}'",
+        "clickCommand": "",
+        "middleClickCommand": "",
+        "rightClickCommand": "",
+        "updateInterval": 5,
+        "showIcon": true,
+        "showText": true,
+        "id": "variant_1766327305921",
+        "name": "VRAM"
+      }
+    ]
+  }
+}
