@@ -18,9 +18,9 @@
 2.  **Установить зависимости:**
     *   `hyprland`
     *   `waybar`
-    *   `wofi`
-    *   `swww`
-    *   `swaync`
+    *   `rofi-wayland` — лаунчер приложений и меню
+    *   `swww` — обои с анимациями
+    *   `swaync` — центр уведомлений
     *   `ghostty` (или ваш любимый терминал)
     *   `nautilus` (или ваш любимый файловый менеджер)
     *   `google-chrome-stable`
@@ -28,8 +28,11 @@
     *   `wl-paste`
     *   `cliphist`
     *   `udiskie`
-    *   `eww`
-    *   `hyprshot`
+    *   `eww` (опционально, для виджетов)
+    *   `hyprshot` — скриншоты
+    *   `imagemagick` — для превью обоев в меню выбора
+    *   `papirus-icon-theme` — монохромные иконки
+    *   Nerd Font (рекомендуется `ttf-maple-nerd` или любой другой Nerd Font)
     *   `redsocks` (опционально, для скрипта `socks-toggle.sh`)
     *   `sing-box` (опционально, для VPN с split tunneling)
 
@@ -52,12 +55,12 @@
 | `Alt + Shift + T`        | Переключить активное окно в плавающий режим (альтернативный) |
 | `Alt + Ctrl + B`         | Открыть Brave в режиме Wayland                     |
 | `Alt + Ctrl + T`         | Открыть `missioncenter`                            |
-| `Alt + Space`            | Открыть меню приложений (`wofi`)                   |
+| `Alt + Space`            | Открыть меню приложений (`rofi`)                   |
 | `Alt + O`                | Открыть `obs`                                      |
 | `Alt + C`                | Открыть `cursor.appimage`                          |
 | `Alt + N`                | Открыть/закрыть центр уведомлений (`swaync`)       |
 | `Alt + F`                | Переключить полноэкранный режим для активного окна |
-| `Alt + Shift + W`        | Установить следующие обои                          |
+| `Alt + Ctrl + A`         | Открыть меню выбора обоев                          |
 | `Alt + H/J/K/L`          | Переместить фокус между окнами (как в Vim)         |
 | `Alt + Shift + H/J/K/L`  | Переместить активное окно                          |
 | `Alt + Ctrl + H/J/K/L`   | Изменить размер активного окна                     |
@@ -77,7 +80,7 @@
 *   `restart_hyprland.sh`: Перезагружает Hyprland, Waybar, swaync и другие компоненты.
 *   `socks-toggle.sh`: Включает и выключает системный прокси с помощью `redsocks` и `iptables`.
 *   `singbox-toggle.sh`: Включает и выключает VPN через `sing-box` с поддержкой split tunneling.
-*   `wall-next.sh`: Устанавливает случайные обои из папки `~/wallpapers`.
+*   `wall-select.sh`: Меню выбора обоев с превью изображений (rofi + imagemagick).
 *   `gpu-fan-control.sh`: Управление вентиляторами NVIDIA GPU (см. раздел ниже).
 
 ## NVIDIA GPU Fan Control на Wayland
@@ -145,53 +148,6 @@ INTERVAL=5    # Интервал проверки (секунды)
 - `xorg-xhost`
 - NVIDIA GPU с проприетарным драйвером
 - Sudoers правило для nvidia-settings
-
-## Управление яркостью монитора (DDC/CI)
-
-Waybar поддерживает управление яркостью монитора через DDC/CI протокол.
-
-### Установка
-
-```bash
-# 1. Установить ddcutil
-sudo pacman -S ddcutil
-
-# 2. Загрузить модуль i2c-dev
-sudo modprobe i2c-dev
-
-# 3. Добавить пользователя в группу i2c
-sudo usermod -aG i2c $USER
-
-# 4. Для автозагрузки модуля
-echo "i2c-dev" | sudo tee /etc/modules-load.d/i2c-dev.conf
-
-# 5. Перелогиниться для применения группы
-```
-
-### Проверка
-
-```bash
-# Определить монитор
-ddcutil detect
-
-# Текущая яркость
-ddcutil getvcp 10
-
-# Установить яркость 50%
-ddcutil setvcp 10 50
-```
-
-### Управление в Waybar
-
-- **Скролл** на иконке яркости — изменение ±10%
-- **Клик на +/-** — изменение ±10%
-
-### Требования
-
-- Монитор с поддержкой DDC/CI (большинство современных мониторов)
-- Подключение через DisplayPort или HDMI
-- `ddcutil`
-- Пользователь в группе `i2c`
 
 ## GRUB с темой Catppuccin и Dual Boot
 
@@ -341,4 +297,4 @@ curl ifconfig.me
 *   **Устройства ввода:** настройки клавиатуры, мыши и тачпада.
 *   **Жесты:** настройка жестов для тачпада.
 *   **Правила для окон:** специфичные правила для определенных приложений.
-*   **Слои:** правила для слоев Wayland (например, для `wofi` и `eww`).
+*   **Слои:** правила для слоев Wayland (например, для `rofi` и `eww`).

@@ -17,12 +17,13 @@
 !.config/waybar/**
 !.config/kitty/**
 !.config/ghostty/**
+!.config/rofi/
 !.config/rofi/**
 !.config/swaync/**
 !.config/swaykbdd/**
 !.config/neofetch/**
 !.config/Cursor/User/keybindings.json
-!.config/Cursor/User/settings.json``
+!.config/Cursor/User/settings.json
 !.config/gtk-3.0/**
 !.config/gtk-4.0/**
 !.config/alacritty/**
