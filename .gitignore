@@ -14,12 +14,10 @@
 !.config/
 !.config/nvim/**
 !.config/hypr/**
-!.config/waybar/**
 !.config/kitty/**
 !.config/ghostty/**
 !.config/rofi/
 !.config/rofi/**
-!.config/swaync/**
 !.config/swaykbdd/**
 !.config/neofetch/**
 !.config/Cursor/User/keybindings.json
@@ -29,6 +27,7 @@
 !.config/alacritty/**
 !.config/scripts/**
 !.config/sing-box/**
+!.config/DankMaterialShell/**
 
 # Скрипты установки
 !scripts/
