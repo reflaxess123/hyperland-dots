@@ -12,7 +12,6 @@ source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zs
 export PATH="/sbin:$HOME/.local/bin:$PATH"
 export EDITOR='nvim'
 export VISUAL='nvim'
-export UV_PROJECT_ENVIRONMENT=.venv-linux
 
 # Tool replacements
 alias cat='bat'
@@ -91,3 +90,11 @@ bindkey -s '^g' 'lazygit\n'
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# bun completions
+[ -s "/home/vasya/.bun/_bun" ] && source "/home/vasya/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+export UV_PROJECT_ENVIRONMENT=.venv-linux
