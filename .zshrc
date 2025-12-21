@@ -12,6 +12,7 @@ source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zs
 export PATH="/sbin:$HOME/.local/bin:$PATH"
 export EDITOR='nvim'
 export VISUAL='nvim'
+export UV_PROJECT_ENVIRONMENT=.venv-linux
 
 # Tool replacements
 alias cat='bat'
