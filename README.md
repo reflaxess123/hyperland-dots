@@ -4,6 +4,7 @@
 
 ## Особенности
 
+*   **DankMaterialShell** — современный desktop shell с Material Design
 *   **Минималистичный и чистый вид:** Конфигурация нацелена на минимализм, с использованием `dwindle` лэйаута.
 *   **Анимации:** Плавные и приятные анимации для окон, рабочих столов и слоев.
 *   **Удобные хоткеи:** Продуманные сочетания клавиш для управления окнами, приложениями и системой.
@@ -17,10 +18,7 @@
     ```
 2.  **Установить зависимости:**
     *   `hyprland`
-    *   `waybar`
-    *   `rofi-wayland` — лаунчер приложений и меню
-    *   `swww` — обои с анимациями
-    *   `swaync` — центр уведомлений
+    *   `dms-shell-hyprland` (AUR) — desktop shell (панель, уведомления, лаунчер, обои)
     *   `ghostty` (или ваш любимый терминал)
     *   `nautilus` (или ваш любимый файловый менеджер)
     *   `google-chrome-stable`
@@ -28,15 +26,18 @@
     *   `wl-paste`
     *   `cliphist`
     *   `udiskie`
-    *   `eww` (опционально, для виджетов)
     *   `hyprshot` — скриншоты
-    *   `imagemagick` — для превью обоев в меню выбора
-    *   `papirus-icon-theme` — монохромные иконки
+    *   `papirus-icon-theme` — иконки
     *   Nerd Font (рекомендуется `ttf-maple-nerd` или любой другой Nerd Font)
-    *   `redsocks` (опционально, для скрипта `socks-toggle.sh`)
     *   `sing-box` (опционально, для VPN с split tunneling)
 
-3.  **Сделать скрипты исполняемыми:**
+3.  **Установить DankMaterialShell:**
+    ```bash
+    yay -S dms-shell-hyprland
+    dms plugins install dankActions
+    ```
+
+4.  **Сделать скрипты исполняемыми:**
     ```bash
     chmod +x ~/.config/hypr/scripts/*.sh
     ```
@@ -48,39 +49,60 @@
 | `Alt + W`                | Открыть терминал (`ghostty`)                       |
 | `Alt + Q`                | Закрыть активное окно                              |
 | `Alt + M`                | Выйти из Hyprland                                  |
-| `Alt + Ctrl + W`         | Перезагрузить Hyprland и все компоненты            |
+| `Alt + Ctrl + W`         | Перезагрузить Hyprland и DMS                       |
 | `Alt + E`                | Открыть файловый менеджер (`nautilus`)             |
 | `Alt + B`                | Открыть браузер (`google-chrome-stable`)           |
 | `Alt + T`                | Переключить активное окно в плавающий режим        |
-| `Alt + Shift + T`        | Переключить активное окно в плавающий режим (альтернативный) |
 | `Alt + Ctrl + B`         | Открыть Brave в режиме Wayland                     |
 | `Alt + Ctrl + T`         | Открыть `missioncenter`                            |
-| `Alt + Space`            | Открыть меню приложений (`rofi`)                   |
+| `Alt + Space`            | Открыть лаунчер приложений (DMS Spotlight)         |
 | `Alt + O`                | Открыть `obs`                                      |
 | `Alt + C`                | Открыть `cursor.appimage`                          |
-| `Alt + N`                | Открыть/закрыть центр уведомлений (`swaync`)       |
+| `Alt + N`                | Открыть/закрыть центр уведомлений                  |
+| `Alt + V`                | История буфера обмена                              |
+| `Alt + X`                | Меню выключения                                    |
+| `Alt + Tab`              | Обзор воркспейсов                                  |
 | `Alt + F`                | Переключить полноэкранный режим для активного окна |
 | `Alt + Ctrl + A`         | Открыть меню выбора обоев                          |
 | `Alt + H/J/K/L`          | Переместить фокус между окнами (как в Vim)         |
 | `Alt + Shift + H/J/K/L`  | Переместить активное окно                          |
 | `Alt + Ctrl + H/J/K/L`   | Изменить размер активного окна                     |
-| `Alt + I`                | Включить/выключить прокси (redsocks)               |
 | `Alt + P`                | Включить/выключить VPN (sing-box)                  |
-| `Alt + Shift + D`        | Показать/скрыть EWW виджет                         |
-| `Alt + Y`                | Сменить тему Waybar                                |
 | `Alt + 1-9, 0`           | Переключиться на рабочий стол 1-10                 |
-| `Alt + Shift + 1-9, 0`   | Переместить активное окно на рабочий стол 1-10      |
+| `Alt + Ctrl + 1-9, 0`    | Переместить активное окно на рабочий стол 1-10     |
 | `Print Screen`           | Сделать скриншот области и скопировать в буфер обмена |
 | `Alt + Ctrl + S`         | Сделать скриншот области и скопировать в буфер обмена |
-| `Alt + Scroll Down`      | Переключиться на следующий рабочий стол            |
-| `Alt + Scroll Up`        | Переключиться на предыдущий рабочий стол           |
+
+## DankMaterialShell
+
+Desktop shell заменяет waybar, swaync, rofi и swww единым интерфейсом.
+
+### Кастомные виджеты (dankActions)
+
+В панели настроены виджеты через плагин dankActions:
+
+- **VPN** — статус sing-box VPN, клик для включения/выключения
+- **GPU** — температура и скорость вентилятора NVIDIA
+- **VRAM** — использование видеопамяти
+- **Lang** — текущая раскладка клавиатуры
+
+### IPC команды
+
+```bash
+dms ipc call spotlight toggle      # Лаунчер
+dms ipc call notifications toggle  # Уведомления
+dms ipc call clipboard toggle      # Буфер обмена
+dms ipc call powermenu toggle      # Меню выключения
+dms ipc call settings toggle       # Настройки
+dms ipc call hypr toggleOverview   # Обзор воркспейсов
+dms ipc call dankdash wallpaper    # Выбор обоев
+```
 
 ## Скрипты
 
-*   `restart_hyprland.sh`: Перезагружает Hyprland, Waybar, swaync и другие компоненты.
+*   `restart_hyprland.sh`: Перезагружает Hyprland и DMS.
 *   `socks-toggle.sh`: Включает и выключает системный прокси с помощью `redsocks` и `iptables`.
 *   `singbox-toggle.sh`: Включает и выключает VPN через `sing-box` с поддержкой split tunneling.
-*   `wall-select.sh`: Меню выбора обоев с превью изображений (rofi + imagemagick).
 *   `gpu-fan-control.sh`: Управление вентиляторами NVIDIA GPU (см. раздел ниже).
 
 ## NVIDIA GPU Fan Control на Wayland
@@ -200,7 +222,7 @@ VPN на основе sing-box с VLESS + Reality протоколом и раз
 ### Особенности
 
 - **VLESS + Reality** — современный протокол с маскировкой под обычный TLS
-- **Split tunneling** — yandex.ru и ya.ru идут напрямую, остальной трафик через VPN
+- **Split tunneling** — .ru домены идут напрямую, остальной трафик через VPN
 - **TUN режим** — весь системный трафик проходит через VPN
 - **DNS over HTTPS** — защищённые DNS запросы через Google
 
@@ -221,52 +243,10 @@ cp .config/sing-box/config.json ~/.config/sing-box/
 # 4. Отредактировать config.json — указать свой сервер, uuid, public_key
 ```
 
-### Настройка сервера
-
-В `~/.config/sing-box/config.json` измените:
-
-```json
-{
-  "outbounds": [{
-    "type": "vless",
-    "server": "ВАШ_IP",
-    "server_port": ВАШ_ПОРТ,
-    "uuid": "ВАШ_UUID",
-    "tls": {
-      "reality": {
-        "public_key": "ВАШ_PUBLIC_KEY",
-        "short_id": "ВАШ_SHORT_ID"
-      }
-    }
-  }]
-}
-```
-
-### Split Tunneling
-
-Домены которые идут напрямую (без VPN):
-
-```json
-{
-  "route": {
-    "rules": [
-      {
-        "domain_suffix": [".yandex.ru", ".ya.ru", ".yandex.net"],
-        "action": "route",
-        "outbound": "direct"
-      }
-    ]
-  }
-}
-```
-
 ### Использование
 
 - `Alt + P` — включить/выключить VPN
-- Клик на "VPN On/Off" в Waybar — переключить VPN
-- Наведение на модуль — показывает:
-  - Правила Direct (какие домены идут напрямую)
-  - Последний трафик (какие домены шли через proxy/direct)
+- Клик на VPN виджет в панели — переключить VPN
 
 ### Проверка
 
@@ -277,12 +257,6 @@ tail -f ~/.local/share/singbox.log
 # Проверить IP
 curl ifconfig.me
 ```
-
-### Требования
-
-- `sing-box`
-- Sudoers правило для sing-box
-- Сервер с VLESS + Reality
 
 ## Монтирование NTFS дисков
 
@@ -315,18 +289,3 @@ sudo mount -a
 
 - Если Windows установлена на этом же диске — отключите **Fast Startup** и **Hibernate** в Windows
 - Для отдельного диска с данными это не требуется
-
-## Конфигурация
-
-Основной файл конфигурации - `hyprland.conf`. В нем вы можете настроить:
-
-*   **Мониторы:** разрешение, частоту обновления и расположение.
-*   **Переменные:** терминал, файловый менеджер, меню и браузер по умолчанию.
-*   **Автозапуск:** приложения, которые запускаются вместе с Hyprland.
-*   **Оформление:** отступы, рамки, тени, размытие и скругление.
-*   **Анимации:** настройка анимаций для окон, рабочих столов и слоев.
-*   **Лэйауты:** `dwindle` и `master`.
-*   **Устройства ввода:** настройки клавиатуры, мыши и тачпада.
-*   **Жесты:** настройка жестов для тачпада.
-*   **Правила для окон:** специфичные правила для определенных приложений.
-*   **Слои:** правила для слоев Wayland (например, для `rofi` и `eww`).
