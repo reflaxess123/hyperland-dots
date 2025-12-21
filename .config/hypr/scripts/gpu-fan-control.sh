@@ -44,11 +44,17 @@ calculate_fan_speed() {
     elif (( temp >= TEMP_MAX )); then
         echo $FAN_MAX
     else
-        # Линейная интерполяция
+        # Квадратичная кривая (прогиб вниз - дольше тихо, резче к концу)
         local range_temp=$((TEMP_MAX - TEMP_MIN))
         local range_fan=$((FAN_MAX - FAN_MIN))
         local offset=$((temp - TEMP_MIN))
-        echo $((FAN_MIN + (offset * range_fan) / range_temp))
+        # normalized^2 даёт выпуклую кривую
+        local speed=$(awk "BEGIN {
+            n = $offset / $range_temp;
+            curved = n * n;
+            printf \"%.0f\", $FAN_MIN + curved * $range_fan
+        }")
+        echo $speed
     fi
 }
 
