@@ -2,13 +2,6 @@
 
 # GPU Fan Control Script with Dynamic Fan Curve
 # Использует XWayland для управления вентиляторами в Hyprland
-#
-# Требования:
-# - nvidia-settings
-# - xorg-xhost
-# - sudoers правило: vasya ALL=(ALL) NOPASSWD: /usr/bin/nvidia-settings
-#
-# Запуск: exec-once в hyprland.conf
 
 LOG_FILE="$HOME/.local/share/gpu-fan.log"
 INTERVAL=5  # Интервал проверки температуры (секунды)
@@ -60,7 +53,7 @@ calculate_fan_speed() {
 }
 
 log "=== GPU Fan Control Started ==="
-log "Fan curve: ${FAN_MIN}% at ${TEMP_MIN}C -> ${FAN_MAX}% at ${TEMP_MAX}C"
+log "Fan curve: ${FAN_MIN}% at ${TEMP_MIN}°C -> ${FAN_MAX}% at ${TEMP_MAX}°C"
 
 # Даем время XWayland запуститься
 sleep 3
@@ -84,7 +77,7 @@ while true; do
 
     if (( DIFF >= 3 )) || (( LAST_SPEED == 0 )); then
         if set_fan_speed $TARGET_SPEED; then
-            log "Temp: ${TEMP}C -> Fan: ${TARGET_SPEED}%"
+            log "Temp: ${TEMP}°C -> Fan: ${TARGET_SPEED}%"
             LAST_SPEED=$TARGET_SPEED
         else
             log "ERROR: Failed to set fan speed"
