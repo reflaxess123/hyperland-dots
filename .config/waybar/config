@@ -9,10 +9,15 @@
     "custom/launcher",
     "cpu",
     "custom/cpu-temp",
-    "custom/gpu-temp",
     "custom/fan",
+    "custom/sep",
+    "custom/gpu-temp",
+    "custom/gpu-fan",
+    "custom/gpu-vram",
+    "custom/sep2",
     "memory",
     "disk",
+    "custom/sep3",
     "network",
     "custom/vpn",
     "tray"
@@ -30,6 +35,18 @@
     "clock",
     "custom/power"
   ],
+  "custom/sep": {
+    "format": "|",
+    "tooltip": false
+  },
+  "custom/sep2": {
+    "format": "|",
+    "tooltip": false
+  },
+  "custom/sep3": {
+    "format": "|",
+    "tooltip": false
+  },
   "hyprland/language": {
     "format-us": "US",
     "format-ru": "RU"
@@ -91,6 +108,20 @@
     "exec": "nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader,nounits",
     "format": "GPU:  {}°C",
     "interval": 5
+  },
+  "custom/gpu-fan": {
+    "exec": "nvidia-smi --query-gpu=fan.speed --format=csv,noheader,nounits",
+    "format": "󰈐 {}%",
+    "interval": 5,
+    "tooltip": true,
+    "tooltip-format": "GPU Fan Speed"
+  },
+  "custom/gpu-vram": {
+    "exec": "nvidia-smi --query-gpu=memory.used,memory.total --format=csv,noheader,nounits | awk -F', ' '{printf \"%.1f/%.1fG\", $1/1024, $2/1024}'",
+    "format": "󰢮 {}",
+    "interval": 5,
+    "tooltip": true,
+    "tooltip-format": "GPU VRAM Usage"
   },
   "custom/fan": {
     "exec": "sensors asusec-isa-000a | grep 'Chipset:' | awk 'NR==1{print $2}' | sed 's/RPM//'",

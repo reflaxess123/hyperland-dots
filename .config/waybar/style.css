@@ -20,6 +20,15 @@ window#waybar {
   border: none;
 }
 
+/* Разделители между секциями */
+#custom-sep,
+#custom-sep2,
+#custom-sep3 {
+  color: #45475a;
+  padding: 0 5px;
+  font-size: 14px;
+}
+
 /* Правый блок */
 .modules-right {
   background-color: #1d1d41;
@@ -46,6 +55,8 @@ window#waybar {
 #cpu,
 #custom-cpu-temp,
 #custom-gpu-temp,
+#custom-gpu-fan,
+#custom-gpu-vram,
 #custom-fan,
 #memory,
 #disk,
@@ -97,24 +108,14 @@ window#waybar {
 }
 
 #network {
-  color: #a6e3a1;
+  color: #cad3f5;
 }
 
 #bluetooth {
   color: #cba6f7;
 }
 
-#cpu {
-  color: #fab387;
-}
-
-#memory {
-  color: #f5c2e7;
-}
-
-#disk {
-  color: #94e2d5;
-}
+/* Цвета для CPU, memory, disk определены ниже в секциях */
 
 #clock {
   color: #f9e2af;
@@ -181,13 +182,24 @@ window#waybar {
   }
 }
 
+/* CPU секция - красный */
+#cpu,
 #custom-cpu-temp,
-#custom-gpu-temp {
+#custom-fan {
   color: #f38ba8;
 }
 
-#custom-fan {
-  color: #74c7ec;
+/* GPU секция - жёлтый */
+#custom-gpu-temp,
+#custom-gpu-fan,
+#custom-gpu-vram {
+  color: #f9e2af;
+}
+
+/* Memory/Disk секция - зелёный */
+#memory,
+#disk {
+  color: #a6e3a1;
 }
 
 #tray {
