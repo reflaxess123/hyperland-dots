@@ -37,6 +37,8 @@ spawn-sh-at-startup "sleep 2 && sudo sing-box run -c ~/.config/sing-box/config.j
 
 // Environment
 environment {
+    XCURSOR_SIZE "24"
+    XCURSOR_THEME "Adwaita"
     GTK_USE_PORTAL "1"
     GDK_BACKEND "wayland,x11"
     QT_QPA_PLATFORM "wayland;xcb"
@@ -73,8 +75,8 @@ layout {
 
 // Cursor
 cursor {
-    xcursor-theme "mcmojave-cursors"
-    xcursor-size 20
+    xcursor-theme "Adwaita"
+    xcursor-size 24
 }
 
 // Hotkey overlay
