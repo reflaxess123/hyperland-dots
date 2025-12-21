@@ -33,7 +33,6 @@
     "custom/brightness-up",
     "pulseaudio",
     "pulseaudio/slider",
-    "custom/theme-toggle",
     "clock",
     "custom/power"
   ],

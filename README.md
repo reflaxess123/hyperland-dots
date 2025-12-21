@@ -190,6 +190,50 @@ ddcutil setvcp 10 50
 - `ddcutil`
 - Пользователь в группе `i2c`
 
+## GRUB с темой Catppuccin и Dual Boot
+
+### Установка
+
+```bash
+# 1. Установить os-prober для обнаружения Windows
+sudo pacman -S os-prober
+
+# 2. Примонтировать Windows EFI раздел (найти через lsblk)
+sudo mount /dev/nvme1n1p4 /mnt/win_efi
+
+# 3. Скачать тему Catppuccin
+git clone https://github.com/catppuccin/grub.git /tmp/catppuccin-grub
+sudo mkdir -p /boot/grub/themes
+sudo cp -r /tmp/catppuccin-grub/src/catppuccin-mocha-grub-theme /boot/grub/themes/
+
+# 4. Редактировать /etc/default/grub:
+sudo nano /etc/default/grub
+```
+
+### Настройки /etc/default/grub
+
+```bash
+GRUB_DEFAULT=saved
+GRUB_SAVEDEFAULT=true
+GRUB_TIMEOUT=30
+GRUB_GFXMODE=1920x1080,1280x720,auto
+GRUB_THEME="/boot/grub/themes/catppuccin-mocha-grub-theme/theme.txt"
+GRUB_DISABLE_OS_PROBER=false
+```
+
+### Применение
+
+```bash
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+```
+
+### Результат
+
+- Windows и Arch Linux в меню загрузки
+- Тема Catppuccin Mocha
+- Запоминает последний выбор
+- Таймаут 30 секунд
+
 ## Конфигурация
 
 Основной файл конфигурации - `hyprland.conf`. В нем вы можете настроить:
