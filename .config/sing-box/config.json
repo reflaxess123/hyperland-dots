@@ -1,7 +1,8 @@
 {
   "log": {
-    "level": "info",
-    "timestamp": true
+    "level": "debug",
+    "timestamp": true,
+    "output": "/home/vasya/.local/share/singbox-traffic.log"
   },
   "dns": {
     "servers": [

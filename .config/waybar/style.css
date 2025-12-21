@@ -194,6 +194,21 @@ window#waybar {
   }
 }
 
+/* sing-box VPN индикатор */
+#custom-singbox {
+  color: #cdd6f4;
+  padding: 0 10px;
+  font-weight: bold;
+}
+
+#custom-singbox.connected {
+  color: #89b4fa;
+}
+
+#custom-singbox.disconnected {
+  color: #6c7086;
+}
+
 /* CPU секция - красный */
 #cpu,
 #custom-cpu-temp,

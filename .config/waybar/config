@@ -20,6 +20,7 @@
     "custom/sep3",
     "network",
     "custom/vpn",
+    "custom/singbox",
     "tray"
   ],
   "modules-center": [
@@ -179,8 +180,16 @@
     "exec": "~/.config/waybar/scripts/socks-status.sh",
     "return-type": "json",
     "interval": 5,
-    "on-click": "~/.config/waybar/scripts/../../hypr/scripts/socks-toggle.sh",
+    "on-click": "~/.config/hypr/scripts/socks-toggle.sh",
     "signal": 8,
+    "format": "{}",
+    "tooltip": true
+  },
+  "custom/singbox": {
+    "exec": "~/.config/waybar/scripts/singbox-status.sh",
+    "return-type": "json",
+    "interval": 3,
+    "on-click": "~/.config/hypr/scripts/singbox-toggle.sh",
     "format": "{}",
     "tooltip": true
   },

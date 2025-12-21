@@ -254,8 +254,8 @@ VPN на основе sing-box с VLESS + Reality протоколом и раз
 # 1. Установить sing-box
 sudo pacman -S sing-box
 
-# 2. Добавить sudoers правило (без пароля)
-echo '$USER ALL=(ALL) NOPASSWD: /usr/bin/sing-box' | sudo tee /etc/sudoers.d/singbox
+# 2. Добавить sudoers правило (без пароля для запуска и остановки)
+echo 'vasya ALL=(ALL) NOPASSWD: /usr/bin/sing-box, /usr/bin/pkill sing-box' | sudo tee /etc/sudoers.d/singbox
 sudo chmod 440 /etc/sudoers.d/singbox
 
 # 3. Скопировать конфиг
@@ -307,7 +307,10 @@ cp .config/sing-box/config.json ~/.config/sing-box/
 ### Использование
 
 - `Alt + P` — включить/выключить VPN
-- Статус отображается в уведомлениях
+- Клик на "VPN On/Off" в Waybar — переключить VPN
+- Наведение на модуль — показывает:
+  - Правила Direct (какие домены идут напрямую)
+  - Последний трафик (какие домены шли через proxy/direct)
 
 ### Проверка
 
