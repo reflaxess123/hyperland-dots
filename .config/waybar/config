@@ -46,8 +46,8 @@
     "tooltip": false
   },
   "hyprland/language": {
-    "format": "{short}",
-    "format-en": " US",
+    "format": " {}",
+    "format-en": " EN",
     "format-ru": " RU"
   },
   "pulseaudio": {
