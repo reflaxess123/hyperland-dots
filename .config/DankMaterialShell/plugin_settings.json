@@ -1,20 +1,10 @@
 {
+  "vpnStatus": {
+    "enabled": true
+  },
   "dankActions": {
     "enabled": true,
     "variants": [
-      {
-        "icon": "vpn_lock",
-        "displayText": "",
-        "displayCommand": "pgrep -x sing-box > /dev/null && echo \"On\" || echo \"Off\"",
-        "clickCommand": "~/.config/hypr/scripts/singbox-toggle.sh",
-        "middleClickCommand": "",
-        "rightClickCommand": "",
-        "updateInterval": 5,
-        "showIcon": true,
-        "showText": true,
-        "id": "variant_1766326439104",
-        "name": "VPN"
-      },
       {
         "icon": "thermostat",
         "displayText": "",
