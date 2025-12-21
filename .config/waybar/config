@@ -6,7 +6,6 @@
   "margin-left": 120,
   "margin-right": 120,
   "modules-left": [
-    "custom/launcher",
     "cpu",
     "custom/cpu-temp",
     "custom/fan",
@@ -50,21 +49,18 @@
     "tooltip": false
   },
   "hyprland/language": {
-    "format-us": "US",
-    "format-ru": "RU"
+    "format": "{short}",
+    "format-en": "🇺🇸 US",
+    "format-ru": "🇷🇺 RU"
   },
   "pulseaudio": {
     "tooltip": false,
     "scroll-step": 5,
-    "format": "{icon}  {volume}%",
-    "format-muted": "{icon}  {volume}%",
+    "format": "🔊 {volume}%",
+    "format-muted": "🔇 {volume}%",
     "on-click": "pavucontrol",
     "format-icons": {
-      "default": [
-        " ",
-        " ",
-        " "
-      ]
+      "default": ["🔈", "🔉", "🔊"]
     }
   },
   "pulseaudio/slider": {
@@ -74,18 +70,18 @@
     "expand": false
   },
   "network": {
-    "format-wifi": "  {essid}",
-    "format-ethernet": "󰈀  Connected",
+    "format-wifi": "📶 {essid}",
+    "format-ethernet": "🌐 Connected",
     "tooltip-format": "{essid} ({signalStrength}%)",
-    "format-linked": "{ifname} (No IP) ",
-    "format-disconnected": "󰌙 Disconnected",
+    "format-linked": "{ifname} (No IP)",
+    "format-disconnected": "❌ Disconnected",
     "format-alt": "{ifname}: {ipaddr}/{cidr}"
   },
   "bluetooth": {
-    "format": "  {status}",
+    "format": "🔵 {status}",
     "on-click": "blueman-manager",
     "format-disabled": "",
-    "format-connected": " {num_connections} connected",
+    "format-connected": "🔵 {num_connections} connected",
     "format-no-controller": "",
     "tooltip-format": "{controller_alias} {controller_address}"
   },
@@ -94,62 +90,63 @@
     "spacing": 10
   },
   "clock": {
-    "format": "   {:%d | %m | %Y        %H:%M}",
-    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+    "format": "{:%d.%m.%Y   %H:%M}",
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt>{calendar}</tt>"
   },
   "cpu": {
     "interval": 15,
-    "format": "  {}%",
+    "format": "🖥️ {}%",
     "max-length": 10
   },
   "custom/cpu-temp": {
     "exec": "sensors k10temp-pci-00c3 | grep 'Tctl:' | awk '{print $2}' | sed 's/+//;s/°C//'",
-    "format": "  {}°C",
+    "format": "🌡️ {}°C",
     "interval": 5
   },
   "custom/gpu-temp": {
     "exec": "nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader,nounits",
-    "format": "GPU:  {}°C",
+    "format": "🎮 {}°C",
     "interval": 5
   },
   "custom/gpu-fan": {
     "exec": "nvidia-smi --query-gpu=fan.speed --format=csv,noheader,nounits",
-    "format": "󰈐 {}%",
+    "format": "🌀 {}%",
     "interval": 5,
     "tooltip": true,
     "tooltip-format": "GPU Fan Speed"
   },
   "custom/gpu-vram": {
     "exec": "nvidia-smi --query-gpu=memory.used,memory.total --format=csv,noheader,nounits | awk -F', ' '{printf \"%.1f/%.1fG\", $1/1024, $2/1024}'",
-    "format": "󰢮 {}",
+    "format": "🎞️ {}",
     "interval": 5,
     "tooltip": true,
     "tooltip-format": "GPU VRAM Usage"
   },
   "custom/fan": {
     "exec": "sensors asusec-isa-000a | grep 'Chipset:' | awk 'NR==1{print $2}' | sed 's/RPM//'",
-    "format": "󰈐 {} RPM",
+    "format": "💨 {} RPM",
     "interval": 5
   },
   "memory": {
     "interval": 30,
-    "format": "󰍛 {}%",
+    "format": "🧠 {}%",
     "max-length": 10
   },
   "disk": {
     "interval": 30,
-    "format": "  {percentage_used}%",
+    "format": "💾 {percentage_used}%",
     "path": "/"
   },
   "custom/launcher": {
-    "format": "",
+    "format": "⚡",
     "on-click": "rofi -show drun",
-    "on-click-right": "killall rofi"
+    "on-click-right": "killall rofi",
+    "tooltip": "Меню приложений"
   },
   "custom/power": {
-    "format": "⏻",
+    "format": "🔌",
     "on-click": "bash ~/.config/waybar/scripts/leave.sh",
-    "tooltip": "Power Menu"
+    "tooltip": "Меню выключения"
   },
   "custom/brightness": {
     "exec": "~/.config/waybar/scripts/brightness.sh",
@@ -194,7 +191,7 @@
     "tooltip": true
   },
   "custom/theme-toggle": {
-    "format": "󰖔",
+    "format": "🎨",
     "on-click": "~/.config/waybar/scripts/switch-theme.sh",
     "tooltip": "Toggle Theme"
   }

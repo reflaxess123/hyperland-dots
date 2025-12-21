@@ -65,7 +65,7 @@ get_recent_traffic() {
 if pgrep -x sing-box > /dev/null; then
     recent=$(get_recent_traffic)
     tooltip="🟢 VLESS VPN активен\\n\\n📋 Direct правила:\\n• ${DIRECT_DOMAINS}\\n\\n📊 Трафик:\\n${recent}"
-    echo "{\"text\": \"VPN On\", \"class\": \"connected\", \"tooltip\": \"${tooltip}\"}"
+    echo "{\"text\": \"🔐 On\", \"class\": \"connected\", \"tooltip\": \"${tooltip}\"}"
 else
-    echo "{\"text\": \"VPN Off\", \"class\": \"disconnected\", \"tooltip\": \"🔴 VPN выключен\\n\\nКлик для включения\"}"
+    echo "{\"text\": \"🔐 Off\", \"class\": \"disconnected\", \"tooltip\": \"🔴 VPN выключен\\n\\nКлик для включения\"}"
 fi

@@ -33,7 +33,7 @@ esac
 # Output for waybar
 brightness=$(get_brightness)
 if [[ -n "$brightness" ]]; then
-    echo "{\"text\": \"󰃟 ${brightness}%\", \"tooltip\": \"Brightness: ${brightness}%\nScroll or click to adjust\"}"
+    echo "{\"text\": \"☀️ ${brightness}%\", \"tooltip\": \"Яркость: ${brightness}%\\nСкролл для регулировки\"}"
 else
-    echo "{\"text\": \"󰃟 --\", \"tooltip\": \"Monitor not detected\"}"
+    echo "{\"text\": \"☀️ --\", \"tooltip\": \"Монитор не обнаружен\"}"
 fi

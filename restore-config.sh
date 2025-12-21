@@ -180,6 +180,9 @@ install_fonts() {
     # Nerd Fonts (дополнительно)
     sudo pacman -S --needed --noconfirm ttf-jetbrains-mono-nerd ttf-firacode-nerd 2>/dev/null || true
 
+    # Emoji шрифт (для waybar иконок)
+    sudo pacman -S --needed --noconfirm noto-fonts-emoji 2>/dev/null || true
+
     log_info "Шрифты установлены"
 }
 
@@ -218,6 +221,38 @@ EOF
     sudo chmod 440 /etc/sudoers.d/redsocks
 
     log_info "redsocks настроен (используй Alt+I для toggle)"
+}
+
+# ==========================================
+# 5.1. Настройка sing-box VPN
+# ==========================================
+setup_singbox() {
+    log_info "Настройка sing-box..."
+
+    # Проверяем наличие sing-box
+    if ! command -v sing-box &> /dev/null; then
+        log_info "Установка sing-box..."
+        sudo pacman -S --needed --noconfirm sing-box || {
+            log_warn "sing-box не найден в pacman, пробуем AUR..."
+            yay -S --noconfirm sing-box-bin || log_warn "Не удалось установить sing-box"
+        }
+    fi
+
+    # Копируем конфиг
+    local SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+    if [[ -f "$SCRIPT_DIR/.config/sing-box/config.json" ]]; then
+        mkdir -p ~/.config/sing-box
+        cp "$SCRIPT_DIR/.config/sing-box/config.json" ~/.config/sing-box/
+        log_info "Конфиг sing-box скопирован (не забудь указать свой сервер!)"
+    fi
+
+    # Sudoers для sing-box (без пароля)
+    sudo tee /etc/sudoers.d/singbox > /dev/null << EOF
+$USER ALL=(ALL) NOPASSWD: /usr/bin/sing-box, /usr/bin/pkill sing-box
+EOF
+    sudo chmod 440 /etc/sudoers.d/singbox
+
+    log_info "sing-box настроен (используй Alt+P для toggle)"
 }
 
 # ==========================================
@@ -408,6 +443,7 @@ copy_configs() {
         ".config/neofetch"
         ".config/scripts"
         ".config/Cursor"
+        ".config/sing-box"
     )
 
     for item in "${items[@]}"; do
@@ -462,6 +498,7 @@ main() {
     install_aur_packages
     install_fonts
     setup_redsocks
+    setup_singbox
     setup_gpu_fan
     install_ohmyzsh
     install_tpm
@@ -479,8 +516,9 @@ main() {
     echo "  1. ПЕРЕЗАГРУЗИСЬ для применения GPU fan control и zsh"
     echo "  2. Запусти nvim для установки плагинов"
     echo "  3. В tmux нажми Ctrl+a затем I для установки плагинов"
-    echo "  4. VPN toggle: Alt+I"
-    echo "  5. Проверь вентиляторы: nvidia-smi --query-gpu=fan.speed --format=csv"
+    echo "  4. Redsocks toggle: Alt+I"
+    echo "  5. sing-box VPN toggle: Alt+P (не забудь настроить сервер в ~/.config/sing-box/config.json)"
+    echo "  6. Проверь вентиляторы: nvidia-smi --query-gpu=fan.speed --format=csv"
     echo ""
 }
 
