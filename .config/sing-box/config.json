@@ -22,9 +22,7 @@
     "rules": [
       {
         "domain_suffix": [
-          ".yandex.ru",
-          ".ya.ru",
-          ".yandex.net"
+          ".ru"
         ],
         "action": "route",
         "server": "local"
@@ -97,17 +95,14 @@
       },
       {
         "domain_suffix": [
-          ".yandex.ru",
-          ".ya.ru",
-          ".yandex.net"
+          ".ru"
         ],
         "action": "route",
         "outbound": "direct"
       },
       {
-        "domain": [
-          "yandex.ru",
-          "ya.ru"
+        "domain_regex": [
+          "^[^.]+\\.ru$"
         ],
         "action": "route",
         "outbound": "direct"

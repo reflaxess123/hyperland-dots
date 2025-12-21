@@ -3,7 +3,7 @@
 LOG_FILE="$HOME/.local/share/singbox-traffic.log"
 
 # Direct domains from config
-DIRECT_DOMAINS="yandex.ru, ya.ru, *.yandex.net"
+DIRECT_DOMAINS="*.ru (все .ru домены)"
 
 get_recent_traffic() {
     if [[ ! -f "$LOG_FILE" ]]; then
