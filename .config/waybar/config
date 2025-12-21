@@ -28,8 +28,10 @@
   "modules-right": [
     "hyprland/language",
     "bluetooth",
+    "custom/brightness-down",
+    "custom/brightness",
+    "custom/brightness-up",
     "pulseaudio",
-    "custom/mic-volume",
     "pulseaudio/slider",
     "custom/theme-toggle",
     "clock",
@@ -84,6 +86,7 @@
     "on-click": "blueman-manager",
     "format-disabled": "",
     "format-connected": " {num_connections} connected",
+    "format-no-controller": "",
     "tooltip-format": "{controller_alias} {controller_address}"
   },
   "tray": {
@@ -147,6 +150,25 @@
     "format": "⏻",
     "on-click": "bash ~/.config/waybar/scripts/leave.sh",
     "tooltip": "Power Menu"
+  },
+  "custom/brightness": {
+    "exec": "~/.config/waybar/scripts/brightness.sh",
+    "return-type": "json",
+    "interval": 5,
+    "on-scroll-up": "~/.config/waybar/scripts/brightness.sh up",
+    "on-scroll-down": "~/.config/waybar/scripts/brightness.sh down",
+    "format": "{}",
+    "tooltip": true
+  },
+  "custom/brightness-up": {
+    "format": "+",
+    "on-click": "~/.config/waybar/scripts/brightness.sh up",
+    "tooltip": false
+  },
+  "custom/brightness-down": {
+    "format": "-",
+    "on-click": "~/.config/waybar/scripts/brightness.sh down",
+    "tooltip": false
   },
   "hyprland/workspaces": {
     "format": "{name}",

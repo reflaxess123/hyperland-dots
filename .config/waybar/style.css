@@ -107,6 +107,18 @@ window#waybar {
   color: #89b4fa;
 }
 
+#custom-brightness {
+  color: #f9e2af;
+  padding: 0 2px;
+}
+
+#custom-brightness-up,
+#custom-brightness-down {
+  color: #f9e2af;
+  padding: 0 5px;
+  font-weight: bold;
+}
+
 #network {
   color: #cad3f5;
 }
