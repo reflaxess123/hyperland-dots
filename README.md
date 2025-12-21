@@ -284,6 +284,38 @@ curl ifconfig.me
 - Sudoers правило для sing-box
 - Сервер с VLESS + Reality
 
+## Монтирование NTFS дисков
+
+Для работы с NTFS дисками (например, диск с данными Windows) используется встроенный драйвер `ntfs3`.
+
+### Установка
+
+```bash
+# 1. Создать точку монтирования
+sudo mkdir -p /mnt/windows
+
+# 2. Найти UUID раздела
+lsblk -o NAME,SIZE,FSTYPE,UUID
+
+# 3. Добавить в /etc/fstab для автомонтирования
+echo 'UUID=ВАШЕ_UUID  /mnt/windows  ntfs3  defaults,uid=1000,gid=1000,nofail  0 0' | sudo tee -a /etc/fstab
+
+# 4. Применить изменения
+sudo systemctl daemon-reload
+sudo mount -a
+```
+
+### Опции
+
+- `ntfs3` — быстрый драйвер в ядре (не ntfs-3g)
+- `uid=1000,gid=1000` — файлы принадлежат вашему пользователю
+- `nofail` — система загрузится даже если диск недоступен
+
+### Важно
+
+- Если Windows установлена на этом же диске — отключите **Fast Startup** и **Hibernate** в Windows
+- Для отдельного диска с данными это не требуется
+
 ## Конфигурация
 
 Основной файл конфигурации - `hyprland.conf`. В нем вы можете настроить:
