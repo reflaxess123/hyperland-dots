@@ -21,6 +21,16 @@
     ],
     "rules": [
       {
+        "domain": [
+          "dns-shop.ru"
+        ],
+        "domain_suffix": [
+          ".dns-shop.ru"
+        ],
+        "action": "route",
+        "server": "local"
+      },
+      {
         "domain_suffix": [
           ".ru"
         ],
@@ -90,6 +100,16 @@
       },
       {
         "ip_is_private": true,
+        "action": "route",
+        "outbound": "direct"
+      },
+      {
+        "domain": [
+          "dns-shop.ru"
+        ],
+        "domain_suffix": [
+          ".dns-shop.ru"
+        ],
         "action": "route",
         "outbound": "direct"
       },
