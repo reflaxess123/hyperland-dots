@@ -1,6 +1,8 @@
 // Niri config - mirrors Hyprland setup
 
 input {
+    mod-key "Alt"
+
     keyboard {
         xkb {
             layout "us,ru"
