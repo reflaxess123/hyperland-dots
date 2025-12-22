@@ -72,6 +72,48 @@ alias ....='cd ../../..'
 
 # Tmux
 ta() { tmux attach -t "$@" }
+tmux-help() {
+  echo "╔══════════════════════════════════════════════════════════╗"
+  echo "║              OH MY TMUX - HOTKEYS                        ║"
+  echo "╠══════════════════════════════════════════════════════════╣"
+  echo "║  Prefix: Ctrl+A                                          ║"
+  echo "╠══════════════════════════════════════════════════════════╣"
+  echo "║  СЕССИИ:                                                 ║"
+  echo "║    prefix + C-c   - новая сессия                         ║"
+  echo "║    prefix + C-f   - найти сессию                         ║"
+  echo "║    prefix + d     - отключиться от сессии                ║"
+  echo "║    prefix + $     - переименовать сессию                 ║"
+  echo "╠══════════════════════════════════════════════════════════╣"
+  echo "║  ОКНА:                                                   ║"
+  echo "║    prefix + c     - новое окно                           ║"
+  echo "║    prefix + C-h   - предыдущее окно                      ║"
+  echo "║    prefix + C-l   - следующее окно                       ║"
+  echo "║    prefix + Tab   - последнее активное окно              ║"
+  echo "║    prefix + 1-9   - перейти к окну N                     ║"
+  echo "║    prefix + ,     - переименовать окно                   ║"
+  echo "╠══════════════════════════════════════════════════════════╣"
+  echo "║  ПАНЕЛИ:                                                 ║"
+  echo "║    prefix + -     - разделить горизонтально              ║"
+  echo "║    prefix + _     - разделить вертикально                ║"
+  echo "║    prefix + h/j/k/l - перемещение между панелями         ║"
+  echo "║    prefix + H/J/K/L - изменить размер панели             ║"
+  echo "║    prefix + < / > - поменять панели местами              ║"
+  echo "║    prefix + x     - закрыть панель                       ║"
+  echo "║    prefix + z     - развернуть/свернуть панель           ║"
+  echo "║    prefix + +     - развернуть панель в новое окно       ║"
+  echo "╠══════════════════════════════════════════════════════════╣"
+  echo "║  КОПИРОВАНИЕ:                                            ║"
+  echo "║    prefix + Enter - режим копирования                    ║"
+  echo "║    prefix + b     - список буферов                       ║"
+  echo "║    prefix + p     - вставить из буфера                   ║"
+  echo "╠══════════════════════════════════════════════════════════╣"
+  echo "║  ДРУГОЕ:                                                 ║"
+  echo "║    prefix + e     - открыть конфиг                       ║"
+  echo "║    prefix + r     - перезагрузить конфиг                 ║"
+  echo "║    prefix + m     - вкл/выкл мышь                        ║"
+  echo "╚══════════════════════════════════════════════════════════╝"
+}
+alias th='tmux-help'
 
 # Cleanup
 clean-node() { rm -rf node_modules }
@@ -87,6 +129,8 @@ hhf() {
 # Key bindings
 bindkey -s '^e' 'nvim .\n'
 bindkey -s '^g' 'lazygit\n'
+bindkey -s '^t' 'tmux\n'
+bindkey -s '^h' 'tmux-help\n'
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
