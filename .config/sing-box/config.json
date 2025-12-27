@@ -22,10 +22,12 @@
     "rules": [
       {
         "domain": [
-          "dns-shop.ru"
+          "dns-shop.ru",
+          "rubygems.org"
         ],
         "domain_suffix": [
-          ".dns-shop.ru"
+          ".dns-shop.ru",
+          ".rubygems.org"
         ],
         "action": "route",
         "server": "local"
@@ -105,10 +107,12 @@
       },
       {
         "domain": [
-          "dns-shop.ru"
+          "dns-shop.ru",
+          "rubygems.org"
         ],
         "domain_suffix": [
-          ".dns-shop.ru"
+          ".dns-shop.ru",
+          ".rubygems.org"
         ],
         "action": "route",
         "outbound": "direct"

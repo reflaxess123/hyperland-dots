@@ -168,7 +168,7 @@ tmux_conf_theme_mode_attr="bold"
 
 # status line style
 tmux_conf_theme_status_fg="$tmux_conf_theme_colour_3"
-tmux_conf_theme_status_bg="$tmux_conf_theme_colour_1"
+tmux_conf_theme_status_bg="default"
 tmux_conf_theme_status_attr="none"
 
 # terminal title
@@ -193,10 +193,10 @@ tmux_conf_theme_terminal_title="#h ❐ #S ● #I #W"
 #     - #{hostname_full_ssh}
 #     - #{username}
 #     - #{username_ssh}
-tmux_conf_theme_window_status_fg="$tmux_conf_theme_colour_3"
-tmux_conf_theme_window_status_bg="$tmux_conf_theme_colour_1"
+tmux_conf_theme_window_status_fg="#cdd6f4"
+tmux_conf_theme_window_status_bg="default"
 tmux_conf_theme_window_status_attr="none"
-tmux_conf_theme_window_status_format="#I #W#{?#{||:#{window_bell_flag},#{window_zoomed_flag}}, ,}#{?window_bell_flag,!,}#{?window_zoomed_flag,Z,}"
+tmux_conf_theme_window_status_format=" #W "
 #tmux_conf_theme_window_status_format="#{circled_window_index} #W#{?#{||:#{window_bell_flag},#{window_zoomed_flag}}, ,}#{?window_bell_flag,!,}#{?window_zoomed_flag,Z,}"
 #tmux_conf_theme_window_status_format="#I #W#{?#{||:#{window_bell_flag},#{window_zoomed_flag}}, ,}#{?window_bell_flag,🔔,}#{?window_zoomed_flag,🔍,}"
 
@@ -210,17 +210,17 @@ tmux_conf_theme_window_status_format="#I #W#{?#{||:#{window_bell_flag},#{window_
 #     - #{hostname_full_ssh}
 #     - #{username}
 #     - #{username_ssh}
-tmux_conf_theme_window_status_current_fg="$tmux_conf_theme_colour_1"
-tmux_conf_theme_window_status_current_bg="$tmux_conf_theme_colour_4"
+tmux_conf_theme_window_status_current_fg="#1e1e2e"
+tmux_conf_theme_window_status_current_bg="default"
 tmux_conf_theme_window_status_current_attr="bold"
-tmux_conf_theme_window_status_current_format="#I #W#{?#{||:#{window_bell_flag},#{window_zoomed_flag}}, ,}#{?window_bell_flag,!,}#{?window_zoomed_flag,Z,}"
+tmux_conf_theme_window_status_current_format=" #W "
 #tmux_conf_theme_window_status_current_format="#{circled_window_index} #W#{?#{||:#{window_bell_flag},#{window_zoomed_flag}}, ,}#{?window_bell_flag,!,}#{?window_zoomed_flag,Z,}"
 #tmux_conf_theme_window_status_current_format="#I #W#{?#{||:#{window_bell_flag},#{window_zoomed_flag}}, ,}#{?window_bell_flag,🔔,}#{?window_zoomed_flag,🔍,}"
 
 # window activity status style
 tmux_conf_theme_window_status_activity_fg="default"
 tmux_conf_theme_window_status_activity_bg="default"
-tmux_conf_theme_window_status_activity_attr="underscore"
+tmux_conf_theme_window_status_activity_attr="none"
 
 # window bell status style
 tmux_conf_theme_window_status_bell_fg="$tmux_conf_theme_colour_5"
@@ -228,15 +228,15 @@ tmux_conf_theme_window_status_bell_bg="default"
 tmux_conf_theme_window_status_bell_attr="blink,bold"
 
 # window last status style
-tmux_conf_theme_window_status_last_fg="$tmux_conf_theme_colour_4"
-tmux_conf_theme_window_status_last_bg="$tmux_conf_theme_colour_2"
+tmux_conf_theme_window_status_last_fg="#cdd6f4"
+tmux_conf_theme_window_status_last_bg="default"
 tmux_conf_theme_window_status_last_attr="none"
 
 # status left/right sections separators (rounded)
-tmux_conf_theme_left_separator_main='\uE0B4'   #
-tmux_conf_theme_left_separator_sub='\uE0B5'    #
-tmux_conf_theme_right_separator_main='\uE0B6'  #
-tmux_conf_theme_right_separator_sub='\uE0B7'   #
+tmux_conf_theme_left_separator_main=''
+tmux_conf_theme_left_separator_sub=''
+tmux_conf_theme_right_separator_main=''
+tmux_conf_theme_right_separator_sub=''
 
 # status left/right content:
 #   - separate main sections with "|"
@@ -265,9 +265,9 @@ tmux_conf_theme_right_separator_sub='\uE0B7'   #
 #     - #{uptime_s}
 #     - #{username}
 #     - #{username_ssh}
-tmux_conf_theme_status_left=" ❐ #S | ↑#{?uptime_y, #{uptime_y}y,}#{?uptime_d, #{uptime_d}d,}#{?uptime_h, #{uptime_h}h,}#{?uptime_m, #{uptime_m}m,} "
+tmux_conf_theme_status_left="#[fg=#cba6f7,bg=default]#[fg=#1e1e2e,bg=#cba6f7] ❐ #S | ↑#{?uptime_y, #{uptime_y}y,}#{?uptime_d, #{uptime_d}d,}#{?uptime_h, #{uptime_h}h,}#{?uptime_m, #{uptime_m}m,} "
 #tmux_conf_theme_status_left=" ❐ #S | ↑#{?uptime_y, #{uptime_y}y,}#{?uptime_d, #{uptime_d}d,}#{?uptime_h, #{uptime_h}h,}#{?uptime_m, #{uptime_m}m,} | #{pretty_pane_current_path} "
-tmux_conf_theme_status_right=" #{prefix}#{mouse}#{pairing}#{synchronized}#{?battery_status,#{battery_status},}#{?battery_bar, #{battery_bar},}#{?battery_percentage, #{battery_percentage},} , %R , %d %b | #{username}#{root} | #{hostname} "
+tmux_conf_theme_status_right=" #{prefix}#{mouse}#{pairing}#{synchronized}#{?battery_status,#{battery_status},}#{?battery_bar, #{battery_bar},}#{?battery_percentage, #{battery_percentage},} , %R , %d %b | #{username}#{root} | #{hostname} #[fg=#cba6f7,bg=default]"
 
 # status left style (dark text on colored backgrounds)
 tmux_conf_theme_status_left_fg="#1e1e2e,#1e1e2e,#1e1e2e"
@@ -406,11 +406,26 @@ run-shell 'tmux unbind x; tmux bind-key x kill-pane'
 # enable mouse
 set -g mouse on
 
+# popup terminal (Ctrl+A, `)
+# Закрыть: Ctrl+D или просто exit
+bind-key ` display-popup -E -w 80% -h 80% -d "#{pane_current_path}"
+
 # display a message after toggling mouse support
 bind m run "cut -c3- '#{TMUX_CONF}' | sh -s _toggle_mouse" \; display 'mouse #{?#{mouse},on,off}'
 
 # move status line to top
-#set -g status-position top
+set -g status-position top
+
+# center window list
+set -g status-justify left
+
+# space between window pills
+set -g window-status-separator " " #!important
+
+# override window formats directly
+set -g window-status-format "#[fg=#313244,bg=default]#[fg=#cdd6f4,bg=#313244] #W #[fg=#313244,bg=default]" #!important
+set -g window-status-current-format "#[fg=#89b4fa,bg=default]#[fg=#1e1e2e,bg=#89b4fa,bold] #W #[fg=#89b4fa,bg=default,nobold]" #!important
+
 
 
 # -- tpm -----------------------------------------------------------------------
@@ -451,9 +466,9 @@ tmux_conf_uninstall_plugins_on_reload=true
 # visit https://github.com/tmux-plugins for available plugins
 #set -g @plugin 'tmux-plugins/tmux-copycat'
 #set -g @plugin 'tmux-plugins/tmux-cpu'
-#set -g @plugin 'tmux-plugins/tmux-resurrect'
-#set -g @plugin 'tmux-plugins/tmux-continuum'
-#set -g @continuum-restore 'on'
+set -g @plugin 'tmux-plugins/tmux-resurrect'
+set -g @plugin 'tmux-plugins/tmux-continuum'
+set -g @continuum-restore 'on'
 
 
 # -- custom variables ----------------------------------------------------------

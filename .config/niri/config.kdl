@@ -8,6 +8,7 @@ input {
             layout "us,ru"
             options "grp:alt_shift_toggle"
         }
+        track-layout "window"
     }
 
     mouse {
@@ -191,5 +192,5 @@ binds {
 
     // Scripts
     Alt+P { spawn-sh "~/.config/hypr/scripts/singbox-toggle.sh"; }
-    Alt+I { spawn-sh "~/.config/hypr/scripts/socks-toggle.sh"; }
+    // Alt+I { spawn-sh "~/.config/hypr/scripts/socks-toggle.sh"; }
 }

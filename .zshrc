@@ -9,7 +9,7 @@ source $ZSH/oh-my-zsh.sh
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # Basic exports
-export PATH="/sbin:$HOME/.local/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 export EDITOR='nvim'
 export VISUAL='nvim'
 
@@ -63,6 +63,9 @@ alias pm='poetry run python main.py'
 # Clipboard
 alias clip='wl-paste'
 copy() { echo "$@" | wl-copy }
+
+# Claude
+alias cl='claude'
 
 # Navigation
 alias ..='cd ..'
@@ -141,4 +144,17 @@ bindkey -s '^h' 'tmux-help\n'
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
-export UV_PROJECT_ENVIRONMENT=.venv-linux
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# rbenv
+eval "$(rbenv init - zsh)"
+# Lazy conda - загружается только при первом вызове
+conda() {
+  unfunction conda
+  source /opt/miniconda3/etc/profile.d/conda.sh
+  conda "$@"
+}
+
