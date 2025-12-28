@@ -1,63 +1,69 @@
 [window]
-opacity = 0.36
+opacity = 0.85
 decorations = "none"
-padding = { x = 25, y = 45 }
+padding = { x = 0, y = 0 }
 dynamic_padding = false
 startup_mode = "Windowed"
 
+[window.dimensions]
+columns = 120
+lines = 40
+
 [font]
-size = 14
+size = 16
+builtin_box_drawing = true
 
 [font.normal]
-family = "JetBrainsMono Nerd Font"
+family = "MapleMono NF CN"
 style = "Regular"
 
-[colors]
-# Схема "Catppuccin Mocha" - яркая и красивая
+[font.offset]
+x = 0
+y = 1
+
+[font.glyph_offset]
+x = 0
+y = 0
+
 [colors.primary]
-background = "#1e1e1e"
-foreground = "#cdd6f4"
+background = "#0d1117"
+foreground = "#ffffff"
 
-# Цвета курсора
 [colors.cursor]
-text = "#1e1e1e"
-cursor = "#89b4fa"  # Синий курсор
+text = "#0d1117"
+cursor = "#ff79c6"
 
-# Цвета выделения
 [colors.selection]
-text = "#1e1e1e"
-background = "#cdd6f4"
+text = "#0d1117"
+background = "#ff6b6b"
 
-# Поиск
 [colors.search.matches]
-foreground = "#1e1e1e"
+foreground = "#0d1117"
 background = "#f9e2af"
 
 [colors.search.focused_match]
-foreground = "#1e1e1e"
+foreground = "#0d1117"
 background = "#a6e3a1"
 
-# Стандартные цвета
 [colors.normal]
-black = "#45475a"
-red = "#f38ba8"
-green = "#a6e3a1"
-yellow = "#f9e2af"
-blue = "#89b4fa"
-magenta = "#f5c2e7"
-cyan = "#94e2d5"
-white = "#bac2de"
+black = "#44475a"
+red = "#ff5555"
+green = "#50fa7b"
+yellow = "#ffb86c"
+blue = "#8be9fd"
+magenta = "#bd93f9"
+cyan = "#ff79c6"
+white = "#f8f8f2"
 
-# Яркие цвета
 [colors.bright]
-black = "#585b70"
-red = "#f38ba8"
-green = "#a6e3a1"
-yellow = "#f9e2af"
-blue = "#89b4fa"
-magenta = "#f5c2e7"
-cyan = "#94e2d5"
-white = "#a6adc8"
+black = "#6272a4"
+red = "#ff6e6e"
+green = "#69ff94"
+yellow = "#ffffa5"
+blue = "#d6acff"
+magenta = "#ff92df"
+cyan = "#a4ffff"
+white = "#ffffff"
 
 [[keyboard.bindings]]
 key = "C"
@@ -69,7 +75,6 @@ key = "V"
 mods = "Control"
 action = "Paste"
 
-# Сохраняем также стандартные терминальные сочетания
 [[keyboard.bindings]]
 key = "C"
 mods = "Control|Shift"
@@ -80,39 +85,50 @@ key = "V"
 mods = "Control|Shift"
 action = "Paste"
 
-# Дополнительные настройки как в kitty
+[[keyboard.bindings]]
+key = "N"
+mods = "Control|Shift"
+action = "SpawnNewInstance"
+
+[[keyboard.bindings]]
+key = "Plus"
+mods = "Control"
+action = "IncreaseFontSize"
+
+[[keyboard.bindings]]
+key = "Minus"
+mods = "Control"
+action = "DecreaseFontSize"
+
+[[keyboard.bindings]]
+key = "Key0"
+mods = "Control"
+action = "ResetFontSize"
+
+[[keyboard.bindings]]
+key = "F11"
+action = "ToggleFullscreen"
+
 [cursor]
 style = { shape = "Block", blinking = "On" }
 blink_interval = 500
 unfocused_hollow = true
 
 [mouse]
-hide_when_typing = false
+hide_when_typing = true
 
 [scrolling]
-history = 10000
+history = 50000
 multiplier = 3
 
-[window.dimensions]
-columns = 120
-lines = 40
-
-# URL настройки
 [hints]
 enabled = [
   { regex = "https?://[^\\s<>\"{}|\\\\^`]+", action = "Copy", post_processing = true, mouse = { enabled = true }, binding = { key = "U", mods = "Control|Shift" } }
 ]
 
-# Производительность
-[debug]
-render_timer = false
-persistent_logging = false
-
-# Переменные окружения для nvim поддержки
 [env]
 TERM = "alacritty"
 COLORTERM = "truecolor"
 
-# Настройки терминала для лучшей совместимости
 [terminal]
-osc52 = "CopyPaste"  # Поддержка OSC 52 для copy/paste
+osc52 = "CopyPaste"
