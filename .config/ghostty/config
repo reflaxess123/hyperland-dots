@@ -1,8 +1,8 @@
 font-family = "MapleMono NF CN"
 font-size = 16
 background-opacity = 0.85
-window-padding-x = 25
-window-padding-y = 25
+window-padding-x = 0
+window-padding-y = 0
 
 window-width = 1200
 window-height = 750
