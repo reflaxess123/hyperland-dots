@@ -524,3 +524,8 @@ set -g @continuum-restore 'on'
 # "$@"
 # # /!\ do not remove the previous line
 # #     do not write below this line
+
+# Ctrl+Tab / Ctrl+Shift+Tab для переключения окон
+bind -n C-Tab next-window
+bind -n C-S-Tab previous-window
+

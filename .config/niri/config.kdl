@@ -2,6 +2,7 @@
 
 input {
     mod-key "Alt"
+    focus-follows-mouse
 
     keyboard {
         xkb {
@@ -55,7 +56,7 @@ environment {
 
 // Layout
 layout {
-    gaps 40
+    gaps 5
 
     center-focused-column "never"
 
@@ -72,7 +73,48 @@ layout {
     }
 
     border {
-        off
+        width 1
+        active-color "#cba6f7"
+        inactive-color "#44444400"
+    }
+
+    struts {
+        left 10
+        right 10
+        top 10
+        bottom 10
+    }
+}
+
+// Animations - smooth like Hyprland
+animations {
+    // Smooth workspace switching
+    workspace-switch {
+        spring damping-ratio=1.0 stiffness=800 epsilon=0.0001
+    }
+
+    // Window animations
+    window-open {
+        duration-ms 200
+        curve "ease-out-expo"
+    }
+
+    window-close {
+        duration-ms 150
+        curve "ease-out-quad"
+    }
+
+    // Smooth window movement
+    horizontal-view-movement {
+        spring damping-ratio=1.0 stiffness=800 epsilon=0.0001
+    }
+
+    window-movement {
+        spring damping-ratio=1.0 stiffness=800 epsilon=0.0001
+    }
+
+    window-resize {
+        spring damping-ratio=1.0 stiffness=800 epsilon=0.0001
     }
 }
 
@@ -104,7 +146,7 @@ window-rule {
 // Keybinds - same as Hyprland
 binds {
     // Apps
-    Alt+W { spawn "ghostty"; }
+    Alt+W { spawn "kitty"; }
     Alt+Q { close-window; }
     Alt+M { quit; }
     Alt+E { spawn "nautilus"; }
@@ -121,8 +163,8 @@ binds {
     Alt+Grave { spawn "dms" "ipc" "call" "overview" "toggle"; }
     Alt+Ctrl+A { spawn "dms" "ipc" "call" "dankdash" "wallpaper"; }
 
-    // Alt+Tab window switching
-    Alt+Tab { focus-column-right; }
+    // Alt+Tab теперь overview (см. ниже)
+    // Для переключения колонок используй Alt+H/L
     Alt+Shift+Tab { focus-column-left; }
 
     // Window management
@@ -185,6 +227,9 @@ binds {
     // Super + scroll = vertical (switch workspaces)
     Super+WheelScrollDown { focus-workspace-down; }
     Super+WheelScrollUp { focus-workspace-up; }
+
+    // Overview (workspace map)
+    Alt+Tab { toggle-overview; }
 
     // Screenshot
     Print { screenshot; }

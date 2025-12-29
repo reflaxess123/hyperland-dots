@@ -108,11 +108,40 @@
       {
         "domain": [
           "dns-shop.ru",
-          "rubygems.org"
+          "rubygems.org",
+          "telegram.org",
+          "t.me",
+          "telegram.me",
+          "telesco.pe",
+          "tg.dev",
+          "core.telegram.org",
+          "web.telegram.org",
+          "desktop.telegram.org"
         ],
         "domain_suffix": [
           ".dns-shop.ru",
-          ".rubygems.org"
+          ".rubygems.org",
+          ".telegram.org",
+          ".t.me",
+          ".telegram.me",
+          ".telesco.pe",
+          ".tg.dev",
+          ".tdesktop.com",
+          ".telegra.ph"
+        ],
+        "action": "route",
+        "outbound": "direct"
+      },
+      {
+        "ip_cidr": [
+          "91.108.4.0/22",
+          "91.108.8.0/22",
+          "91.108.12.0/22",
+          "91.108.16.0/22",
+          "91.108.20.0/22",
+          "91.108.56.0/22",
+          "149.154.160.0/20",
+          "185.76.151.0/24"
         ],
         "action": "route",
         "outbound": "direct"
