@@ -134,6 +134,56 @@ alias space='du -sh * 2>/dev/null | sort -hr | head -20'
 alias vpn-log='tail -f ~/.local/share/singbox-traffic.log'
 alias vpn-traffic='tail -f ~/.local/share/singbox-traffic.log | grep -E "proxy|direct" --color=auto'
 
+# Claude Code usage
+claude-usage() {
+  local CREDS="$HOME/.claude/.credentials.json"
+  [[ ! -f "$CREDS" ]] && echo "❌ No credentials" && return
+
+  local TOKEN=$(jq -r '.claudeAiOauth.accessToken' "$CREDS" 2>/dev/null)
+  [[ -z "$TOKEN" || "$TOKEN" == "null" ]] && echo "❌ No token" && return
+
+  local R=$(curl -s --max-time 10 "https://api.anthropic.com/api/oauth/usage" \
+    -H "Authorization: Bearer $TOKEN" \
+    -H "anthropic-beta: oauth-2025-04-20" 2>/dev/null)
+
+  [[ -z "$R" ]] && echo "❌ Network error" && return
+
+  local H5=$(echo "$R" | jq -r '.five_hour.utilization // 0')
+  local H5_R=$(echo "$R" | jq -r '.five_hour.resets_at // empty')
+  local D7=$(echo "$R" | jq -r '.seven_day.utilization // 0')
+  local D7_R=$(echo "$R" | jq -r '.seven_day.resets_at // empty')
+
+  time_left() {
+    local t="$1"
+    [[ -z "$t" ]] && echo "?" && return
+    local diff=$(( $(date -d "$t" +%s) - $(date +%s) ))
+    [[ $diff -lt 0 ]] && echo "0m" && return
+    local d=$((diff/86400)) h=$(((diff%86400)/3600)) m=$(((diff%3600)/60))
+    [[ $d -gt 0 ]] && echo "${d}d ${h}h" || [[ $h -gt 0 ]] && echo "${h}h ${m}m" || echo "${m}m"
+  }
+
+  local bar5="" bar7=""
+  local filled5=$((${H5%.*}/5)) filled7=$((${D7%.*}/5))
+  for i in {1..20}; do
+    [[ $i -le $filled5 ]] && bar5+="█" || bar5+="░"
+    [[ $i -le $filled7 ]] && bar7+="█" || bar7+="░"
+  done
+
+  echo ""
+  echo "  \033[1;35m󰧑  Claude Code Usage\033[0m"
+  echo "  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  echo ""
+  printf "  \033[1;36m⚡ 5-hour limit\033[0m\n"
+  printf "     \033[33m%s\033[0m \033[1m%.0f%%\033[0m\n" "$bar5" "$H5"
+  printf "     ↻ resets in \033[32m%s\033[0m\n" "$(time_left "$H5_R")"
+  echo ""
+  printf "  \033[1;34m📅 7-day limit\033[0m\n"
+  printf "     \033[33m%s\033[0m \033[1m%.0f%%\033[0m\n" "$bar7" "$D7"
+  printf "     ↻ resets in \033[32m%s\033[0m\n" "$(time_left "$D7_R")"
+  echo ""
+}
+alias cu='claude-usage'
+
 # History with fzf insertion
 hhf() { 
   local cmd=$(fc -ln 1 | fzf --tac --no-sort)
