@@ -361,24 +361,55 @@ SERVICE
 install_dms() {
     log_info "Установка DankMaterialShell..."
 
-    if command -v dms &> /dev/null; then
+    if ! command -v dms &> /dev/null; then
+        # Установка зависимостей
+        sudo pacman -S --needed --noconfirm qt6-base qt6-declarative qt6-wayland pipewire wireplumber
+
+        # Установка из AUR
+        yay -S --noconfirm dankmaterialshell-bin || {
+            log_warn "DMS не найден в AUR, пробуем ручную установку..."
+            cd /tmp
+            git clone https://github.com/nickshanks/DankMaterialShell.git
+            cd DankMaterialShell
+            ./install.sh
+        }
+        log_info "DMS установлен"
+    else
         log_info "DMS уже установлен"
-        return
     fi
 
-    # Установка зависимостей
-    sudo pacman -S --needed --noconfirm qt6-base qt6-declarative qt6-wayland pipewire wireplumber
+    # Установка кастомных плагинов
+    install_dms_plugins
+}
 
-    # Установка из AUR
-    yay -S --noconfirm dankmaterialshell-bin || {
-        log_warn "DMS не найден в AUR, пробуем ручную установку..."
-        cd /tmp
-        git clone https://github.com/nickshanks/DankMaterialShell.git
-        cd DankMaterialShell
-        ./install.sh
-    }
+# ==========================================
+# 6.6. Установка кастомных плагинов DMS
+# ==========================================
+install_dms_plugins() {
+    log_info "Установка кастомных плагинов DMS..."
 
-    log_info "DMS установлен"
+    local plugins_dir="$HOME/.config/DankMaterialShell/plugins"
+    mkdir -p "$plugins_dir"
+
+    # treesize-dms - монитор дискового пространства
+    if [[ ! -d "$plugins_dir/treesize-dms" ]]; then
+        log_info "Клонирование treesize-dms..."
+        git clone https://github.com/reflaxess123/treesize-dms "$plugins_dir/treesize-dms"
+    else
+        log_info "treesize-dms уже установлен, обновляю..."
+        cd "$plugins_dir/treesize-dms" && git pull
+    fi
+
+    # vpnstatus - статус sing-box VPN
+    if [[ ! -d "$plugins_dir/vpnStatus" ]]; then
+        log_info "Клонирование vpnStatus..."
+        git clone https://github.com/reflaxess123/vpnstatus "$plugins_dir/vpnStatus"
+    else
+        log_info "vpnStatus уже установлен, обновляю..."
+        cd "$plugins_dir/vpnStatus" && git pull
+    fi
+
+    log_info "Плагины DMS установлены"
 }
 
 # ==========================================
