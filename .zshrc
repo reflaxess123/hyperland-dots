@@ -159,7 +159,13 @@ claude-usage() {
     local diff=$(( $(date -d "$t" +%s) - $(date +%s) ))
     [[ $diff -lt 0 ]] && echo "0m" && return
     local d=$((diff/86400)) h=$(((diff%86400)/3600)) m=$(((diff%3600)/60))
-    [[ $d -gt 0 ]] && echo "${d}d ${h}h" || [[ $h -gt 0 ]] && echo "${h}h ${m}m" || echo "${m}m"
+    if [[ $d -gt 0 ]]; then
+      echo "${d}d ${h}h"
+    elif [[ $h -gt 0 ]]; then
+      echo "${h}h ${m}m"
+    else
+      echo "${m}m"
+    fi
   }
 
   local bar5="" bar7=""

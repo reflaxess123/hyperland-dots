@@ -474,6 +474,8 @@ tmux_conf_uninstall_plugins_on_reload=true
 set -g @plugin 'catppuccin/tmux'
 set -g @catppuccin_flavor 'mocha'
 set -g @catppuccin_status_background 'none'
+set -g @catppuccin_window_text " #W"
+set -g @catppuccin_window_current_text " #W"
 
 # -- custom variables ----------------------------------------------------------
 
@@ -532,6 +534,10 @@ set -g @catppuccin_status_background 'none'
 # Ctrl+Tab / Ctrl+Shift+Tab для переключения окон
 bind -n C-Tab next-window
 bind -n C-S-Tab previous-window
+
+# Window naming - show current command
+set -g automatic-rename on
+set -g automatic-rename-format "#{pane_current_command}"
 
 # Force load catppuccin theme
 run '~/.tmux/plugins/tmux/catppuccin.tmux'
