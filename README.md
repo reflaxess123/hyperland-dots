@@ -1,10 +1,10 @@
 # Мои Dotfiles для Hyprland
 
-Персональная конфигурация для Hyprland + DankMaterialShell на Arch Linux.
+Персональная конфигурация для Hyprland + DankMaterialShell / Caelestia Shell на Arch Linux.
 
 ## Особенности
 
-- **DankMaterialShell** — современный desktop shell (панель, уведомления, лаунчер, обои)
+- **DankMaterialShell** или **Caelestia Shell** — два desktop shell на выбор
 - **Минималистичный дизайн** — dwindle layout, Catppuccin Mocha акценты
 - **Плавные анимации** — настроенные bezier curves для окон и workspaces
 - **VPN с split tunneling** — sing-box (VLESS + Reality), .ru домены напрямую
@@ -101,6 +101,31 @@ dms ipc call hypr toggleOverview   # Обзор workspaces
 dms ipc call dankdash wallpaper    # Выбор обоев
 ```
 
+## Caelestia Shell
+
+Альтернативный desktop shell на базе Quickshell. Переключение:
+
+```bash
+~/.config/hypr/scripts/switch-shell.sh
+```
+
+### Особенности
+
+- Прозрачность с blur
+- Температура в °C
+- Dashboard с системной информацией (Alt+Tab)
+
+### Горячие клавиши Caelestia
+
+| Клавиша | Действие |
+|---------|----------|
+| `Alt + Space` | Launcher |
+| `Alt + N` | Sidebar |
+| `Alt + V` | Utilities |
+| `Alt + X` | Session menu |
+| `Alt + Tab` | Dashboard |
+| `Alt + Ctrl + A` | Random wallpaper |
+
 ## sing-box VPN
 
 VPN на основе VLESS + Reality с split tunneling.
@@ -170,6 +195,7 @@ nvidia-smi --query-gpu=fan.speed,temperature.gpu --format=csv
 ├── hypr/                 # Hyprland + скрипты
 ├── niri/                 # Niri compositor
 ├── DankMaterialShell/    # DMS + плагины
+├── caelestia/            # Caelestia Shell настройки
 ├── sing-box/             # VPN (только шаблон!)
 ├── kitty/                # Терминал
 ├── ghostty/              # Терминал

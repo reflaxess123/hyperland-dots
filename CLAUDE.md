@@ -1,13 +1,13 @@
 # Hyperland Dots
 
-Dotfiles для Hyprland, Niri и DankMaterialShell.
+Dotfiles для Hyprland, Niri, DankMaterialShell и Caelestia Shell.
 
 ## Структура репозитория
 
 ```
 hyperland-dots/
-├── .zshrc                    # Zsh конфиг (Oh My Zsh + Powerlevel10k)
-├── .tmux.conf.local          # Oh My Tmux настройки (Dracula theme)
+├── .zshrc                    # Zsh конфиг (Oh My Zsh + Powerlevel10k + алиасы)
+├── .tmux.conf.local          # Oh My Tmux настройки (Catppuccin Mocha theme)
 ├── .p10k.zsh                 # Powerlevel10k конфиг
 ├── restore-config.sh         # Скрипт полной установки системы
 ├── README.md                 # Документация
@@ -39,7 +39,10 @@ hyperland-dots/
     ├── sing-box/             # VPN конфиг
     │   └── config.json.example  # Шаблон (без реальных данных!)
     │
-    ├── kitty/                # Kitty терминал (Dracula colors)
+    ├── caelestia/            # Caelestia Shell конфиг (альтернатива DMS)
+    │   └── shell.json        # Настройки шелла
+    │
+    ├── kitty/                # Kitty терминал
     ├── ghostty/              # Ghostty терминал
     ├── alacritty/            # Alacritty терминал
     ├── rofi/                 # App launcher темы
@@ -58,16 +61,29 @@ hyperland-dots/
 | `.config/hypr/hyprland.conf` | Основной конфиг Hyprland |
 | `.config/niri/config.kdl` | Конфиг Niri compositor |
 | `.config/DankMaterialShell/settings.json` | Настройки DMS |
+| `.config/caelestia/shell.json` | Настройки Caelestia Shell |
 | `.config/sing-box/config.json.example` | Шаблон VPN конфига |
-| `.tmux.conf.local` | Tmux настройки |
-| `.zshrc` | Shell конфиг |
+| `.tmux.conf.local` | Tmux настройки (Catppuccin theme) |
+| `.zshrc` | Shell конфиг + алиасы |
 | `restore-config.sh` | Скрипт установки |
+
+## Zsh алиасы
+
+| Алиас | Описание |
+|-------|----------|
+| `t` | Tmux attach или new session |
+| `cu` | Claude Code usage (лимиты API) |
+| `disk` | Обзор дисков |
+| `space` | Топ-20 по размеру в текущей папке |
+| `vpn-log` | Sing-box лог в реалтайме |
+| `vpn-traffic` | Только proxy/direct трафик |
 
 ## Важно
 
 - **sing-box/config.json** исключён из git (содержит приватные данные)
 - Используй `config.json.example` как шаблон
-- DMS заменяет waybar, swaync, rofi, swww
+- **DMS** и **Caelestia Shell** — альтернативные desktop shells
+- Переключение между ними: `~/.config/hypr/scripts/switch-shell.sh`
 - nvim конфиг устанавливается отдельно (NvChad)
 
 ## Как обновить
