@@ -116,7 +116,13 @@
           "tg.dev",
           "core.telegram.org",
           "web.telegram.org",
-          "desktop.telegram.org"
+          "desktop.telegram.org",
+          "avito.st",
+          "avito.ru",
+          "hcaptcha.com",
+          "geetest.com",
+          "yastatic.net",
+          "bdimg.com"
         ],
         "domain_suffix": [
           ".dns-shop.ru",
@@ -127,7 +133,13 @@
           ".telesco.pe",
           ".tg.dev",
           ".tdesktop.com",
-          ".telegra.ph"
+          ".telegra.ph",
+          ".avito.st",
+          ".avito.ru",
+          ".hcaptcha.com",
+          ".geetest.com",
+          ".yastatic.net",
+          ".bdimg.com"
         ],
         "action": "route",
         "outbound": "direct"

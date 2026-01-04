@@ -65,7 +65,7 @@ alias clip='wl-paste'
 copy() { echo "$@" | wl-copy }
 
 # Claude
-alias cl='claude'
+alias cl='claude --dangerously-skip-permissions'
 
 # Navigation
 alias ..='cd ..'

@@ -85,24 +85,24 @@ tmux_conf_24b_colour=auto
 #   - tmux_conf_theme_synchronized
 tmux_conf_theme=enabled
 
-# Catppuccin Mocha theme
-tmux_conf_theme_colour_1="#1e1e2e"    # base (background)
-tmux_conf_theme_colour_2="#313244"    # surface0
-tmux_conf_theme_colour_3="#6c7086"    # overlay1
-tmux_conf_theme_colour_4="#89b4fa"    # blue
-tmux_conf_theme_colour_5="#f9e2af"    # yellow
-tmux_conf_theme_colour_6="#1e1e2e"    # base
-tmux_conf_theme_colour_7="#cdd6f4"    # text
-tmux_conf_theme_colour_8="#1e1e2e"    # base
-tmux_conf_theme_colour_9="#cba6f7"    # mauve
-tmux_conf_theme_colour_10="#f5c2e7"   # pink
-tmux_conf_theme_colour_11="#a6e3a1"   # green
-tmux_conf_theme_colour_12="#6c7086"   # overlay1
-tmux_conf_theme_colour_13="#cdd6f4"   # text
-tmux_conf_theme_colour_14="#1e1e2e"   # base
-tmux_conf_theme_colour_15="#1e1e2e"   # base
-tmux_conf_theme_colour_16="#f38ba8"   # red
-tmux_conf_theme_colour_17="#cdd6f4"   # text
+# Dracula theme (bright neon)
+tmux_conf_theme_colour_1="#282a36"    # background
+tmux_conf_theme_colour_2="#44475a"    # current line
+tmux_conf_theme_colour_3="#6272a4"    # comment
+tmux_conf_theme_colour_4="#8be9fd"    # cyan
+tmux_conf_theme_colour_5="#f1fa8c"    # yellow
+tmux_conf_theme_colour_6="#282a36"    # background
+tmux_conf_theme_colour_7="#f8f8f2"    # foreground
+tmux_conf_theme_colour_8="#282a36"    # background
+tmux_conf_theme_colour_9="#bd93f9"    # purple
+tmux_conf_theme_colour_10="#ff79c6"   # pink
+tmux_conf_theme_colour_11="#50fa7b"   # green
+tmux_conf_theme_colour_12="#6272a4"   # comment
+tmux_conf_theme_colour_13="#f8f8f2"   # foreground
+tmux_conf_theme_colour_14="#282a36"   # background
+tmux_conf_theme_colour_15="#282a36"   # background
+tmux_conf_theme_colour_16="#ff5555"   # red
+tmux_conf_theme_colour_17="#f8f8f2"   # foreground
 
 # default theme (ansi)
 #tmux_conf_theme_colour_1="colour0"
@@ -193,7 +193,7 @@ tmux_conf_theme_terminal_title="#h ❐ #S ● #I #W"
 #     - #{hostname_full_ssh}
 #     - #{username}
 #     - #{username_ssh}
-tmux_conf_theme_window_status_fg="#cdd6f4"
+tmux_conf_theme_window_status_fg="#f8f8f2"
 tmux_conf_theme_window_status_bg="default"
 tmux_conf_theme_window_status_attr="none"
 tmux_conf_theme_window_status_format=" #W "
@@ -210,7 +210,7 @@ tmux_conf_theme_window_status_format=" #W "
 #     - #{hostname_full_ssh}
 #     - #{username}
 #     - #{username_ssh}
-tmux_conf_theme_window_status_current_fg="#1e1e2e"
+tmux_conf_theme_window_status_current_fg="#282a36"
 tmux_conf_theme_window_status_current_bg="default"
 tmux_conf_theme_window_status_current_attr="bold"
 tmux_conf_theme_window_status_current_format=" #W "
@@ -228,7 +228,7 @@ tmux_conf_theme_window_status_bell_bg="default"
 tmux_conf_theme_window_status_bell_attr="blink,bold"
 
 # window last status style
-tmux_conf_theme_window_status_last_fg="#cdd6f4"
+tmux_conf_theme_window_status_last_fg="#f8f8f2"
 tmux_conf_theme_window_status_last_bg="default"
 tmux_conf_theme_window_status_last_attr="none"
 
@@ -265,18 +265,18 @@ tmux_conf_theme_right_separator_sub=''
 #     - #{uptime_s}
 #     - #{username}
 #     - #{username_ssh}
-tmux_conf_theme_status_left="#[fg=#cba6f7,bg=default]#[fg=#1e1e2e,bg=#cba6f7] ❐ #S | ↑#{?uptime_y, #{uptime_y}y,}#{?uptime_d, #{uptime_d}d,}#{?uptime_h, #{uptime_h}h,}#{?uptime_m, #{uptime_m}m,} "
+tmux_conf_theme_status_left="#[fg=#bd93f9,bg=default]#[fg=#282a36,bg=#bd93f9] ❐ #S | ↑#{?uptime_y, #{uptime_y}y,}#{?uptime_d, #{uptime_d}d,}#{?uptime_h, #{uptime_h}h,}#{?uptime_m, #{uptime_m}m,} "
 #tmux_conf_theme_status_left=" ❐ #S | ↑#{?uptime_y, #{uptime_y}y,}#{?uptime_d, #{uptime_d}d,}#{?uptime_h, #{uptime_h}h,}#{?uptime_m, #{uptime_m}m,} | #{pretty_pane_current_path} "
-tmux_conf_theme_status_right=" #{prefix}#{mouse}#{pairing}#{synchronized}#{?battery_status,#{battery_status},}#{?battery_bar, #{battery_bar},}#{?battery_percentage, #{battery_percentage},} , %R , %d %b | #{username}#{root} | #{hostname} #[fg=#cba6f7,bg=default]"
+tmux_conf_theme_status_right=" #{prefix}#{mouse}#{pairing}#{synchronized}#{?battery_status,#{battery_status},}#{?battery_bar, #{battery_bar},}#{?battery_percentage, #{battery_percentage},} , %R , %d %b | #{username}#{root} | #{hostname} #[fg=#bd93f9,bg=default]"
 
 # status left style (dark text on colored backgrounds)
-tmux_conf_theme_status_left_fg="#1e1e2e,#1e1e2e,#1e1e2e"
+tmux_conf_theme_status_left_fg="#282a36,#282a36,#282a36"
 tmux_conf_theme_status_left_bg="$tmux_conf_theme_colour_9,$tmux_conf_theme_colour_10,$tmux_conf_theme_colour_11"
 tmux_conf_theme_status_left_attr="bold,none,none"
 
 # status right style (dark text on colored backgrounds)
-tmux_conf_theme_status_right_fg="#6c7086,#1e1e2e,#1e1e2e"
-tmux_conf_theme_status_right_bg="#313244,$tmux_conf_theme_colour_4,$tmux_conf_theme_colour_9"
+tmux_conf_theme_status_right_fg="#6272a4,#282a36,#282a36"
+tmux_conf_theme_status_right_bg="#44475a,$tmux_conf_theme_colour_4,$tmux_conf_theme_colour_9"
 tmux_conf_theme_status_right_attr="none,none,bold"
 
 # pairing indicator
@@ -423,8 +423,8 @@ set -g status-justify left
 set -g window-status-separator " " #!important
 
 # override window formats directly
-set -g window-status-format "#[fg=#313244,bg=default]#[fg=#cdd6f4,bg=#313244] #W #[fg=#313244,bg=default]" #!important
-set -g window-status-current-format "#[fg=#89b4fa,bg=default]#[fg=#1e1e2e,bg=#89b4fa,bold] #W #[fg=#89b4fa,bg=default,nobold]" #!important
+set -g window-status-format "#[fg=#44475a,bg=default]#[fg=#f8f8f2,bg=#44475a] #W #[fg=#44475a,bg=default]" #!important
+set -g window-status-current-format "#[fg=#8be9fd,bg=default]#[fg=#282a36,bg=#8be9fd,bold] #W #[fg=#8be9fd,bg=default,nobold]" #!important
 
 
 
