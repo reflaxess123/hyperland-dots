@@ -41,3 +41,5 @@
 # Documentation
 !README.md
 !CLAUDE.md
+!.config/caelestia/
+!.config/caelestia/**
