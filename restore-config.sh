@@ -126,6 +126,8 @@ install_aur_packages() {
         telegram-desktop
         redsocks
         mission-center
+        mcmojave-cursors
+        zen-browser-bin
     )
 
     for pkg in "${aur_packages[@]}"; do
@@ -354,6 +356,32 @@ SERVICE
 }
 
 # ==========================================
+# 6.5. Установка DankMaterialShell
+# ==========================================
+install_dms() {
+    log_info "Установка DankMaterialShell..."
+
+    if command -v dms &> /dev/null; then
+        log_info "DMS уже установлен"
+        return
+    fi
+
+    # Установка зависимостей
+    sudo pacman -S --needed --noconfirm qt6-base qt6-declarative qt6-wayland pipewire wireplumber
+
+    # Установка из AUR
+    yay -S --noconfirm dankmaterialshell-bin || {
+        log_warn "DMS не найден в AUR, пробуем ручную установку..."
+        cd /tmp
+        git clone https://github.com/nickshanks/DankMaterialShell.git
+        cd DankMaterialShell
+        ./install.sh
+    }
+
+    log_info "DMS установлен"
+}
+
+# ==========================================
 # 7. Установка Oh-My-Zsh и Powerlevel10k
 # ==========================================
 install_ohmyzsh() {
@@ -378,7 +406,25 @@ install_ohmyzsh() {
 }
 
 # ==========================================
-# 7. Установка TPM (Tmux Plugin Manager)
+# 7.5. Установка Oh My Tmux
+# ==========================================
+install_ohmytmux() {
+    log_info "Установка Oh My Tmux..."
+
+    if [[ -f "$HOME/.tmux.conf" ]] && grep -q "gpakosz" "$HOME/.tmux.conf" 2>/dev/null; then
+        log_info "Oh My Tmux уже установлен"
+        return
+    fi
+
+    cd ~
+    git clone https://github.com/gpakosz/.tmux.git
+    ln -sf .tmux/.tmux.conf ~/.tmux.conf
+
+    log_info "Oh My Tmux установлен"
+}
+
+# ==========================================
+# 7.6. Установка TPM (Tmux Plugin Manager)
 # ==========================================
 install_tpm() {
     log_info "Установка TPM..."
@@ -430,20 +476,22 @@ copy_configs() {
 
     local items=(
         ".zshrc"
-        ".tmux.conf"
+        ".tmux.conf.local"
         ".p10k.zsh"
         ".config/hypr"
-        ".config/waybar"
         ".config/ghostty"
         ".config/kitty"
         ".config/alacritty"
-        ".config/wofi"
-        ".config/swaync"
         ".config/swaykbdd"
         ".config/neofetch"
         ".config/scripts"
         ".config/Cursor"
         ".config/sing-box"
+        ".config/DankMaterialShell"
+        ".config/rofi"
+        ".config/niri"
+        ".config/gtk-3.0"
+        ".config/gtk-4.0"
     )
 
     for item in "${items[@]}"; do
@@ -500,7 +548,9 @@ main() {
     setup_redsocks
     setup_singbox
     setup_gpu_fan
+    install_dms
     install_ohmyzsh
+    install_ohmytmux
     install_tpm
     copy_configs
     make_scripts_executable
