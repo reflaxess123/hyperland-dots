@@ -74,6 +74,7 @@ alias ....='cd ../../..'
 ~() { cd $HOME }
 
 # Tmux
+t() { tmux attach || tmux new }
 ta() { tmux attach -t "$@" }
 tmux-help() {
   echo "╔══════════════════════════════════════════════════════════╗"
@@ -123,6 +124,16 @@ clean-node() { rm -rf node_modules }
 clean-logs() { rm -f *.log }
 clean-temp() { rm -rf /tmp/* }
 
+# Disk space
+alias df='df -h'
+alias du='du -h'
+alias disk='df -h | grep -E "^/dev|Filesystem"'
+alias space='du -sh * 2>/dev/null | sort -hr | head -20'
+
+# Sing-box traffic monitor
+alias vpn-log='tail -f ~/.local/share/singbox-traffic.log'
+alias vpn-traffic='tail -f ~/.local/share/singbox-traffic.log | grep -E "proxy|direct" --color=auto'
+
 # History with fzf insertion
 hhf() { 
   local cmd=$(fc -ln 1 | fzf --tac --no-sort)
@@ -132,7 +143,7 @@ hhf() {
 # Key bindings
 bindkey -s '^e' 'nvim .\n'
 bindkey -s '^g' 'lazygit\n'
-bindkey -s '^t' 'tmux\n'
+bindkey -s '^t' 't\n'
 bindkey -s '^h' 'tmux-help\n'
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
