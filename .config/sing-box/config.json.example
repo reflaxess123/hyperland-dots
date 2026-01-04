@@ -2,7 +2,7 @@
   "log": {
     "level": "debug",
     "timestamp": true,
-    "output": "/home/vasya/.local/share/singbox-traffic.log"
+    "output": "/home/YOUR_USERNAME/.local/share/singbox-traffic.log"
   },
   "dns": {
     "servers": [
@@ -68,9 +68,9 @@
     {
       "type": "vless",
       "tag": "proxy",
-      "server": "89.124.69.151",
-      "server_port": 33663,
-      "uuid": "ea7ef323-54e0-44f0-9a40-411c486313ab",
+      "server": "YOUR_SERVER_IP",
+      "server_port": 443,
+      "uuid": "YOUR_UUID_HERE",
       "tls": {
         "enabled": true,
         "server_name": "google.com",
@@ -80,8 +80,8 @@
         },
         "reality": {
           "enabled": true,
-          "public_key": "oa2LHPI2ezfKS6E-5cfeGlzuqs5-0k_XkI9oNwLst1s",
-          "short_id": "30"
+          "public_key": "YOUR_REALITY_PUBLIC_KEY",
+          "short_id": "YOUR_SHORT_ID"
         }
       }
     },

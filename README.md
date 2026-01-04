@@ -1,90 +1,94 @@
 # Мои Dotfiles для Hyprland
 
-Это моя персональная конфигурация для Hyprland, Wayland-композитора.
+Персональная конфигурация для Hyprland + DankMaterialShell на Arch Linux.
 
 ## Особенности
 
-*   **DankMaterialShell** — современный desktop shell с Material Design
-*   **Минималистичный и чистый вид:** Конфигурация нацелена на минимализм, с использованием `dwindle` лэйаута.
-*   **Анимации:** Плавные и приятные анимации для окон, рабочих столов и слоев.
-*   **Удобные хоткеи:** Продуманные сочетания клавиш для управления окнами, приложениями и системой.
-*   **Скрипты:** Набор полезных скриптов для автоматизации задач.
+- **DankMaterialShell** — современный desktop shell (панель, уведомления, лаунчер, обои)
+- **Минималистичный дизайн** — dwindle layout, Catppuccin Mocha акценты
+- **Плавные анимации** — настроенные bezier curves для окон и workspaces
+- **VPN с split tunneling** — sing-box (VLESS + Reality), .ru домены напрямую
+- **NVIDIA GPU fan control** — динамическое управление вентиляторами на Wayland
+- **Кастомные DMS плагины** — VPN статус, Disk Scanner, GPU мониторинг
 
-## Установка
+## Быстрая установка
 
-1.  **Клонировать репозиторий:**
-    ```bash
-    git clone <URL-вашего-репозитория> ~/.config/hypr
-    ```
-2.  **Установить зависимости:**
-    *   `hyprland`
-    *   `dms-shell-hyprland` (AUR) — desktop shell (панель, уведомления, лаунчер, обои)
-    *   `ghostty` (или ваш любимый терминал)
-    *   `nautilus` (или ваш любимый файловый менеджер)
-    *   `google-chrome-stable`
-    *   `pavucontrol`
-    *   `wl-paste`
-    *   `cliphist`
-    *   `udiskie`
-    *   `hyprshot` — скриншоты
-    *   `papirus-icon-theme` — иконки
-    *   Nerd Font (рекомендуется `ttf-maple-nerd` или любой другой Nerd Font)
-    *   `sing-box` (опционально, для VPN с split tunneling)
+```bash
+# Клонировать репозиторий
+git clone https://github.com/reflaxess123/hyperland-dots ~/hyperland-dots
 
-3.  **Установить DankMaterialShell:**
-    ```bash
-    yay -S dms-shell-hyprland
-    dms plugins install dankActions
-    ```
+# Запустить скрипт установки
+cd ~/hyperland-dots
+chmod +x restore-config.sh
+./restore-config.sh
+```
 
-4.  **Сделать скрипты исполняемыми:**
-    ```bash
-    chmod +x ~/.config/hypr/scripts/*.sh
-    ```
+Скрипт установит все зависимости, настроит конфиги и DMS плагины.
 
 ## Сочетания клавиш
 
-| Клавиша                  | Действие                                           |
-| ------------------------ | -------------------------------------------------- |
-| `Alt + W`                | Открыть терминал (`ghostty`)                       |
-| `Alt + Q`                | Закрыть активное окно                              |
-| `Alt + M`                | Выйти из Hyprland                                  |
-| `Alt + Ctrl + W`         | Перезагрузить Hyprland и DMS                       |
-| `Alt + E`                | Открыть файловый менеджер (`nautilus`)             |
-| `Alt + B`                | Открыть браузер (`google-chrome-stable`)           |
-| `Alt + T`                | Переключить активное окно в плавающий режим        |
-| `Alt + Ctrl + B`         | Открыть Brave в режиме Wayland                     |
-| `Alt + Ctrl + T`         | Открыть `missioncenter`                            |
-| `Alt + Space`            | Открыть лаунчер приложений (DMS Spotlight)         |
-| `Alt + O`                | Открыть `obs`                                      |
-| `Alt + C`                | Открыть `cursor.appimage`                          |
-| `Alt + N`                | Открыть/закрыть центр уведомлений                  |
-| `Alt + V`                | История буфера обмена                              |
-| `Alt + X`                | Меню выключения                                    |
-| `Alt + Tab`              | Обзор воркспейсов                                  |
-| `Alt + F`                | Переключить полноэкранный режим для активного окна |
-| `Alt + Ctrl + A`         | Открыть меню выбора обоев                          |
-| `Alt + H/J/K/L`          | Переместить фокус между окнами (как в Vim)         |
-| `Alt + Shift + H/J/K/L`  | Переместить активное окно                          |
-| `Alt + Ctrl + H/J/K/L`   | Изменить размер активного окна                     |
-| `Alt + P`                | Включить/выключить VPN (sing-box)                  |
-| `Alt + 1-9, 0`           | Переключиться на рабочий стол 1-10                 |
-| `Alt + Ctrl + 1-9, 0`    | Переместить активное окно на рабочий стол 1-10     |
-| `Print Screen`           | Сделать скриншот области и скопировать в буфер обмена |
-| `Alt + Ctrl + S`         | Сделать скриншот области и скопировать в буфер обмена |
+### Основные
+
+| Клавиша | Действие |
+|---------|----------|
+| `Alt + W` | Терминал (kitty) |
+| `Alt + Q` | Закрыть окно |
+| `Alt + M` | Выход из Hyprland |
+| `Alt + E` | Файловый менеджер (nautilus) |
+| `Alt + Space` | Лаунчер (DMS Spotlight) |
+| `Alt + Tab` | Обзор workspaces |
+| `Alt + F` | Fullscreen |
+| `Alt + T` | Toggle floating |
+| `Alt + D` | Pseudo (tiling) |
+| `Alt + S` | Pin window |
+
+### VPN и система
+
+| Клавиша | Действие |
+|---------|----------|
+| `Alt + P` | Toggle VPN (sing-box) |
+| `Alt + I` | Toggle SOCKS proxy |
+| `Alt + Ctrl + T` | Mission Center |
+| `Alt + Ctrl + W` | Restart Hyprland + DMS |
+| `Alt + Ctrl + A` | Выбор обоев |
+
+### DMS панели
+
+| Клавиша | Действие |
+|---------|----------|
+| `Alt + N` | Уведомления |
+| `Alt + V` | Буфер обмена |
+| `Alt + X` | Меню выключения |
+| `Alt + O` | OBS Studio |
+
+### Навигация (Vim-style)
+
+| Клавиша | Действие |
+|---------|----------|
+| `Alt + H/J/K/L` | Фокус между окнами |
+| `Alt + Shift + H/J/K/L` | Переместить окно |
+| `Alt + Ctrl + H/J/K/L` | Resize окна |
+| `Alt + 1-9, 0` | Workspace 1-10 |
+| `Alt + Ctrl + 1-9` | Переместить на workspace |
+
+### Скриншоты
+
+| Клавиша | Действие |
+|---------|----------|
+| `Print` | Скриншот области |
+| `Alt + Ctrl + S` | Скриншот области |
 
 ## DankMaterialShell
 
 Desktop shell заменяет waybar, swaync, rofi и swww единым интерфейсом.
 
-### Кастомные виджеты (dankActions)
+### Кастомные виджеты
 
 В панели настроены виджеты через плагин dankActions:
-
-- **VPN** — статус sing-box VPN, клик для включения/выключения
+- **VPN** — статус sing-box, клик для toggle
 - **GPU** — температура и скорость вентилятора NVIDIA
 - **VRAM** — использование видеопамяти
-- **Lang** — текущая раскладка клавиатуры
+- **Disk** — занятое место, клик для tree view
 
 ### IPC команды
 
@@ -93,199 +97,122 @@ dms ipc call spotlight toggle      # Лаунчер
 dms ipc call notifications toggle  # Уведомления
 dms ipc call clipboard toggle      # Буфер обмена
 dms ipc call powermenu toggle      # Меню выключения
-dms ipc call settings toggle       # Настройки
-dms ipc call hypr toggleOverview   # Обзор воркспейсов
+dms ipc call hypr toggleOverview   # Обзор workspaces
 dms ipc call dankdash wallpaper    # Выбор обоев
 ```
 
-## Скрипты
+## sing-box VPN
 
-*   `restart_hyprland.sh`: Перезагружает Hyprland и DMS.
-*   `socks-toggle.sh`: Включает и выключает системный прокси с помощью `redsocks` и `iptables`.
-*   `singbox-toggle.sh`: Включает и выключает VPN через `sing-box` с поддержкой split tunneling.
-*   `gpu-fan-control.sh`: Управление вентиляторами NVIDIA GPU (см. раздел ниже).
-
-## NVIDIA GPU Fan Control на Wayland
-
-### Динамическая кривая вентиляторов
-
-Скрипт `gpu-fan-control.sh` автоматически управляет скоростью вентиляторов GPU в зависимости от температуры:
-
-| Температура | Скорость вентилятора |
-|-------------|---------------------|
-| ≤ 35°C      | 40%                 |
-| 50°C        | 58%                 |
-| 70°C        | 82%                 |
-| ≥ 85°C      | 100%                |
-
-Линейная интерполяция между точками с гистерезисом 3% для предотвращения частых переключений.
-
-### Как это работает
-
-Скрипт использует **XWayland** который уже запущен в Hyprland:
-
-1. `xhost si:localuser:root` — разрешает root доступ к X дисплею
-2. `nvidia-settings` — устанавливает скорость вентиляторов через XWayland
-3. `xhost -si:localuser:root` — убирает разрешение
-
-Это работает потому что Hyprland автоматически запускает XWayland на `:0`.
-
-### Установка
-
-```bash
-# 1. Установить зависимости
-sudo pacman -S nvidia-settings xorg-xhost
-
-# 2. Добавить sudoers правило (без пароля для nvidia-settings)
-echo '$USER ALL=(ALL) NOPASSWD: /usr/bin/nvidia-settings' | sudo tee /etc/sudoers.d/nvidia-settings
-
-# 3. Скрипт уже настроен на автозапуск через exec-once в hyprland.conf
-```
-
-### Проверка
-
-```bash
-# Логи демона
-tail -f ~/.local/share/gpu-fan.log
-
-# Текущая скорость и температура
-nvidia-smi --query-gpu=fan.speed,temperature.gpu --format=csv
-```
-
-### Настройка кривой
-
-Отредактируйте `~/.config/hypr/scripts/gpu-fan-control.sh`:
-
-```bash
-TEMP_MIN=35   # Температура для минимальной скорости
-TEMP_MAX=85   # Температура для максимальной скорости
-FAN_MIN=40    # Минимальная скорость (%)
-FAN_MAX=100   # Максимальная скорость (%)
-INTERVAL=5    # Интервал проверки (секунды)
-```
-
-### Требования
-
-- `nvidia-settings`
-- `xorg-xhost`
-- NVIDIA GPU с проприетарным драйвером
-- Sudoers правило для nvidia-settings
-
-## GRUB с темой Catppuccin и Dual Boot
-
-### Установка
-
-```bash
-# 1. Установить os-prober для обнаружения Windows
-sudo pacman -S os-prober
-
-# 2. Примонтировать Windows EFI раздел (найти через lsblk)
-sudo mount /dev/nvme1n1p4 /mnt/win_efi
-
-# 3. Скачать тему Catppuccin
-git clone https://github.com/catppuccin/grub.git /tmp/catppuccin-grub
-sudo mkdir -p /boot/grub/themes
-sudo cp -r /tmp/catppuccin-grub/src/catppuccin-mocha-grub-theme /boot/grub/themes/
-
-# 4. Редактировать /etc/default/grub:
-sudo nano /etc/default/grub
-```
-
-### Настройки /etc/default/grub
-
-```bash
-GRUB_DEFAULT=saved
-GRUB_SAVEDEFAULT=true
-GRUB_TIMEOUT=30
-GRUB_GFXMODE=1920x1080,1280x720,auto
-GRUB_THEME="/boot/grub/themes/catppuccin-mocha-grub-theme/theme.txt"
-GRUB_DISABLE_OS_PROBER=false
-```
-
-### Применение
-
-```bash
-sudo grub-mkconfig -o /boot/grub/grub.cfg
-```
-
-### Результат
-
-- Windows и Arch Linux в меню загрузки
-- Тема Catppuccin Mocha
-- Запоминает последний выбор
-- Таймаут 30 секунд
-
-## sing-box VPN с Split Tunneling
-
-VPN на основе sing-box с VLESS + Reality протоколом и раздельным роутингом.
+VPN на основе VLESS + Reality с split tunneling.
 
 ### Особенности
 
-- **VLESS + Reality** — современный протокол с маскировкой под обычный TLS
-- **Split tunneling** — .ru домены идут напрямую, остальной трафик через VPN
-- **TUN режим** — весь системный трафик проходит через VPN
-- **DNS over HTTPS** — защищённые DNS запросы через Google
+- .ru домены идут напрямую
+- Telegram идёт напрямую
+- Avito, hCaptcha идут напрямую
+- Остальной трафик через VPN
+- DNS over HTTPS (Google)
 
-### Установка
+### Настройка
 
 ```bash
-# 1. Установить sing-box
-sudo pacman -S sing-box
+# Скопировать шаблон
+cp ~/.config/sing-box/config.json.example ~/.config/sing-box/config.json
 
-# 2. Добавить sudoers правило (без пароля для запуска и остановки)
+# Отредактировать — указать свои данные:
+# - YOUR_SERVER_IP
+# - YOUR_UUID_HERE
+# - YOUR_REALITY_PUBLIC_KEY
+# - YOUR_SHORT_ID
+nano ~/.config/sing-box/config.json
+
+# Добавить sudoers правило
 echo 'vasya ALL=(ALL) NOPASSWD: /usr/bin/sing-box, /usr/bin/pkill sing-box' | sudo tee /etc/sudoers.d/singbox
 sudo chmod 440 /etc/sudoers.d/singbox
-
-# 3. Скопировать конфиг
-mkdir -p ~/.config/sing-box
-cp .config/sing-box/config.json ~/.config/sing-box/
-
-# 4. Отредактировать config.json — указать свой сервер, uuid, public_key
 ```
-
-### Использование
-
-- `Alt + P` — включить/выключить VPN
-- Клик на VPN виджет в панели — переключить VPN
 
 ### Проверка
 
 ```bash
-# Логи
-tail -f ~/.local/share/singbox.log
-
-# Проверить IP
-curl ifconfig.me
+tail -f ~/.local/share/singbox.log  # Логи
+curl ifconfig.me                     # Проверить IP
 ```
 
-## Монтирование NTFS дисков
+## NVIDIA GPU Fan Control
 
-Для работы с NTFS дисками (например, диск с данными Windows) используется встроенный драйвер `ntfs3`.
+Скрипт `gpu-fan-control.sh` динамически управляет вентиляторами GPU.
 
-### Установка
+| Температура | Скорость |
+|-------------|----------|
+| ≤ 35°C | 40% |
+| 50°C | 58% |
+| 70°C | 82% |
+| ≥ 85°C | 100% |
+
+### Требования
 
 ```bash
-# 1. Создать точку монтирования
-sudo mkdir -p /mnt/windows
-
-# 2. Найти UUID раздела
-lsblk -o NAME,SIZE,FSTYPE,UUID
-
-# 3. Добавить в /etc/fstab для автомонтирования
-echo 'UUID=ВАШЕ_UUID  /mnt/windows  ntfs3  defaults,uid=1000,gid=1000,nofail  0 0' | sudo tee -a /etc/fstab
-
-# 4. Применить изменения
-sudo systemctl daemon-reload
-sudo mount -a
+sudo pacman -S nvidia-settings xorg-xhost
+echo '$USER ALL=(ALL) NOPASSWD: /usr/bin/nvidia-settings' | sudo tee /etc/sudoers.d/nvidia-settings
 ```
 
-### Опции
+### Логи
 
-- `ntfs3` — быстрый драйвер в ядре (не ntfs-3g)
-- `uid=1000,gid=1000` — файлы принадлежат вашему пользователю
-- `nofail` — система загрузится даже если диск недоступен
+```bash
+tail -f ~/.local/share/gpu-fan.log
+nvidia-smi --query-gpu=fan.speed,temperature.gpu --format=csv
+```
 
-### Важно
+## Структура репозитория
 
-- Если Windows установлена на этом же диске — отключите **Fast Startup** и **Hibernate** в Windows
-- Для отдельного диска с данными это не требуется
+```
+.config/
+├── hypr/                 # Hyprland + скрипты
+├── niri/                 # Niri compositor
+├── DankMaterialShell/    # DMS + плагины
+├── sing-box/             # VPN (только шаблон!)
+├── kitty/                # Терминал
+├── ghostty/              # Терминал
+├── alacritty/            # Терминал
+├── rofi/                 # Launcher темы
+├── gtk-3.0/              # GTK темы
+└── gtk-4.0/              # GTK темы
+```
+
+## Зависимости
+
+### Pacman
+
+```bash
+hyprland kitty nautilus rofi papirus-icon-theme
+nm-applet pavucontrol wl-clipboard cliphist udiskie
+nvidia-settings xorg-xhost sing-box
+```
+
+### AUR
+
+```bash
+yay -S dms-shell-hyprland hyprshot mcmojave-cursors
+```
+
+## GRUB (Dual Boot)
+
+```bash
+# Установить тему Catppuccin
+git clone https://github.com/catppuccin/grub.git /tmp/catppuccin-grub
+sudo cp -r /tmp/catppuccin-grub/src/catppuccin-mocha-grub-theme /boot/grub/themes/
+
+# /etc/default/grub
+GRUB_DEFAULT=saved
+GRUB_SAVEDEFAULT=true
+GRUB_TIMEOUT=30
+GRUB_THEME="/boot/grub/themes/catppuccin-mocha-grub-theme/theme.txt"
+GRUB_DISABLE_OS_PROBER=false
+
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+```
+
+## Связанные репозитории
+
+- [treesize-dms](https://github.com/reflaxess123/treesize-dms) — DMS плагин Disk Scanner
+- [vpnstatus](https://github.com/reflaxess123/vpnstatus) — DMS плагин VPN Status

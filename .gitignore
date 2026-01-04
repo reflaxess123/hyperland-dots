@@ -27,7 +27,10 @@
 !.config/gtk-4.0/**
 !.config/alacritty/**
 !.config/scripts/**
-!.config/sing-box/**
+!.config/sing-box/
+!.config/sing-box/config.json.example
+# Exclude real config with sensitive data
+.config/sing-box/config.json
 !.config/DankMaterialShell/**
 !.config/niri/**
 
@@ -35,5 +38,6 @@
 !scripts/
 !scripts/**
 
-# README
+# Documentation
 !README.md
+!CLAUDE.md
