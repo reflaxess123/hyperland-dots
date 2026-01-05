@@ -8,27 +8,35 @@ export HYPRLAND_INSTANCE_SIGNATURE=$(ls -t /run/user/1000/hypr/ 2>/dev/null | he
 
 echo "Restarting Hyprland services..."
 
-# Detect and restart current shell
-if pgrep -x qs > /dev/null; then
-    # Caelestia Shell (runs as 'qs')
-    echo "Restarting Caelestia Shell..."
-    pkill -x qs
-    sleep 1
-    caelestia shell -d &
-elif pgrep -x dms > /dev/null; then
-    # DankMaterialShell
-    echo "Restarting DMS..."
-    dms kill
-    sleep 1
-    dms run &
+# Detect shell from config (not running process)
+if grep -q "^exec-once = dms" ~/.config/hypr/hyprland.conf; then
+    SHELL_TYPE="dms"
+elif grep -q "^exec-once = caelestia" ~/.config/hypr/hyprland.conf; then
+    SHELL_TYPE="caelestia"
 else
-    # Try to detect from config
-    if grep -q "^exec-once = caelestia" ~/.config/hypr/hyprland.conf; then
-        caelestia shell -d &
-    elif grep -q "^exec-once = dms" ~/.config/hypr/hyprland.conf; then
-        dms run &
-    fi
+    SHELL_TYPE="none"
 fi
+
+# Kill any running shells
+pkill -x qs 2>/dev/null
+pkill -x dms 2>/dev/null
+dms kill 2>/dev/null
+sleep 1
+
+# Start the configured shell
+case $SHELL_TYPE in
+    dms)
+        echo "Starting DMS..."
+        dms run &
+        ;;
+    caelestia)
+        echo "Starting Caelestia Shell..."
+        caelestia shell -d &
+        ;;
+    *)
+        echo "No shell configured"
+        ;;
+esac
 
 # Restart clipboard manager if running
 if pgrep wl-paste > /dev/null; then
