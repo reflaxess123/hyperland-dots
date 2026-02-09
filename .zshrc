@@ -130,9 +130,6 @@ alias du='du -h'
 alias disk='df -h | grep -E "^/dev|Filesystem"'
 alias space='du -sh * 2>/dev/null | sort -hr | head -20'
 
-# Sing-box traffic monitor
-alias vpn-log='tail -f ~/.local/share/singbox-traffic.log'
-alias vpn-traffic='tail -f ~/.local/share/singbox-traffic.log | grep -E "proxy|direct" --color=auto'
 
 # Claude Code usage
 claude-usage() {
@@ -206,7 +203,7 @@ bindkey -s '^h' 'tmux-help\n'
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # bun completions
-[ -s "/home/vasya/.bun/_bun" ] && source "/home/vasya/.bun/_bun"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
@@ -216,8 +213,6 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-# rbenv
-eval "$(rbenv init - zsh)"
 # Lazy conda - загружается только при первом вызове
 conda() {
   unfunction conda
