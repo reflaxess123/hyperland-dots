@@ -1,49 +1,63 @@
 font-family = "MapleMono NF CN"
 font-size = 16
 background-opacity = 0.85
-window-padding-x = 0
-window-padding-y = 0
+window-padding-x = 25
+window-padding-y = 25
 
 window-width = 1200
 window-height = 750
 
 window-decoration = false
 
-foreground = ffffff
-background = 0d1117
-selection-foreground = 0d1117
-selection-background = ff6b6b
+# Catppuccin Mocha colors
+foreground = e4e9fc
+background = 000000
+selection-foreground = 1e1e2e
+selection-background = f5e0dc
 
-cursor-color = ff79c6
+cursor-color = f5e0dc
+cursor-style = block
+cursor-style-blink = true
 
-palette = 0=44475a
-palette = 1=ff5555
+palette = 0=6c7086
+palette = 1=ff6b8a
 palette = 2=50fa7b
-palette = 3=ffb86c
-palette = 4=8be9fd
-palette = 5=bd93f9
-palette = 6=ff79c6
+palette = 3=ffeb57
+palette = 4=7aa2f7
+palette = 5=ff79c6
+palette = 6=8be9fd
 palette = 7=f8f8f2
-palette = 8=6272a4
-palette = 9=ff6e6e
+palette = 8=6c7086
+palette = 9=ff5555
 palette = 10=69ff94
 palette = 11=ffffa5
-palette = 12=d6acff
+palette = 12=bd93f9
 palette = 13=ff92df
 palette = 14=a4ffff
 palette = 15=ffffff
 
 scrollback-limit = 50000
 
+# Clipboard
 keybind = ctrl+c=copy_to_clipboard
 keybind = ctrl+shift+c=text:\x03
 keybind = ctrl+v=paste_from_clipboard
 keybind = ctrl+shift+v=paste_from_clipboard
+
+# Windows & tabs
 keybind = ctrl+shift+n=new_window
 keybind = ctrl+shift+t=new_tab
 keybind = ctrl+shift+w=close_surface
 keybind = alt+f4=close_window
 
+# Splits
+keybind = ctrl+shift+enter=new_split:auto
+keybind = ctrl+shift+right=goto_split:right
+keybind = ctrl+shift+left=goto_split:left
+keybind = ctrl+shift+up=goto_split:top
+keybind = ctrl+shift+down=goto_split:bottom
+
+# Tab switching
 keybind = ctrl+1=goto_tab:1
 keybind = ctrl+2=goto_tab:2
 keybind = ctrl+3=goto_tab:3
@@ -54,12 +68,14 @@ keybind = ctrl+7=goto_tab:7
 keybind = ctrl+8=goto_tab:8
 keybind = ctrl+9=goto_tab:9
 
+# Font size
 keybind = ctrl+plus=increase_font_size:2
 keybind = ctrl+minus=decrease_font_size:2
 keybind = ctrl+0=reset_font_size
 
-keybind = ctrl+shift+up=scroll_page_up
-keybind = ctrl+shift+down=scroll_page_down
+# Scroll
+keybind = ctrl+shift+page_up=scroll_page_up
+keybind = ctrl+shift+page_down=scroll_page_down
 keybind = ctrl+shift+home=scroll_to_top
 keybind = ctrl+shift+end=scroll_to_bottom
 
@@ -67,13 +83,12 @@ keybind = f11=toggle_fullscreen
 keybind = ctrl+shift+f=toggle_fullscreen
 
 mouse-hide-while-typing = true
-
 confirm-close-surface = false
-
 auto-update = off
-
 copy-on-select = true
+
+# Remove inactive tab dimming
+gtk-custom-css = tabbar tabbox tab { opacity: 1; }
 
 keybind = shift+insert=paste_from_clipboard
 keybind = ctrl+insert=copy_to_clipboard
-keybind = shift+enter=text:\n

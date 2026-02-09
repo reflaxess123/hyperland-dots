@@ -102,7 +102,7 @@ install_pacman_packages() {
         ghostty
         kitty
         alacritty
-        neofetch
+        fastfetch
 
         # NVIDIA GPU Fan Control
         nvidia-settings
@@ -356,6 +356,49 @@ SERVICE
 }
 
 # ==========================================
+# 6.1. Настройка системных вентиляторов (nct6798)
+# ==========================================
+setup_system_fan() {
+    log_info "Настройка системных вентиляторов..."
+
+    # Проверяем наличие nct6798
+    if ! ls /sys/class/hwmon/hwmon*/name 2>/dev/null | xargs grep -l "nct6798" &>/dev/null; then
+        # Загружаем модуль
+        sudo modprobe nct6775 2>/dev/null || true
+        echo nct6775 | sudo tee /etc/modules-load.d/nct6775.conf > /dev/null
+        log_warn "Модуль nct6775 загружен. Может потребоваться перезагрузка."
+    fi
+
+    # Копируем скрипт
+    local SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+    sudo cp "$SCRIPT_DIR/scripts/setup-system-fan.sh" /usr/local/bin/system-fan-curve.sh
+    sudo chmod +x /usr/local/bin/system-fan-curve.sh
+
+    # Создаём systemd сервис
+    sudo tee /etc/systemd/system/system-fan.service > /dev/null << 'EOF'
+[Unit]
+Description=System Fan Curve
+After=systemd-modules-load.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/system-fan-curve.sh
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+    sudo systemctl daemon-reload
+    sudo systemctl enable system-fan.service
+
+    # Применяем сейчас
+    sudo /usr/local/bin/system-fan-curve.sh 2>/dev/null || log_warn "Не удалось применить кривую (нужна перезагрузка?)"
+
+    log_info "Системные вентиляторы настроены (nct6798)"
+}
+
+# ==========================================
 # 6.5. Установка DankMaterialShell
 # ==========================================
 install_dms() {
@@ -366,7 +409,7 @@ install_dms() {
         sudo pacman -S --needed --noconfirm qt6-base qt6-declarative qt6-wayland pipewire wireplumber
 
         # Установка из AUR
-        yay -S --noconfirm dankmaterialshell-bin || {
+        yay -S --noconfirm dms-shell-bin || {
             log_warn "DMS не найден в AUR, пробуем ручную установку..."
             cd /tmp
             git clone https://github.com/nickshanks/DankMaterialShell.git
@@ -579,6 +622,7 @@ main() {
     setup_redsocks
     setup_singbox
     setup_gpu_fan
+    setup_system_fan
     install_dms
     install_ohmyzsh
     install_ohmytmux
