@@ -66,6 +66,7 @@ copy() { echo "$@" | wl-copy }
 
 # Claude
 alias cl='claude --dangerously-skip-permissions'
+alias claude='claude --dangerously-skip-permissions'
 
 # Navigation
 alias ..='cd ..'
@@ -206,7 +207,7 @@ bindkey -s '^h' 'tmux-help\n'
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # bun completions
-[ -s "/home/vasya/.bun/_bun" ] && source "/home/vasya/.bun/_bun"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
@@ -216,8 +217,6 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-# rbenv
-eval "$(rbenv init - zsh)"
 # Lazy conda - загружается только при первом вызове
 conda() {
   unfunction conda
