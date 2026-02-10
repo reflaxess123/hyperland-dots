@@ -17,7 +17,8 @@ pkill swww-daemon 2>/dev/null
 sleep 0.5
 swww-daemon &disown
 sleep 1
-swww img ~/wallpapers/15-Sequoia-Sunrise.png --transition-type none &
+WALLPAPER=$(grep 'swww img' ~/.config/hypr/hyprland.conf | sed 's/.*swww img //' | sed 's/ --.*//' | head -1)
+eval swww img "$WALLPAPER" --transition-type none &
 
 # Restart clipboard manager
 pkill wl-paste 2>/dev/null
