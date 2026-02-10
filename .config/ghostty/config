@@ -1,6 +1,5 @@
 font-family = "MapleMono NF CN"
 font-size = 16
-background-opacity = 0.4
 window-padding-x = 25
 window-padding-y = 25
 
@@ -10,31 +9,10 @@ window-height = 750
 window-decoration = false
 
 # Catppuccin Mocha colors
-foreground = e4e9fc
-background = 000000
-selection-foreground = 1e1e2e
-selection-background = f5e0dc
 
-cursor-color = f5e0dc
 cursor-style = block
 cursor-style-blink = true
 
-palette = 0=6c7086
-palette = 1=ff6b8a
-palette = 2=50fa7b
-palette = 3=ffeb57
-palette = 4=7aa2f7
-palette = 5=ff79c6
-palette = 6=8be9fd
-palette = 7=f8f8f2
-palette = 8=6c7086
-palette = 9=ff5555
-palette = 10=69ff94
-palette = 11=ffffa5
-palette = 12=bd93f9
-palette = 13=ff92df
-palette = 14=a4ffff
-palette = 15=ffffff
 
 scrollback-limit = 50000
 
@@ -91,3 +69,26 @@ unfocused-split-opacity = 1
 
 keybind = shift+insert=paste_from_clipboard
 keybind = ctrl+insert=copy_to_clipboard
+foreground = ebdbb2
+background = 1d2021
+background-opacity = 0.6
+window-theme = dark
+selection-foreground = 282828
+selection-background = d5c4a1
+cursor-color = d65d0e
+palette = 0=282828
+palette = 1=cc241d
+palette = 2=98971a
+palette = 3=d79921
+palette = 4=458588
+palette = 5=b16286
+palette = 6=689d6a
+palette = 7=a89984
+palette = 8=928374
+palette = 9=fb4934
+palette = 10=b8bb26
+palette = 11=fabd2f
+palette = 12=83a598
+palette = 13=d3869b
+palette = 14=8ec07c
+palette = 15=ebdbb2

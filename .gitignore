@@ -45,3 +45,5 @@
 !CLAUDE.md
 !.config/caelestia/
 !.config/caelestia/**
+!.config/Code/
+!.config/Code/**

@@ -9,12 +9,12 @@
 
 window#waybar {
   background: rgba(26, 26, 26, 0);
-  color: #cad3f5;
+  color: #ebdbb2;
 }
 
 /* Левый блок */
 .modules-left {
-  background-color: rgba(29, 29, 65, 0.9);
+  background-color: rgba(40, 40, 36, 0.9);
   border-radius: 25px;
   padding: 0 15px;
   border: none;
@@ -24,21 +24,21 @@ window#waybar {
 #custom-sep,
 #custom-sep2,
 #custom-sep3 {
-  color: #45475a;
+  color: #665c54;
   padding: 0 5px;
   font-size: 14px;
 }
 
 /* Правый блок */
 .modules-right {
-  background-color: rgba(29, 29, 65, 0.9);
+  background-color: rgba(40, 40, 36, 0.9);
   border-radius: 25px;
   padding: 0 15px;
   border: none;
 }
 
 .modules-center {
-  background-color: rgba(29, 29, 65, 0.9);
+  background-color: rgba(40, 40, 36, 0.9);
   border-radius: 25px;
   padding: 0 5px;
   border: none;
@@ -67,7 +67,7 @@ window#waybar {
 #language {
   padding: 4px 8px;
   margin: 0 2px;
-  color: #cad3f5;
+  color: #ebdbb2;
 }
 
 #workspaces {
@@ -78,7 +78,7 @@ window#waybar {
 
 #workspaces button {
   padding: 0 5px;
-  color: #cdd6f4;
+  color: #ebdbb2;
   transition: all 0.3s ease;
 }
 
@@ -87,50 +87,48 @@ window#waybar {
 }
 
 #workspaces button.active {
-  color: #89b4fa;
+  color: #fe8019;
 }
 
 #custom-launcher {
-  color: #89b4fa;
+  color: #fe8019;
   font-size: 16px;
   padding: 0 15px;
 }
 
 #custom-power {
-  color: #f38ba8;
+  color: #ebdbb2;
   font-size: 16px;
   padding: 0 15px;
 }
 
 /* Style for specific icons/modules that need it */
 #pulseaudio {
-  color: #89b4fa;
+  color: #ebdbb2;
 }
 
 #custom-brightness {
-  color: #f9e2af;
+  color: #fabd2f;
   padding: 0 2px;
 }
 
 #custom-brightness-up,
 #custom-brightness-down {
-  color: #f9e2af;
+  color: #fabd2f;
   padding: 0 5px;
   font-weight: bold;
 }
 
 #network {
-  color: #cad3f5;
+  color: #ebdbb2;
 }
 
 #bluetooth {
-  color: #cba6f7;
+  color: #bdae93;
 }
 
-/* Цвета для CPU, memory, disk определены ниже в секциях */
-
 #clock {
-  color: #f9e2af;
+  color: #d5c4a1;
   font-weight: bold;
 }
 
@@ -150,33 +148,33 @@ window#waybar {
   min-height: 12px;
   min-width: 80px;
   border-radius: 5px;
-  background-color: #302d41;
+  background-color: #504945;
 }
 
 #pulseaudio-slider highlight {
   min-width: 12px;
   min-height: 12px;
   border-radius: 9999px;
-  background-color: #cad3f4;
+  background-color: #d5c4a1;
 }
 
 /* VPN индикатор */
 #custom-vpn {
-  color: #cdd6f4;
+  color: #ebdbb2;
   padding: 0 10px;
   font-weight: bold;
 }
 
 #custom-vpn.connected {
-  color: #a6e3a1;
+  color: #ebdbb2;
 }
 
 #custom-vpn.disconnected {
-  color: #f38ba8;
+  color: #928374;
 }
 
 #custom-vpn.connecting {
-  color: #f9e2af;
+  color: #bdae93;
   animation: pulse 2s infinite;
 }
 
@@ -196,37 +194,37 @@ window#waybar {
 
 /* sing-box VPN индикатор */
 #custom-singbox {
-  color: #cdd6f4;
+  color: #ebdbb2;
   padding: 0 10px;
   font-weight: bold;
 }
 
 #custom-singbox.connected {
-  color: #89b4fa;
+  color: #ebdbb2;
 }
 
 #custom-singbox.disconnected {
-  color: #6c7086;
+  color: #928374;
 }
 
-/* CPU секция - красный */
+/* CPU секция */
 #cpu,
 #custom-cpu-temp,
 #custom-fan {
-  color: #f38ba8;
+  color: #d5c4a1;
 }
 
-/* GPU секция - жёлтый */
+/* GPU секция */
 #custom-gpu-temp,
 #custom-gpu-fan,
 #custom-gpu-vram {
-  color: #f9e2af;
+  color: #bdae93;
 }
 
-/* Memory/Disk секция - зелёный */
+/* Memory/Disk секция */
 #memory,
 #disk {
-  color: #a6e3a1;
+  color: #a89984;
 }
 
 #tray {
@@ -238,7 +236,7 @@ window#waybar {
   padding: 0 10px;
   margin: 0 2px;
   border-radius: 6px;
-  color: #a6e3a1;
+  color: #a89984;
   font-weight: bold;
 }
 
@@ -249,7 +247,7 @@ window#waybar {
 
 tooltip {
   border-radius: 15px;
-  background-color: #10102e;
-  color: #cad3f5;
+  background-color: #3c3836;
+  color: #ebdbb2;
   border: none;
 }

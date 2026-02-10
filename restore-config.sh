@@ -65,7 +65,6 @@ install_pacman_packages() {
 
         # Терминальные утилиты
         neovim
-        tmux
         bat
         eza
         fd
@@ -468,46 +467,10 @@ install_ohmyzsh() {
 }
 
 # ==========================================
-# 7.5. Установка Oh My Tmux
+# 7.5. Установка LazyVim
 # ==========================================
-install_ohmytmux() {
-    log_info "Установка Oh My Tmux..."
-
-    if [[ -f "$HOME/.tmux.conf" ]] && grep -q "gpakosz" "$HOME/.tmux.conf" 2>/dev/null; then
-        log_info "Oh My Tmux уже установлен"
-        return
-    fi
-
-    cd ~
-    git clone https://github.com/gpakosz/.tmux.git
-    ln -sf .tmux/.tmux.conf ~/.tmux.conf
-
-    log_info "Oh My Tmux установлен"
-}
-
-# ==========================================
-# 7.6. Установка TPM (Tmux Plugin Manager)
-# ==========================================
-install_tpm() {
-    log_info "Установка TPM..."
-
-    if [[ ! -d "$HOME/.tmux/plugins/tpm" ]]; then
-        git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-    else
-        log_info "TPM уже установлен"
-    fi
-
-    # Установка плагинов
-    ~/.tmux/plugins/tpm/bin/install_plugins 2>/dev/null || true
-
-    log_info "TPM настроен"
-}
-
-# ==========================================
-# 8. Установка NvChad
-# ==========================================
-install_nvchad() {
-    log_info "Установка NvChad..."
+install_lazyvim() {
+    log_info "Установка LazyVim..."
 
     # Бэкап старого конфига
     if [[ -d "$HOME/.config/nvim" ]]; then
@@ -521,11 +484,12 @@ install_nvchad() {
     rm -rf ~/.local/state/nvim
     rm -rf ~/.cache/nvim
 
-    # Клонируем кастомный NvChad конфиг
-    log_info "Клонирование кастомного NvChad конфига..."
-    git clone https://github.com/reflaxess123/nvchad3 ~/.config/nvim
+    # Клонируем LazyVim starter
+    log_info "Клонирование LazyVim..."
+    git clone https://github.com/LazyVim/starter ~/.config/nvim
+    rm -rf ~/.config/nvim/.git
 
-    log_info "NvChad установлен. Запусти nvim для завершения установки плагинов."
+    log_info "LazyVim установлен. Запусти nvim для завершения установки плагинов."
 }
 
 # ==========================================
@@ -536,7 +500,6 @@ copy_configs() {
 
     local items=(
         ".zshrc"
-        ".tmux.conf.local"
         ".p10k.zsh"
         ".config/hypr"
         ".config/ghostty"
@@ -552,6 +515,7 @@ copy_configs() {
         ".config/niri"
         ".config/gtk-3.0"
         ".config/gtk-4.0"
+        ".config/Code/User"
     )
 
     for item in "${items[@]}"; do
@@ -609,12 +573,10 @@ main() {
     setup_system_fan
     install_hk_translator
     install_ohmyzsh
-    install_ohmytmux
-    install_tpm
     copy_configs
     setup_singbox
     make_scripts_executable
-    install_nvchad
+    install_lazyvim
     set_default_shell
 
     # Установка тёмной темы по умолчанию
@@ -637,10 +599,9 @@ main() {
     echo ""
     echo "Следующие шаги:"
     echo "  1. ПЕРЕЗАГРУЗИСЬ для применения GPU fan control и zsh"
-    echo "  2. Запусти nvim для установки плагинов"
-    echo "  3. В tmux нажми Ctrl+a затем I для установки плагинов"
-    echo "  4. sing-box VPN toggle: Alt+P (не забудь настроить сервер в ~/.config/sing-box/config.json)"
-    echo "  5. Проверь вентиляторы: nvidia-smi --query-gpu=fan.speed --format=csv"
+    echo "  2. Запусти nvim для установки LazyVim плагинов"
+    echo "  3. sing-box VPN toggle: Alt+P (не забудь настроить сервер в ~/.config/sing-box/config.json)"
+    echo "  4. Проверь вентиляторы: nvidia-smi --query-gpu=fan.speed --format=csv"
     echo ""
 }
 
