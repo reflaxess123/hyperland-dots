@@ -118,6 +118,7 @@ install_pacman_packages() {
         libxrandr
         clang
         cmake
+        xdotool
     )
 
     sudo pacman -S --needed --noconfirm "${packages[@]}" || log_warn "Некоторые пакеты не найдены в pacman"
