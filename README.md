@@ -5,12 +5,14 @@
 ## Особенности
 
 - **Waybar** — минималистичная панель с Gruvbox цветами
-- **Gruvbox тема** — единый стиль для ghostty, waybar, VSCode, nvim, GTK
+- **Gruvbox тема** — единый стиль для ghostty, waybar, VSCode, nvim, GTK, rofi, swaync
 - **Dark/Light toggle** — переключение всех тем по Ctrl+Y
+- **Voice Input** — speech-to-text через faster-whisper на CUDA (Ctrl+Super)
 - **Плавные анимации** — настроенные bezier curves для окон и workspaces
 - **VPN с split tunneling** — sing-box (VLESS + Reality), .ru домены напрямую
 - **NVIDIA GPU fan control** — динамическое управление вентиляторами на Wayland
 - **LazyVim** — nvim с прозрачным gruvbox-material
+- **SwayNC** — уведомления в стиле Gruvbox
 
 ## Быстрая установка
 
@@ -21,7 +23,7 @@ chmod +x restore-config.sh
 ./restore-config.sh
 ```
 
-Скрипт установит все зависимости, настроит конфиги, waybar, swww, LazyVim.
+Скрипт установит все зависимости, настроит конфиги, waybar, swww, LazyVim, voice input venv.
 
 ## Сочетания клавиш
 
@@ -39,6 +41,7 @@ chmod +x restore-config.sh
 | `Alt + T` | Toggle floating |
 | `Alt + S` | Pin window |
 | `Ctrl + Y` | Toggle dark/light тема |
+| `Ctrl + Super` | Voice input (toggle запись/транскрибация) |
 
 ### VPN и система
 
@@ -65,11 +68,38 @@ chmod +x restore-config.sh
 
 | Компонент | Dark | Light |
 |-----------|------|-------|
-| Ghostty | Gruvbox Dark (0.6 opacity) | Gruvbox Light (0.3 opacity) |
+| Ghostty | Gruvbox Dark (0.8 opacity) | Gruvbox Light (0.3 opacity) |
 | Waybar | Gruvbox Dark monochrome | Gruvbox Light monochrome |
 | VSCode | Gruvbox Dark Hard | Bearded Theme Milkshake Mint |
 | Nvim | gruvbox-material transparent | gruvbox-material transparent |
 | GTK | Adwaita:dark | Adwaita |
+| Rofi | Gruvbox Dark (muted) | — |
+| SwayNC | Gruvbox Dark | — |
+
+## Voice Input
+
+Speech-to-text через faster-whisper large-v3-turbo на CUDA.
+
+- **Ctrl+Super** — первое нажатие начинает запись (красный ● в waybar)
+- **Ctrl+Super** — второе нажатие останавливает и транскрибирует (жёлтый ●)
+- Текст автоматически вставляется в активное поле через wtype
+- Venv: `~/.local/share/voice-input/venv`
+
+### Troubleshooting
+
+| Проблема | Решение |
+|----------|---------|
+| `libcublas.so.12 not found` | `pip install nvidia-cublas-cu12 nvidia-cudnn-cu12` в venv (CUDA 13 в системе, ctranslate2 собран под CUDA 12) |
+| Текст не вставляется | `sudo pacman -S wtype` — нужен для имитации Ctrl+V на Wayland |
+| `bindr` не работает с Super_L | Используется toggle вместо hold-to-record |
+| Первый запуск долгий | Модель (~1.6GB) скачивается при первом использовании |
+
+## Ghostty
+
+- **НЕТ hot-reload** — `pkill -USR1 ghostty` крашит терминал
+- Тема применяется только при открытии нового окна
+- toggle-theme.sh использует atomic write (tmpfile + mv), не sed -i
+- sed -i на ghostty config создаёт дубли строк — не использовать
 
 ## sing-box VPN
 
@@ -109,19 +139,30 @@ nano ~/.config/sing-box/config.json
 | 55°C | 90% |
 | ≥ 58°C | 100% |
 
+## NTFS диск
+
+Второй диск (nvme0n1p1) автоматически монтируется в `/media/$USER/Storage` через fstab. Виден в Nautilus.
+
+```bash
+# Ручное монтирование:
+sudo modprobe ntfs3
+sudo mount -t ntfs3 -o force /dev/nvme0n1p1 /media/$USER/Storage
+```
+
 ## Структура
 
 ```
 .config/
-├── hypr/                 # Hyprland + скрипты
-├── waybar/               # Панель (Gruvbox dark/light CSS)
+├── hypr/                 # Hyprland + скрипты (voice-input, theme toggle)
+├── waybar/               # Панель (Gruvbox dark/light CSS, voice indicator)
 ├── ghostty/              # Терминал + themes/
-├── Code/User/            # VSCode settings
+├── Code/User/            # VSCode settings + keybindings
+├── swaync/               # Уведомления (Gruvbox)
 ├── sing-box/             # VPN (только шаблон!)
+├── rofi/                 # Launcher темы (Gruvbox)
 ├── niri/                 # Niri compositor
 ├── kitty/                # Терминал
 ├── alacritty/            # Терминал
-├── rofi/                 # Launcher темы
 ├── gtk-3.0/              # GTK темы
 └── gtk-4.0/              # GTK темы
 ```
