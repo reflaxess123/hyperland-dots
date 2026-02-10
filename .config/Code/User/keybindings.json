@@ -1,0 +1,6 @@
+[
+  {
+    "key": "ctrl+l",
+    "command": "workbench.action.toggleAuxiliaryBar"
+  }
+]
