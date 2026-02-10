@@ -1,0 +1,155 @@
+{
+  "layer": "top",
+  "position": "top",
+  "margin-top": 5,
+  "margin-bottom": 5,
+  "margin-left": 10,
+  "margin-right": 10,
+  "modules-left": [
+    "cpu",
+    "custom/cpu-temp",
+    "custom/fan",
+    "custom/sep",
+    "custom/gpu-temp",
+    "custom/gpu-fan",
+    "custom/gpu-vram",
+    "custom/sep2",
+    "memory",
+    "disk",
+    "custom/sep3",
+    "network",
+    "custom/singbox",
+    "tray"
+  ],
+  "modules-center": [
+    "hyprland/workspaces"
+  ],
+  "modules-right": [
+    "hyprland/language",
+    "bluetooth",
+    "pulseaudio",
+    "pulseaudio/slider",
+    "clock",
+    "custom/power"
+  ],
+  "custom/sep": {
+    "format": "|",
+    "tooltip": false
+  },
+  "custom/sep2": {
+    "format": "|",
+    "tooltip": false
+  },
+  "custom/sep3": {
+    "format": "|",
+    "tooltip": false
+  },
+  "hyprland/language": {
+    "format": " {}",
+    "format-en": " EN",
+    "format-ru": " RU"
+  },
+  "pulseaudio": {
+    "tooltip": false,
+    "scroll-step": 5,
+    "format": "󰕾 {volume}%",
+    "format-muted": "󰖁 {volume}%",
+    "on-click": "pavucontrol",
+    "format-icons": {
+      "default": ["󰕿", "󰖀", "󰕾"]
+    }
+  },
+  "pulseaudio/slider": {
+    "min": 0,
+    "max": 100,
+    "orientation": "horizontal",
+    "expand": false
+  },
+  "network": {
+    "format-wifi": "󰤨 {essid}",
+    "format-ethernet": "󰈀 Connected",
+    "tooltip-format": "{essid} ({signalStrength}%)",
+    "format-linked": "{ifname} (No IP)",
+    "format-disconnected": "󰤭 Disconnected",
+    "format-alt": "{ifname}: {ipaddr}/{cidr}"
+  },
+  "bluetooth": {
+    "format": "󰂯 {status}",
+    "on-click": "blueman-manager",
+    "format-disabled": "",
+    "format-connected": "󰂱 {num_connections}",
+    "format-no-controller": "",
+    "tooltip-format": "{controller_alias} {controller_address}"
+  },
+  "tray": {
+    "icon-size": 18,
+    "spacing": 10
+  },
+  "clock": {
+    "format": "󰃰 {:%d.%m.%Y   %H:%M}",
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt>{calendar}</tt>"
+  },
+  "cpu": {
+    "interval": 15,
+    "format": "󰻠 {}%",
+    "max-length": 10
+  },
+  "custom/cpu-temp": {
+    "exec": "sensors k10temp-pci-00c3 | grep 'Tctl:' | awk '{print $2}' | sed 's/+//;s/°C//'",
+    "format": "󰔏 {}°C",
+    "interval": 5
+  },
+  "custom/gpu-temp": {
+    "exec": "nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader,nounits",
+    "format": "󰢮 {}°C",
+    "interval": 5
+  },
+  "custom/gpu-fan": {
+    "exec": "nvidia-smi --query-gpu=fan.speed --format=csv,noheader,nounits",
+    "format": "󰈐 {}%",
+    "interval": 5,
+    "tooltip": true,
+    "tooltip-format": "GPU Fan Speed"
+  },
+  "custom/gpu-vram": {
+    "exec": "nvidia-smi --query-gpu=memory.used,memory.total --format=csv,noheader,nounits | awk -F', ' '{printf \"%.1f/%.1fG\", $1/1024, $2/1024}'",
+    "format": "󰍛 {}",
+    "interval": 5,
+    "tooltip": true,
+    "tooltip-format": "GPU VRAM Usage"
+  },
+  "custom/fan": {
+    "exec": "sensors asusec-isa-000a | grep 'Chipset:' | awk 'NR==1{print $2}' | sed 's/RPM//'",
+    "format": "󰈐 {} RPM",
+    "interval": 5
+  },
+  "memory": {
+    "interval": 30,
+    "format": "󰘚 {}%",
+    "max-length": 10
+  },
+  "disk": {
+    "interval": 30,
+    "format": "󰋊 {percentage_used}%",
+    "path": "/"
+  },
+  "custom/power": {
+    "format": "󰐥",
+    "on-click": "bash ~/.config/waybar/scripts/leave.sh",
+    "tooltip": "Power Menu"
+  },
+  "hyprland/workspaces": {
+    "format": "{name}",
+    "on-scroll-up": "hyprctl dispatch workspace e+1",
+    "on-scroll-down": "hyprctl dispatch workspace e-1",
+    "on-click": "activate"
+  },
+  "custom/singbox": {
+    "exec": "~/.config/waybar/scripts/singbox-status.sh",
+    "return-type": "json",
+    "interval": 3,
+    "on-click": "~/.config/hypr/scripts/singbox-toggle.sh",
+    "format": "{}",
+    "tooltip": true
+  }
+}

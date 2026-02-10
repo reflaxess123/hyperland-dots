@@ -5,6 +5,8 @@
 
 set -e
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 echo "=========================================="
 echo "  Hyprland Dotfiles Restore Script"
 echo "=========================================="
@@ -78,7 +80,9 @@ install_pacman_packages() {
 
         # Wayland/Hyprland
         hyprland
+        hyprpaper
         waybar
+        rofi-wayland
         wofi
         swaync
         swww
@@ -86,6 +90,7 @@ install_pacman_packages() {
         wl-clipboard
         cliphist
         udiskie
+        xdg-desktop-portal-gtk
         network-manager-applet
         pavucontrol
         nautilus
@@ -124,10 +129,11 @@ install_aur_packages() {
         google-chrome
         brave-bin
         telegram-desktop
-        redsocks
         mission-center
         mcmojave-cursors
         zen-browser-bin
+        visual-studio-code-bin
+        obsidian
     )
 
     for pkg in "${aur_packages[@]}"; do
@@ -151,14 +157,12 @@ install_fonts() {
     # Maple Mono NF CN
     if ! fc-list | grep -qi "maple"; then
         log_info "Установка Maple Mono NF CN..."
-        yay -S --noconfirm ttf-maple || {
-            log_warn "ttf-maple не найден в AUR, скачиваю вручную..."
-            mkdir -p ~/.local/share/fonts
-            cd /tmp
-            curl -LO https://github.com/subframe7536/maple-font/releases/latest/download/MapleMono-NF-CN.zip
-            unzip -o MapleMono-NF-CN.zip -d ~/.local/share/fonts/
-            fc-cache -fv
-        }
+        mkdir -p ~/.local/share/fonts
+        cd /tmp
+        rm -f MapleMono-NF-CN.zip
+        curl -fL "https://github.com/subframe7536/maple-font/releases/latest/download/MapleMono-NF-CN.zip" -o MapleMono-NF-CN.zip
+        unzip -o MapleMono-NF-CN.zip -d ~/.local/share/fonts/
+        fc-cache -fv
     else
         log_info "Maple Mono уже установлен"
     fi
@@ -168,12 +172,11 @@ install_fonts() {
         log_info "Установка Playpen Sans..."
         mkdir -p ~/.local/share/fonts
         cd /tmp
-        curl -LO "https://github.com/nickshanks/Playpen-Sans/releases/latest/download/PlaypenSans.zip" 2>/dev/null || \
-        curl -LO "https://fonts.google.com/download?family=Playpen%20Sans" -o PlaypenSans.zip 2>/dev/null || {
-            log_warn "Скачиваю Playpen Sans с Google Fonts..."
-            curl -L "https://fonts.google.com/download?family=Playpen%20Sans" -o PlaypenSans.zip
-        }
-        unzip -o PlaypenSans.zip -d ~/.local/share/fonts/ 2>/dev/null || true
+        rm -rf Playpen-Sans
+        git clone --depth=1 https://github.com/TypeTogether/Playpen-Sans.git
+        cp Playpen-Sans/fonts/ttf/*.ttf ~/.local/share/fonts/ 2>/dev/null || true
+        cp Playpen-Sans/fonts/variable/*.ttf ~/.local/share/fonts/ 2>/dev/null || true
+        rm -rf Playpen-Sans
         fc-cache -fv
     else
         log_info "Playpen Sans уже установлен"
@@ -189,44 +192,7 @@ install_fonts() {
 }
 
 # ==========================================
-# 5. Настройка redsocks
-# ==========================================
-setup_redsocks() {
-    log_info "Настройка redsocks..."
-
-    # Конфиг redsocks
-    sudo tee /etc/redsocks.conf > /dev/null << 'EOF'
-base {
-    log_debug = off;
-    log_info = on;
-    log = "syslog:daemon";
-    daemon = on;
-    redirector = iptables;
-}
-
-redsocks {
-    local_ip = 127.0.0.1;
-    local_port = 12345;
-
-    ip = 78.40.193.120;
-    port = 46764;
-    type = socks5;
-}
-EOF
-
-    # Sudoers для скрипта socks-toggle.sh (iptables, redsocks, pkill)
-    sudo tee /etc/sudoers.d/redsocks > /dev/null << EOF
-$USER ALL=(ALL) NOPASSWD: /usr/bin/iptables
-$USER ALL=(ALL) NOPASSWD: /usr/bin/redsocks
-$USER ALL=(ALL) NOPASSWD: /usr/bin/pkill redsocks
-EOF
-    sudo chmod 440 /etc/sudoers.d/redsocks
-
-    log_info "redsocks настроен (используй Alt+I для toggle)"
-}
-
-# ==========================================
-# 5.1. Настройка sing-box VPN
+# 5. Настройка sing-box VPN
 # ==========================================
 setup_singbox() {
     log_info "Настройка sing-box..."
@@ -240,12 +206,66 @@ setup_singbox() {
         }
     fi
 
-    # Копируем конфиг
-    local SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-    if [[ -f "$SCRIPT_DIR/.config/sing-box/config.json" ]]; then
-        mkdir -p ~/.config/sing-box
-        cp "$SCRIPT_DIR/.config/sing-box/config.json" ~/.config/sing-box/
-        log_info "Конфиг sing-box скопирован (не забудь указать свой сервер!)"
+    mkdir -p ~/.config/sing-box
+
+    # Генерация конфига из VLESS ссылки
+    if [[ ! -f "$HOME/.config/sing-box/config.json" ]]; then
+        echo ""
+        echo -e "${YELLOW}Вставь VLESS ссылку (vless://...) для настройки VPN:${NC}"
+        echo -e "${YELLOW}(или нажми Enter чтобы пропустить)${NC}"
+        read -r vless_link
+
+        if [[ "$vless_link" == vless://* ]]; then
+            # Парсим: vless://UUID@SERVER:PORT?params#fragment
+            local userinfo="${vless_link#vless://}"
+            local uuid="${userinfo%%@*}"
+            local rest="${userinfo#*@}"
+            local hostport="${rest%%\?*}"
+            local server="${hostport%%:*}"
+            local port="${hostport##*:}"
+            local params="${rest#*\?}"
+            params="${params%%#*}"
+
+            # Извлекаем параметры
+            local pbk="" fp="" sni="" sid=""
+            IFS='&' read -ra PAIRS <<< "$params"
+            for pair in "${PAIRS[@]}"; do
+                local key="${pair%%=*}"
+                local val="${pair#*=}"
+                case "$key" in
+                    pbk) pbk="$val" ;;
+                    fp)  fp="$val" ;;
+                    sni) sni="$val" ;;
+                    sid) sid="$val" ;;
+                esac
+            done
+
+            # Генерируем config.json из шаблона
+            sed -e "s|YOUR_SERVER_IP|$server|g" \
+                -e "s|YOUR_UUID_HERE|$uuid|g" \
+                -e "s|YOUR_REALITY_PUBLIC_KEY|$pbk|g" \
+                -e "s|YOUR_SHORT_ID|$sid|g" \
+                -e "s|YOUR_USERNAME|$USER|g" \
+                "$SCRIPT_DIR/.config/sing-box/config.json.example" | \
+            python3 -c "
+import sys, json
+cfg = json.load(sys.stdin)
+cfg['outbounds'][0]['server_port'] = $port
+cfg['outbounds'][0]['tls']['server_name'] = '$sni'
+cfg['outbounds'][0]['tls']['utls']['fingerprint'] = '$fp'
+json.dump(cfg, sys.stdout, indent=2, ensure_ascii=False)
+" > "$HOME/.config/sing-box/config.json"
+
+            log_info "sing-box config.json сгенерирован из VLESS ссылки"
+            log_info "  Сервер: $server:$port | SNI: $sni"
+        else
+            if [[ -n "$vless_link" ]]; then
+                log_warn "Невалидная ссылка (должна начинаться с vless://)"
+            fi
+            log_warn "sing-box конфиг не создан. Создай вручную: ~/.config/sing-box/config.json"
+        fi
+    else
+        log_info "sing-box config.json уже существует, пропускаем"
     fi
 
     # Sudoers для sing-box (без пароля)
@@ -370,7 +390,6 @@ setup_system_fan() {
     fi
 
     # Копируем скрипт
-    local SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
     sudo cp "$SCRIPT_DIR/scripts/setup-system-fan.sh" /usr/local/bin/system-fan-curve.sh
     sudo chmod +x /usr/local/bin/system-fan-curve.sh
 
@@ -399,60 +418,29 @@ EOF
 }
 
 # ==========================================
-# 6.5. Установка DankMaterialShell
+# 6.2. Установка hk-translator
 # ==========================================
-install_dms() {
-    log_info "Установка DankMaterialShell..."
+install_hk_translator() {
+    log_info "Установка hk-translator..."
 
-    if ! command -v dms &> /dev/null; then
-        # Установка зависимостей
-        sudo pacman -S --needed --noconfirm qt6-base qt6-declarative qt6-wayland pipewire wireplumber
+    # Зависимость
+    sudo pacman -S --needed --noconfirm python-evdev
 
-        # Установка из AUR
-        yay -S --noconfirm dms-shell-bin || {
-            log_warn "DMS не найден в AUR, пробуем ручную установку..."
-            cd /tmp
-            git clone https://github.com/nickshanks/DankMaterialShell.git
-            cd DankMaterialShell
-            ./install.sh
-        }
-        log_info "DMS установлен"
-    else
-        log_info "DMS уже установлен"
-    fi
+    # Клонируем и копируем
+    cd /tmp
+    rm -rf hk-translator
+    git clone --depth=1 https://github.com/reflaxess123/hk-translator.git
+    sudo mkdir -p /opt/hk-translator
+    sudo cp hk-translator/hk-translator.py /opt/hk-translator/
+    sudo cp hk-translator/hk-translator.service /etc/systemd/system/
 
-    # Установка кастомных плагинов
-    install_dms_plugins
-}
+    # Включаем сервис
+    sudo systemctl daemon-reload
+    sudo systemctl enable hk-translator
 
-# ==========================================
-# 6.6. Установка кастомных плагинов DMS
-# ==========================================
-install_dms_plugins() {
-    log_info "Установка кастомных плагинов DMS..."
+    rm -rf /tmp/hk-translator
 
-    local plugins_dir="$HOME/.config/DankMaterialShell/plugins"
-    mkdir -p "$plugins_dir"
-
-    # treesize-dms - монитор дискового пространства
-    if [[ ! -d "$plugins_dir/treesize-dms" ]]; then
-        log_info "Клонирование treesize-dms..."
-        git clone https://github.com/reflaxess123/treesize-dms "$plugins_dir/treesize-dms"
-    else
-        log_info "treesize-dms уже установлен, обновляю..."
-        cd "$plugins_dir/treesize-dms" && git pull
-    fi
-
-    # vpnstatus - статус sing-box VPN
-    if [[ ! -d "$plugins_dir/vpnStatus" ]]; then
-        log_info "Клонирование vpnStatus..."
-        git clone https://github.com/reflaxess123/vpnstatus "$plugins_dir/vpnStatus"
-    else
-        log_info "vpnStatus уже установлен, обновляю..."
-        cd "$plugins_dir/vpnStatus" && git pull
-    fi
-
-    log_info "Плагины DMS установлены"
+    log_info "hk-translator установлен (запустится после перезагрузки)"
 }
 
 # ==========================================
@@ -546,8 +534,6 @@ install_nvchad() {
 copy_configs() {
     log_info "Копирование конфигов..."
 
-    local SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-
     local items=(
         ".zshrc"
         ".tmux.conf.local"
@@ -561,7 +547,7 @@ copy_configs() {
         ".config/scripts"
         ".config/Cursor"
         ".config/sing-box"
-        ".config/DankMaterialShell"
+        ".config/waybar"
         ".config/rofi"
         ".config/niri"
         ".config/gtk-3.0"
@@ -604,7 +590,7 @@ set_default_shell() {
     log_info "Установка zsh как shell по умолчанию..."
 
     if [[ "$SHELL" != *"zsh"* ]]; then
-        chsh -s $(which zsh)
+        sudo usermod -s /usr/bin/zsh "$USER"
         log_info "zsh установлен по умолчанию. Перелогинься для применения."
     else
         log_info "zsh уже установлен по умолчанию"
@@ -619,18 +605,30 @@ main() {
     install_pacman_packages
     install_aur_packages
     install_fonts
-    setup_redsocks
-    setup_singbox
     setup_gpu_fan
     setup_system_fan
-    install_dms
+    install_hk_translator
     install_ohmyzsh
     install_ohmytmux
     install_tpm
     copy_configs
+    setup_singbox
     make_scripts_executable
     install_nvchad
     set_default_shell
+
+    # Установка тёмной темы по умолчанию
+    gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+    gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita:dark'
+    ln -sf "$HOME/.config/waybar/style-dark.css" "$HOME/.config/waybar/style.css"
+    echo "dark" > "$HOME/.config/hypr/.theme-state"
+    log_info "Тёмная тема установлена (переключение: Ctrl+Y)"
+
+    # Перезагрузка Hyprland конфига и перезапуск панели/обоев
+    hyprctl reload 2>/dev/null && log_info "Hyprland конфиг перезагружен" || true
+    pkill waybar 2>/dev/null || true; waybar &disown
+    pkill swww-daemon 2>/dev/null || true; swww-daemon &disown; sleep 1; swww img ~/wallpapers/15-Sequoia-Sunrise.png --transition-type none
+    log_info "waybar и swww перезапущены"
 
     echo ""
     echo "=========================================="
@@ -641,9 +639,8 @@ main() {
     echo "  1. ПЕРЕЗАГРУЗИСЬ для применения GPU fan control и zsh"
     echo "  2. Запусти nvim для установки плагинов"
     echo "  3. В tmux нажми Ctrl+a затем I для установки плагинов"
-    echo "  4. Redsocks toggle: Alt+I"
-    echo "  5. sing-box VPN toggle: Alt+P (не забудь настроить сервер в ~/.config/sing-box/config.json)"
-    echo "  6. Проверь вентиляторы: nvidia-smi --query-gpu=fan.speed --format=csv"
+    echo "  4. sing-box VPN toggle: Alt+P (не забудь настроить сервер в ~/.config/sing-box/config.json)"
+    echo "  5. Проверь вентиляторы: nvidia-smi --query-gpu=fan.speed --format=csv"
     echo ""
 }
 

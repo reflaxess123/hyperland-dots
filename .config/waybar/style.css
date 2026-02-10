@@ -1,0 +1,255 @@
+* {
+  border: none;
+  border-radius: 0;
+  font-family: "Playpen Sans", sans-serif;
+  font-size: 13px;
+  min-height: 0;
+  font-weight: 600;
+}
+
+window#waybar {
+  background: rgba(26, 26, 26, 0);
+  color: #cad3f5;
+}
+
+/* Левый блок */
+.modules-left {
+  background-color: #1d1d41;
+  border-radius: 25px;
+  padding: 0 15px;
+  border: none;
+}
+
+/* Разделители между секциями */
+#custom-sep,
+#custom-sep2,
+#custom-sep3 {
+  color: #45475a;
+  padding: 0 5px;
+  font-size: 14px;
+}
+
+/* Правый блок */
+.modules-right {
+  background-color: #1d1d41;
+  border-radius: 25px;
+  padding: 0 15px;
+  border: none;
+}
+
+.modules-center {
+  background-color: #1d1d41;
+  border-radius: 25px;
+  padding: 0 5px;
+  border: none;
+}
+
+/* Reset all modules */
+#workspaces,
+#clock,
+#pulseaudio,
+#custom-mic-volume,
+#pulseaudio-slider,
+#network,
+#bluetooth,
+#cpu,
+#custom-cpu-temp,
+#custom-gpu-temp,
+#custom-gpu-fan,
+#custom-gpu-vram,
+#custom-fan,
+#memory,
+#disk,
+#tray,
+#hyprland-language,
+#custom-power,
+#custom-launcher,
+#language {
+  padding: 4px 8px;
+  margin: 0 2px;
+  color: #cad3f5;
+}
+
+#workspaces {
+  margin: 5px;
+  padding: 0 5px;
+  border-radius: 6px;
+}
+
+#workspaces button {
+  padding: 0 5px;
+  color: #cdd6f4;
+  transition: all 0.3s ease;
+}
+
+#workspaces button:hover {
+  background: rgba(100, 100, 100, 0);
+}
+
+#workspaces button.active {
+  color: #89b4fa;
+}
+
+#custom-launcher {
+  color: #89b4fa;
+  font-size: 16px;
+  padding: 0 15px;
+}
+
+#custom-power {
+  color: #f38ba8;
+  font-size: 16px;
+  padding: 0 15px;
+}
+
+/* Style for specific icons/modules that need it */
+#pulseaudio {
+  color: #89b4fa;
+}
+
+#custom-brightness {
+  color: #f9e2af;
+  padding: 0 2px;
+}
+
+#custom-brightness-up,
+#custom-brightness-down {
+  color: #f9e2af;
+  padding: 0 5px;
+  font-weight: bold;
+}
+
+#network {
+  color: #cad3f5;
+}
+
+#bluetooth {
+  color: #cba6f7;
+}
+
+/* Цвета для CPU, memory, disk определены ниже в секциях */
+
+#clock {
+  color: #f9e2af;
+  font-weight: bold;
+}
+
+/* Hide sliders by default */
+#pulseaudio-slider slider {
+  min-height: 0px;
+  min-width: 0px;
+  opacity: 0;
+  background: none;
+  border: none;
+  box-shadow: none;
+  margin: 0;
+  padding: 0;
+}
+
+#pulseaudio-slider trough {
+  min-height: 12px;
+  min-width: 80px;
+  border-radius: 5px;
+  background-color: #302d41;
+}
+
+#pulseaudio-slider highlight {
+  min-width: 12px;
+  min-height: 12px;
+  border-radius: 9999px;
+  background-color: #cad3f4;
+}
+
+/* VPN индикатор */
+#custom-vpn {
+  color: #cdd6f4;
+  padding: 0 10px;
+  font-weight: bold;
+}
+
+#custom-vpn.connected {
+  color: #a6e3a1;
+}
+
+#custom-vpn.disconnected {
+  color: #f38ba8;
+}
+
+#custom-vpn.connecting {
+  color: #f9e2af;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.6;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+/* sing-box VPN индикатор */
+#custom-singbox {
+  color: #cdd6f4;
+  padding: 0 10px;
+  font-weight: bold;
+}
+
+#custom-singbox.connected {
+  color: #89b4fa;
+}
+
+#custom-singbox.disconnected {
+  color: #6c7086;
+}
+
+/* CPU секция - красный */
+#cpu,
+#custom-cpu-temp,
+#custom-fan {
+  color: #f38ba8;
+}
+
+/* GPU секция - жёлтый */
+#custom-gpu-temp,
+#custom-gpu-fan,
+#custom-gpu-vram {
+  color: #f9e2af;
+}
+
+/* Memory/Disk секция - зелёный */
+#memory,
+#disk {
+  color: #a6e3a1;
+}
+
+#tray {
+  margin: 0 5px;
+}
+
+/* Языковой индикатор */
+#language {
+  padding: 0 10px;
+  margin: 0 2px;
+  border-radius: 6px;
+  color: #a6e3a1;
+  font-weight: bold;
+}
+
+/* Слайдер громкости */
+#pulseaudio.slider {
+  min-width: 100px;
+}
+
+tooltip {
+  border-radius: 15px;
+  background-color: #10102e;
+  color: #cad3f5;
+  border: none;
+}
