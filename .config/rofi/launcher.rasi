@@ -1,14 +1,14 @@
-/* Catppuccin Mocha - Application Launcher */
+/* Gruvbox Dark - Application Launcher */
 
 * {
-    bg: #1e1e2e;
-    bg-alt: #313244;
-    bg-hover: #45475a;
-    fg: #cdd6f4;
-    fg-alt: #a6adc8;
-    accent: #89b4fa;
-    accent-alt: #b4befe;
-    urgent: #f38ba8;
+    bg: #282828;
+    bg-alt: #3c3836;
+    bg-hover: #504945;
+    fg: #ebdbb2;
+    fg-alt: #a89984;
+    accent: #a89984;
+    accent-alt: #bdae93;
+    urgent: #cc241d;
 
     background-color: transparent;
     text-color: @fg;
@@ -45,7 +45,7 @@ prompt {
 
 entry {
     placeholder: "Search apps...";
-    placeholder-color: #6c7086;
+    placeholder-color: #665c54;
 }
 
 listview {

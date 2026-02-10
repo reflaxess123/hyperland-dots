@@ -489,7 +489,28 @@ install_lazyvim() {
     git clone https://github.com/LazyVim/starter ~/.config/nvim
     rm -rf ~/.config/nvim/.git
 
-    log_info "LazyVim установлен. Запусти nvim для завершения установки плагинов."
+    # Gruvbox Material с прозрачным фоном
+    cat > ~/.config/nvim/lua/plugins/transparent.lua << 'NVIMEOF'
+return {
+  {
+    "LazyVim/LazyVim",
+    opts = {
+      colorscheme = "gruvbox-material",
+    },
+  },
+  {
+    "sainnhe/gruvbox-material",
+    lazy = false,
+    priority = 1000,
+    config = function()
+      vim.g.gruvbox_material_transparent_background = 2
+      vim.g.gruvbox_material_background = "hard"
+    end,
+  },
+}
+NVIMEOF
+
+    log_info "LazyVim установлен (gruvbox-material). Запусти nvim для установки плагинов."
 }
 
 # ==========================================

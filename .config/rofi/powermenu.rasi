@@ -1,10 +1,10 @@
-/* Catppuccin Mocha - Power Menu */
+/* Gruvbox Dark - Power Menu */
 
 * {
-    bg: #1e1e2e;
-    bg-alt: #313244;
-    fg: #cdd6f4;
-    accent: #f38ba8;
+    bg: #282828;
+    bg-alt: #3c3836;
+    fg: #ebdbb2;
+    accent: #a89984;
 
     background-color: transparent;
     text-color: @fg;
