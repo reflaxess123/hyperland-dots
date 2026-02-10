@@ -116,6 +116,7 @@ install_pacman_packages() {
         # Dependencies
         gtk3
         libxrandr
+        clang
     )
 
     sudo pacman -S --needed --noconfirm "${packages[@]}" || log_warn "Некоторые пакеты не найдены в pacman"
