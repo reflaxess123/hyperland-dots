@@ -18,8 +18,6 @@
 !.config/rofi/**
 !.config/swaykbdd/**
 !.config/neofetch/**
-!.config/Cursor/User/keybindings.json
-!.config/Cursor/User/settings.json
 !.config/gtk-3.0/**
 !.config/gtk-4.0/**
 !.config/alacritty/**
@@ -30,8 +28,11 @@
 !.config/sing-box/config.json.example
 # Exclude real config with sensitive data
 .config/sing-box/config.json
-!.config/DankMaterialShell/**
 !.config/niri/**
+!.config/zellij/
+!.config/zellij/**
+!.config/swaync/
+!.config/swaync/**
 
 # Скрипты установки
 !scripts/
@@ -40,7 +41,5 @@
 # Documentation
 !README.md
 !CLAUDE.md
-!.config/caelestia/
-!.config/caelestia/**
 !.config/Code/
 !.config/Code/**
