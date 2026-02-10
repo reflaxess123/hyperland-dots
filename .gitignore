@@ -6,11 +6,8 @@
 
 # Явно включаем нужные конфиги
 !.zshrc
-!.tmux.conf
-!.tmux.conf.local
 !.p10k.zsh
 !gpu-fan-control.sh
-!sync-git.sh
 !restore-config.sh
 !.config/
 !.config/nvim/**
