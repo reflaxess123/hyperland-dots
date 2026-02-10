@@ -112,6 +112,10 @@ install_pacman_packages() {
         nvidia-settings
         xorg-server
         xorg-xhost
+
+        # Dependencies
+        gtk3
+        libxrandr
     )
 
     sudo pacman -S --needed --noconfirm "${packages[@]}" || log_warn "Некоторые пакеты не найдены в pacman"
@@ -514,6 +518,32 @@ NVIMEOF
 }
 
 # ==========================================
+# 8.5. Монтирование NTFS диска (nvme0n1p1)
+# ==========================================
+mount_ntfs_disk() {
+    log_info "Настройка NTFS диска..."
+
+    sudo modprobe ntfs3
+
+    sudo mkdir -p /media/$USER/Storage
+
+    if ! grep -q "7E68A3DE68A39405" /etc/fstab; then
+        echo "UUID=7E68A3DE68A39405 /media/$USER/Storage ntfs3 defaults,force,nofail 0 0" | sudo tee -a /etc/fstab
+        log_info "fstab запись добавлена"
+    else
+        log_info "fstab запись уже существует"
+    fi
+
+    if ! mountpoint -q /media/$USER/Storage; then
+        sudo mount -t ntfs3 -o force /dev/nvme0n1p1 /media/$USER/Storage 2>/dev/null && \
+            log_info "NTFS диск смонтирован в /media/$USER/Storage" || \
+            log_warn "Не удалось смонтировать NTFS диск (возможно nvme0n1p1 отсутствует)"
+    else
+        log_info "NTFS диск уже смонтирован"
+    fi
+}
+
+# ==========================================
 # 9. Копирование конфигов
 # ==========================================
 copy_configs() {
@@ -595,6 +625,7 @@ main() {
     setup_system_fan
     install_hk_translator
     install_ohmyzsh
+    mount_ntfs_disk
     copy_configs
     setup_singbox
     make_scripts_executable
