@@ -114,7 +114,8 @@
           "hcaptcha.com",
           "geetest.com",
           "yastatic.net",
-          "bdimg.com"
+          "bdimg.com",
+          "timeweb.cloud"
         ],
         "domain_suffix": [
           ".dns-shop.ru",
@@ -124,7 +125,8 @@
           ".hcaptcha.com",
           ".geetest.com",
           ".yastatic.net",
-          ".bdimg.com"
+          ".bdimg.com",
+          ".timeweb.cloud"
         ],
         "action": "route",
         "outbound": "direct"
