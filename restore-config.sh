@@ -536,6 +536,7 @@ copy_configs() {
         ".config/niri"
         ".config/gtk-3.0"
         ".config/gtk-4.0"
+        ".config/swaync"
         ".config/Code/User"
     )
 
