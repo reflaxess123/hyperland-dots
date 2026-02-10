@@ -1,0 +1,81 @@
+// Zellij config — Windows Terminal style keybinds
+
+keybinds clear-defaults=true {
+    normal {
+        // Tabs
+        bind "Ctrl Shift t" { NewTab; }
+        bind "Ctrl Shift w" { CloseFocus; }
+        bind "Ctrl Tab" { GoToNextTab; }
+        bind "Ctrl Shift Tab" { GoToPreviousTab; }
+        bind "Ctrl 1" { GoToTab 1; }
+        bind "Ctrl 2" { GoToTab 2; }
+        bind "Ctrl 3" { GoToTab 3; }
+        bind "Ctrl 4" { GoToTab 4; }
+        bind "Ctrl 5" { GoToTab 5; }
+        bind "Ctrl 6" { GoToTab 6; }
+        bind "Ctrl 7" { GoToTab 7; }
+        bind "Ctrl 8" { GoToTab 8; }
+        bind "Ctrl 9" { GoToTab 9; }
+
+        // Splits
+        bind "Alt Shift =" { NewPane "Right"; }
+        bind "Alt Shift -" { NewPane "Down"; }
+
+        // Pane navigation
+        bind "Alt Left" { MoveFocus "Left"; }
+        bind "Alt Right" { MoveFocus "Right"; }
+        bind "Alt Up" { MoveFocus "Up"; }
+        bind "Alt Down" { MoveFocus "Down"; }
+
+        // Pane resize
+        bind "Ctrl Shift Left" { Resize "Increase Left"; }
+        bind "Ctrl Shift Right" { Resize "Increase Right"; }
+        bind "Ctrl Shift Up" { Resize "Increase Up"; }
+        bind "Ctrl Shift Down" { Resize "Increase Down"; }
+
+        // Close pane
+        bind "Ctrl Shift x" { CloseFocus; }
+
+        // Fullscreen pane
+        bind "Alt Enter" { ToggleFocusFullscreen; }
+
+        // Floating pane
+        bind "Alt f" { ToggleFloatingPanes; }
+
+        // Scroll
+        bind "PageUp" { PageScrollUp; }
+        bind "PageDown" { PageScrollDown; }
+
+        // Copy
+        bind "Alt c" { Copy; }
+
+        // Session
+        bind "Ctrl Shift d" { Detach; }
+
+        // Quit
+        bind "Ctrl Shift q" { Quit; }
+    }
+}
+
+// Clean look — tabs on top, no status bar
+simplified_ui true
+pane_frames false
+default_layout "custom"
+
+theme "gruvbox-transparent"
+
+themes {
+    gruvbox-transparent {
+        fg "#ebdbb2"
+        bg "#1d2021"
+        black "#1d2021"
+        red "#fb4934"
+        green "#b8bb26"
+        yellow "#fabd2f"
+        blue "#83a598"
+        magenta "#d3869b"
+        cyan "#8ec07c"
+        white "#fbf1c7"
+        orange "#fe8019"
+    }
+}

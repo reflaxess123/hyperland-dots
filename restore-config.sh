@@ -120,6 +120,7 @@ install_pacman_packages() {
         cmake
         xdotool
         wtype
+        zellij
     )
 
     sudo pacman -S --needed --noconfirm "${packages[@]}" || log_warn "Некоторые пакеты не найдены в pacman"
@@ -592,6 +593,7 @@ copy_configs() {
         ".config/gtk-4.0"
         ".config/swaync"
         ".config/Code/User"
+        ".config/zellij"
     )
 
     for item in "${items[@]}"; do
