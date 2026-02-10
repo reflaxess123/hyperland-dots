@@ -245,6 +245,21 @@ window#waybar {
   min-width: 100px;
 }
 
+/* Voice input индикатор */
+#custom-voice {
+  font-size: 10px;
+  padding: 0 4px;
+}
+
+#custom-voice.recording {
+  color: #fb4934;
+}
+
+#custom-voice.processing {
+  color: #fabd2f;
+  animation: pulse 0.5s infinite;
+}
+
 tooltip {
   border-radius: 15px;
   background-color: #3c3836;

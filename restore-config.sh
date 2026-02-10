@@ -119,6 +119,7 @@ install_pacman_packages() {
         clang
         cmake
         xdotool
+        wtype
     )
 
     sudo pacman -S --needed --noconfirm "${packages[@]}" || log_warn "Некоторые пакеты не найдены в pacman"
@@ -521,7 +522,28 @@ NVIMEOF
 }
 
 # ==========================================
-# 8.5. Монтирование NTFS диска (nvme0n1p1)
+# 8.5. Voice input (faster-whisper venv)
+# ==========================================
+setup_voice_input() {
+    log_info "Настройка voice input (faster-whisper)..."
+
+    local venv_dir="$HOME/.local/share/voice-input/venv"
+
+    if [[ ! -d "$venv_dir" ]]; then
+        mkdir -p "$(dirname "$venv_dir")"
+        python -m venv "$venv_dir"
+        "$venv_dir/bin/pip" install --upgrade pip
+        "$venv_dir/bin/pip" install faster-whisper nvidia-cublas-cu12 nvidia-cudnn-cu12
+        # Pre-download model
+        "$venv_dir/bin/python" -c "from faster_whisper import WhisperModel; WhisperModel('large-v3-turbo', device='cpu', compute_type='int8')" 2>/dev/null
+        log_info "Voice input venv создан: $venv_dir"
+    else
+        log_info "Voice input venv уже существует"
+    fi
+}
+
+# ==========================================
+# 8.6. Монтирование NTFS диска (nvme0n1p1)
 # ==========================================
 mount_ntfs_disk() {
     log_info "Настройка NTFS диска..."
@@ -562,7 +584,6 @@ copy_configs() {
         ".config/swaykbdd"
         ".config/neofetch"
         ".config/scripts"
-        ".config/Cursor"
         ".config/sing-box"
         ".config/waybar"
         ".config/rofi"
@@ -628,6 +649,7 @@ main() {
     setup_system_fan
     install_hk_translator
     install_ohmyzsh
+    setup_voice_input
     mount_ntfs_disk
     copy_configs
     setup_singbox

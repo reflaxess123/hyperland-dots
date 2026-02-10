@@ -12,8 +12,6 @@ source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zs
 export PATH="$HOME/.local/bin:$PATH"
 export EDITOR='nvim'
 export VISUAL='nvim'
-export http_proxy="http://91.201.114.192:52439"
-export https_proxy="http://91.201.114.192:52439"
 
 # Tool replacements
 alias cat='bat'

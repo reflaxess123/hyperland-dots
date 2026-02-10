@@ -19,7 +19,8 @@
     "custom/sep3",
     "network",
     "custom/singbox",
-    "tray"
+    "tray",
+    "custom/voice"
   ],
   "modules-center": [
     "hyprland/workspaces"
@@ -143,6 +144,13 @@
     "on-scroll-up": "hyprctl dispatch workspace e+1",
     "on-scroll-down": "hyprctl dispatch workspace e-1",
     "on-click": "activate"
+  },
+  "custom/voice": {
+    "exec": "cat /tmp/waybar-voice.json 2>/dev/null || echo '{\"text\": \"\", \"class\": \"idle\"}'",
+    "return-type": "json",
+    "signal": 8,
+    "interval": "once",
+    "format": "{}"
   },
   "custom/singbox": {
     "exec": "~/.config/waybar/scripts/singbox-status.sh",
