@@ -117,6 +117,7 @@ install_pacman_packages() {
         gtk3
         libxrandr
         clang
+        cmake
     )
 
     sudo pacman -S --needed --noconfirm "${packages[@]}" || log_warn "Некоторые пакеты не найдены в pacman"
