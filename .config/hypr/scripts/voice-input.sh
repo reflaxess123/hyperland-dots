@@ -5,9 +5,15 @@
 RECORDING_PID="/tmp/voice-recording.pid"
 RECORDING_FILE="/tmp/voice-recording.wav"
 VOICE_STATE="/tmp/waybar-voice.json"
+LOCK_FILE="/tmp/voice-input.lock"
 VENV="$HOME/.local/share/voice-input/venv"
 SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
 WAYBAR_SIGNAL=8
+
+# Prevent duplicate launches during transcription
+if [[ -f "$LOCK_FILE" ]]; then
+    exit 0
+fi
 
 update_waybar() {
     echo "{\"text\": \"$1\", \"class\": \"$2\"}" > "$VOICE_STATE"
@@ -26,11 +32,13 @@ start_recording() {
 }
 
 stop_and_transcribe() {
+    touch "$LOCK_FILE"
     kill -INT "$(cat "$RECORDING_PID")" 2>/dev/null
     sleep 0.2
     rm -f "$RECORDING_PID"
 
     if [[ ! -s "$RECORDING_FILE" ]]; then
+        rm -f "$LOCK_FILE"
         update_waybar "" "idle"
         return
     fi
@@ -44,7 +52,7 @@ stop_and_transcribe() {
         wtype -M ctrl v -m ctrl
     fi
 
-    rm -f "$RECORDING_FILE"
+    rm -f "$RECORDING_FILE" "$LOCK_FILE"
     update_waybar "" "idle"
 }
 
