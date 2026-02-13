@@ -121,6 +121,8 @@ install_pacman_packages() {
         xdotool
         wtype
         zellij
+        blueman
+        imagemagick
     )
 
     sudo pacman -S --needed --noconfirm "${packages[@]}" || log_warn "Некоторые пакеты не найдены в pacman"
@@ -554,14 +556,14 @@ mount_ntfs_disk() {
     sudo mkdir -p /media/$USER/Storage
 
     if ! grep -q "7E68A3DE68A39405" /etc/fstab; then
-        echo "UUID=7E68A3DE68A39405 /media/$USER/Storage ntfs3 defaults,force,nofail 0 0" | sudo tee -a /etc/fstab
+        echo "UUID=7E68A3DE68A39405 /media/$USER/Storage ntfs3 uid=1000,gid=1000,dmask=022,fmask=133,force,nofail 0 0" | sudo tee -a /etc/fstab
         log_info "fstab запись добавлена"
     else
         log_info "fstab запись уже существует"
     fi
 
     if ! mountpoint -q /media/$USER/Storage; then
-        sudo mount -t ntfs3 -o force /dev/nvme0n1p1 /media/$USER/Storage 2>/dev/null && \
+        sudo mount -t ntfs3 -o uid=1000,gid=1000,dmask=022,fmask=133,force /dev/nvme0n1p1 /media/$USER/Storage 2>/dev/null && \
             log_info "NTFS диск смонтирован в /media/$USER/Storage" || \
             log_warn "Не удалось смонтировать NTFS диск (возможно nvme0n1p1 отсутствует)"
     else
