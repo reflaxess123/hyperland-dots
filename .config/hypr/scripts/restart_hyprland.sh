@@ -32,6 +32,9 @@ sleep 0.5
 nwg-dock-hyprland -d -l overlay -p bottom -i 48 -nolauncher -o DP-1 -m -iw "11,12,13,14,15,16,17,18,19,20" &disown
 nwg-dock-hyprland -d -l overlay -p bottom -i 48 -nolauncher -o DP-2 -m -iw "1,2,3,4,5,6,7,8,9,10" &disown
 
+# Restart hyprshell (alt-tab switcher)
+hyprshell socat '"Restart"' 2>/dev/null || { hyprshell run & disown; }
+
 # Reload Hyprland config
 hyprctl reload
 

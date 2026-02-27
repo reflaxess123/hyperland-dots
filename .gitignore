@@ -33,6 +33,8 @@
 !.config/zellij/**
 !.config/swaync/
 !.config/swaync/**
+!.config/hyprshell/
+!.config/hyprshell/**
 
 # Скрипты установки
 !scripts/

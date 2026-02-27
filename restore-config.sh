@@ -145,6 +145,7 @@ install_aur_packages() {
         zen-browser-bin
         visual-studio-code-bin
         obsidian
+        hyprshell-bin
     )
 
     for pkg in "${aur_packages[@]}"; do
@@ -598,6 +599,7 @@ copy_configs() {
         ".config/Code/User"
         ".config/zellij"
         ".config/wezterm"
+        ".config/hyprshell"
     )
 
     for item in "${items[@]}"; do

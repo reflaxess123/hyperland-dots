@@ -1,0 +1,80 @@
+configuration {
+    show-icons: true;
+    display-dmenu: "";
+    disable-history: true;
+    kb-element-next: "Tab";
+    kb-element-prev: "ISO_Left_Tab";
+    kb-row-tab: "";
+    kb-row-rtab: "";
+}
+
+* {
+    bg: rgba(30, 30, 30, 0.75);
+    bg-selected: rgba(255, 255, 255, 0.12);
+    fg: #ebdbb2;
+    fg-dim: #a89984;
+    border-color: rgba(255, 255, 255, 0.08);
+    radius: 18px;
+}
+
+window {
+    transparency: "real";
+    background-color: @bg;
+    border: 1px solid;
+    border-color: @border-color;
+    border-radius: @radius;
+    padding: 12px;
+    location: center;
+    anchor: center;
+    width: 800px;
+}
+
+mainbox {
+    children: [listview];
+    background-color: transparent;
+}
+
+inputbar {
+    enabled: false;
+}
+
+listview {
+    columns: 10;
+    lines: 1;
+    flow: horizontal;
+    fixed-columns: false;
+    spacing: 8px;
+    background-color: transparent;
+    scrollbar: false;
+}
+
+element {
+    orientation: vertical;
+    padding: 12px 16px;
+    border-radius: 14px;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+element selected.normal {
+    background-color: @bg-selected;
+}
+
+element-icon {
+    size: 64px;
+    horizontal-align: 0.5;
+    background-color: transparent;
+    cursor: inherit;
+}
+
+element-text {
+    horizontal-align: 0.5;
+    background-color: transparent;
+    text-color: @fg-dim;
+    font: "Maple Mono NF CN 9";
+    cursor: inherit;
+}
+
+element selected.normal element-text {
+    text-color: @fg;
+}
