@@ -123,6 +123,7 @@ install_pacman_packages() {
         zellij
         blueman
         imagemagick
+        nwg-dock-hyprland
     )
 
     sudo pacman -S --needed --noconfirm "${packages[@]}" || log_warn "Некоторые пакеты не найдены в pacman"
@@ -596,6 +597,7 @@ copy_configs() {
         ".config/swaync"
         ".config/Code/User"
         ".config/zellij"
+        ".config/wezterm"
     )
 
     for item in "${items[@]}"; do
