@@ -26,6 +26,11 @@ sleep 0.5
 wl-paste --type text --watch cliphist store &
 wl-paste --type image --watch cliphist store &
 
+# Restart nwg-dock
+pkill nwg-dock-hyprla 2>/dev/null
+sleep 0.5
+nwg-dock-hyprland -d -l overlay -p bottom -i 48 -nolauncher &disown
+
 # Reload Hyprland config
 hyprctl reload
 
