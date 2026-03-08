@@ -6,6 +6,9 @@ configuration {
     kb-element-prev: "ISO_Left_Tab";
     kb-row-tab: "";
     kb-row-rtab: "";
+    hover-select: true;
+    me-select-entry: "";
+    me-accept-entry: "MousePrimary";
 }
 
 * {
