@@ -1,5 +1,5 @@
 #!/bin/bash
-# Voice input: CTRL+SUPER toggle — first press starts, second stops & transcribes
+# Voice input: Push-to-talk — start on press, stop & transcribe on release
 # Uses faster-whisper large-v3-turbo on CUDA
 
 RECORDING_PID="/tmp/voice-recording.pid"
@@ -25,6 +25,9 @@ is_recording() {
 }
 
 start_recording() {
+    if is_recording; then
+        return
+    fi
     rm -f "$RECORDING_FILE"
     update_waybar "●" "recording"
     pw-record "$RECORDING_FILE" &
@@ -32,9 +35,18 @@ start_recording() {
 }
 
 stop_and_transcribe() {
+    if ! is_recording; then
+        return
+    fi
+    
     touch "$LOCK_FILE"
+    # Мягкая остановка для сохранения WAV
     kill -INT "$(cat "$RECORDING_PID")" 2>/dev/null
-    sleep 0.2
+    sleep 0.3
+    # Жесткая остановка, если не закрылся
+    kill -9 "$(cat "$RECORDING_PID")" 2>/dev/null
+    pkill pw-record 2>/dev/null
+    
     rm -f "$RECORDING_PID"
 
     if [[ ! -s "$RECORDING_FILE" ]]; then
@@ -56,8 +68,19 @@ stop_and_transcribe() {
     update_waybar "" "idle"
 }
 
-if is_recording; then
-    stop_and_transcribe
-else
-    start_recording
-fi
+case "$1" in
+    start)
+        start_recording
+        ;;
+    stop)
+        stop_and_transcribe
+        ;;
+    *)
+        # Fallback for toggle behavior if run without args
+        if is_recording; then
+            stop_and_transcribe
+        else
+            start_recording
+        fi
+        ;;
+esac
