@@ -35,7 +35,10 @@ fi
 
 SELECTED=$(echo "$WINDOWS" | rofi -dmenu \
     -theme ~/.config/rofi/alt-tab.rasi \
-    -selected-row 1)
+    -selected-row 1 \
+    -hover-select \
+    -me-select-entry 'MouseSecondary' \
+    -me-accept-entry 'MousePrimary')
 
 if [ -n "$SELECTED" ]; then
     ADDR=$(echo "$SELECTED" | grep -oP 'info\x1f\K0x[0-9a-f]+' || true)

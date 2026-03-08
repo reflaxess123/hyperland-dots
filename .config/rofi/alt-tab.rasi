@@ -7,7 +7,7 @@ configuration {
     kb-row-tab: "";
     kb-row-rtab: "";
     hover-select: true;
-    me-select-entry: "";
+    me-select-entry: "MouseSecondary";
     me-accept-entry: "MousePrimary";
 }
 
