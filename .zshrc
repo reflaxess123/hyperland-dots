@@ -1,8 +1,3 @@
-# Zellij auto-attach (before p10k to avoid console output warning)
-if [[ -z "${ZELLIJ_SESSION_NAME}" && -z "$INSIDE_EMACS" && -z "$VSCODE_INJECTION" ]]; then
-    zellij attach -c main
-fi
-
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
@@ -181,3 +176,11 @@ conda() {
   conda "$@"
 }
 
+
+# pnpm
+export PNPM_HOME="/home/billy/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end

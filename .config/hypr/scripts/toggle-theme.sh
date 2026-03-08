@@ -8,6 +8,7 @@ STATE_FILE="$HOME/.config/hypr/.theme-state"
 WAYBAR_DIR="$HOME/.config/waybar"
 GHOSTTY_CONFIG="$HOME/.config/ghostty/config"
 GHOSTTY_THEMES="$HOME/.config/ghostty/themes"
+WEZTERM_THEME="$HOME/.config/wezterm/theme.txt"
 
 current=$(cat "$STATE_FILE" 2>/dev/null || echo "dark")
 
@@ -53,7 +54,13 @@ if [ -f "$VSCODE_SETTINGS" ]; then
     fi
 fi
 
+# WezTerm: write theme file (auto-reloads)
+echo "$MODE" > "$WEZTERM_THEME"
+
 echo "$MODE" > "$STATE_FILE"
+
+# Restart portals (forces Chrome/Brave to re-read color-scheme)
+systemctl --user restart xdg-desktop-portal-gtk.service xdg-desktop-portal.service &
 
 # Restart waybar
 pkill waybar 2>/dev/null
