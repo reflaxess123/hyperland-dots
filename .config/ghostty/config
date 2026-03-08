@@ -66,7 +66,8 @@ keybind = shift+insert=paste_from_clipboard
 keybind = ctrl+insert=copy_to_clipboard
 foreground = fbf1c7
 background = 000000
-background-opacity = 0.5
+background-opacity = 0.9
+background-blur = true
 window-theme = dark
 selection-foreground = 282828
 selection-background = d5c4a1
